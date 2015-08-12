@@ -56,7 +56,6 @@
 
 \graphicspath{{Pictures/}}
 
-
 \begin{document}
 \maketitle
 
@@ -89,19 +88,19 @@ where $Q_e$ is determined by the value of the externally connected resistance an
 \label{fig:resonator_equiv}
 \end{figure}
 
-The common way of connection is the capacitive coupling $C_\kappa$ to the transmission line, as depicted on the equivalent scheme of the circuit on \autoref{fig:resonator_equiv}~(a). To draw the equivalent scheme of the circuit one needs first to determine the type of the resonance for the chosen TLR\cite{pozar2012}. In the studied design the resonators are $\lambda/4$ thus the equivalent for each of them is the parallel RLC resonator, where $C$ and $L$ are equivalent capacitance and inductance and $R=R_{in}$ characterises the internal dissipation. Its $Q_i  = \omega	C R_{in}$ can be calculated from the definition when no external impedance connected.
+The common way of connection is the capacitive coupling $C_\kappa$ to the transmission line, as depicted on the equivalent scheme of the circuit in \autoref{fig:resonator_equiv}~(a). To draw the equivalent scheme of the circuit one needs first to determine the type of the resonance for the chosen TLR\cite{pozar2012}. In the studied design the resonators are $\lambda/4$ thus the equivalent for each of them is the parallel RLC resonator, where $C$ and $L$ are equivalent capacitance and inductance and $R=R_{in}$ characterises the internal dissipation. Its $Q_i  = \omega_0	C R_{in}$ where $\omega_0 = \sqrt{1/LC}$ can be calculated from the definition when no external impedance is connected.
  
 The external Q-factor can be derived in a bit more complicated way\cite{Goppl2008}. We can transform the circuit on the \autoref{fig:resonator_equiv}~(a) to explicitly include the external parameters in the internal ones. To do so one needs to convert the series connection of the coupling capacitor and the characteristic impedances into parallel, as done on the \autoref{fig:resonator_equiv}~(b). The $R^*$ and $C^*$ impedances should be chosen in such a way that total impedance of the external circuit was the same as before the transformation. To achieve this $R^*$ and $C^*$ must be calculated as follows:
 \begin{gather}
 R^{*} = \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	} \\
-C^{*} = \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2}. \label{eq:C_ast}
+C^{*} = \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2} \approx C_\kappa (\text{for our case}). \label{eq:C_ast}
 \end{gather}
 From this and \autoref{fig:resonator_equiv}~(b) it is simple to write down the expression for the external and loaded quality factors:
 \begin{gather}
 Q_e = \omega (C+C^{*}) R^{*} \\
 Q_l = \omega (C+C^{*})  \frac{1}{1/R^{*}+1/R_{in}}. \label{eq:Q_l}
 \end{gather}
-If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:qfactor}.
+If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:qfactor}. The values been used in the simulations are: $C = 350$ fF, $L = 2$ nH, $R_{in}=10^7$ Ohm, $Z_0 = 50$ Ohm.
 
 \begin{figure}
 \centering
@@ -122,9 +121,9 @@ If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:q
 
 \subsection{Introduction}
 
-In the following two subsections we will discuss the scattering matrix for the two different configurations of resonator coupling. Generally, a two-port microwave device under test can be drawn like on \autoref{fgeneral2port}. For such system it is possible to calculate different 2 by 2 matrices, which bind together voltages and currents on the ports 1 and 2.
+In the following two subsections we will discuss the scattering matrix for the two different configurations of resonator coupling. Generally, a two-port microwave device under test can be drawn like in \autoref{fgeneral2port}. For such system it is possible to calculate different 2 by 2 matrices, which bind together voltages and currents on the ports 1 and 2.
 
-To calculate S-parameters one needs to treat voltages and currents, which can be calculated from Kirchhoff's laws, as a sum of the incident and reflected components (``+'' corresponds to the incident wave and ``-'' to the reflected wave):
+To calculate S-parameters one needs to treat voltages and currents, which can be calculated from Kirchhoff's laws, as a sum of the incident and reflected components (``+'' corresponds to the incident wave and ``$-$'' to the reflected wave):
 \begin{gather*}
 V_{1,2} = V_{1,2}^+ + V_{1,2}^- \\
 I_{1,2} = I_{1,2}^+ - I_{1,2}^- = \frac{V_{1,2}}{Z_0},
@@ -151,7 +150,7 @@ V_2^+
 However, it's often more convenient to use indirect methods of calculating S-parameters, for example, to extract them from $ABCD$-matrix.
 
 \subsection{Coupled (shunting) design}
-For a coupled design one needs to treat the resonator as a shunt in the transmission line as on \autoref{fig:shunted_tl}. Then there are two similar ways to calculate the S-matrix. First is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
+For a coupled design one needs to treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Then there are two similar ways to calculate the S-matrix. First is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
 \begin{gather}    
 \Gamma = \frac{Z_{eff} - Z_{0}}{Z_{eff} + Z_{0}} = S_{11} = S_{22} \label{eGamma}\\
 T = \frac{2Z_{eff}}{Z_{eff}+Z_0} \overset{!}{=} S_{21} = S_{12}, \label{eT}
@@ -165,7 +164,7 @@ where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.99\textwidth]{S21s}
-\caption{ $S_{21}$ parameters simulated with \eqref{eq:S21} for different coupling strengths. The loaded quality factors are calculated with \eqref{eq:Q_l} and with ``3db''-method.}
+\caption{ $S_{21}$ parameters simulated with \eqref{eq:S21} for different coupling strengths. The loaded quality factors are calculated with \eqref{eq:Q_l} and with ``3db''-method. The red dashes show the values of expression $\sqrt{1/L(C+C_k)}$ according to \autoref{fig:resonator_equiv}~(b), the green ones show the theoretically predicted depths.}
 \label{fig:S21s}
 \end{figure}
 
@@ -174,11 +173,16 @@ Another way (totally reliable) is to calculate $ABCD$ matrix or impedance matrix
 S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22} \\
 S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12} \label{eq:S21}
 \end{gather}
-The second expression is plotted on \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method. It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and  \eqref{eq:C_ast} and $Q_l$ decreases 
+The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method. It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast} and $Q_l$ decreases.
+
+In \autoref{fig:S21s} the resonance frequencies calculated from the equivalent circuit in \autoref{fig:resonator_equiv}~(b) are shown along with the analytically calculated depths of the peaks:
+\begin{equation}
+\min_f S_{21} = \frac{2 L \left(C + C_{\kappa}\right)}{\sqrt{C_{\kappa}^{2} L Z_{0}^{2} \left(C + C_{\kappa}\right) + \left(2 (C+C_\kappa) L + C_{k}^{2} R_{in} Z_{0} \right)^{2}}}
+\end{equation}
 
 \subsection{Embedded (series) design}
 
-For the embedded resonator it's possible to draw a similar equivalent circuit as for the ``shunt'' design\cite{Goppl2008}. It is depicted on \autoref{fseries_tl}. 
+For the embedded resonator it's possible to draw a similar equivalent circuit as for the ``shunt'' design\cite{Goppl2008}. It is depicted in \autoref{fseries_tl}. 
 
 \begin{figure}[h]
 \centering
@@ -189,11 +193,11 @@ For the embedded resonator it's possible to draw a similar equivalent circuit as
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.9\textwidth]{S21s_series}
-\caption{$S_{21}$ for the series configuration. Loaded Q-factors calculated  via analytic expression similar to \eqref{eq:Q_l}.}
+\caption{$S_{21}$ for the series configuration. Loaded Q-factors were calculated  via analytic expression similar to \eqref{eq:Q_l}.}
 \label{fS21s_series}
 \end{figure}
 
-For this kind of connection of the resonator to the transmission line formula \eqref{eT} is now not valid (however, \eqref{eGamma} still holds true). To calculate transmission in this case one needs to use the transmission matrix and convert it to the S-matrix. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
+For this kind of connection of the resonator to the transmission line \eqref{eT} is now not valid (however, \eqref{eGamma} still holds true). To calculate transmission in this case one can find the transmission matrix and then convert it to the S-matrix. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
 \begin{equation}
 \hat T = \rbrkt{\begin{matrix}
 A & B \\
@@ -203,10 +207,31 @@ C & D
 1/Z_{res} &  1 + \frac{1/i\omega C_\kappa}{Z_{res}} 
 \end{matrix}},
 \end{equation}
-where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ is  plotted on \autoref{fS21s_series} and can be calculated as\cite{pozar2012} 
+where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ is  plotted in \autoref{fS21s_series} and can be calculated as\cite{pozar2012} 
 \begin{equation}
 S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 \end{equation}
+
+\appendix
+
+\chapter{Dephasing or Does the density matrix really exist?}
+
+There are two ways of describing dephasing. One is developed from the system-bath approach (Lindbladian master equation) and the other comes from the stochastic Schrödinger equation. However the results of the latter deviate from the results of the latter for the experiment of spin-echo for single qubit. Here this problem will be described in detail.
+
+\section{Quantum derivation of dephasing}
+
+For the derivation of the phase-destroying process in a quantum way the system-bath interaction Hamiltonian part is chosen as
+\[
+\mathcal{\hat H}_{sb} = \hat \sigma_z \otimes \hat O_b, 
+\]
+where $\hat O_b$ is an arbitrary bath operator. From this interaction a master equation it then developed:
+\[
+\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s)
+\]
+
+The dynamics of this equation can be seen on
+
+
 
 \bibliographystyle{ugost2008}
 \bibliography{report.bib}
