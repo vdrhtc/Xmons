@@ -28,7 +28,7 @@
     \usepackage{longtable} % longtable support required by pandoc >1.10
 
 
- 	
+\newcommand{\diff}{\,\mathrm{d}} 	
  \renewcommand{\figureautorefname}{Fig.}%
 \renewcommand*\thesection{\arabic{section}}
 \DeclarePairedDelimiter\bra{\langle}{\rvert}
@@ -214,23 +214,132 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 
 \appendix
 
-\chapter{Dephasing or Does the density matrix really exist?}
+\chapter{Pure dephasing or Does the density matrix really exist?}
 
-There are two ways of describing dephasing. One is developed from the system-bath approach (Lindbladian master equation) and the other comes from the stochastic Schrödinger equation. However the results of the latter deviate from the results of the latter for the experiment of spin-echo for single qubit. Here this problem will be described in detail.
+There are two ways of describing pure dephasing. One is developed from the system-bath approach (Lindbladian master equation) and the other comes from the stochastic Schrödinger equation. However the results of the latter deviate fundamentally from the results of the latter for the experiment of spin-echo for single qubit. Here this problem will be described in detail.
 
 \section{Quantum derivation of dephasing}
 
-For the derivation of the phase-destroying process in a quantum way the system-bath interaction Hamiltonian part is chosen as
+For the derivation of this phase-destroying process in a quantum way the system-bath interaction Hamiltonian part is chosen as
 \[
 \mathcal{\hat H}_{sb} = \hat \sigma_z \otimes \hat O_b, 
 \]
-where $\hat O_b$ is an arbitrary bath operator. From this interaction a master equation it then developed:
+where $\hat O_b$ is an arbitrary bath operator. From this interaction term a master equation is then developed:
 \[
-\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s)
+\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
 \]
+The dynamics of this equation can be seen in \autoref{fig:qdeph}.  At $t \rightarrow \infty$ the state of the system is a totally mixed state:
+\[
+\hat \rho_s (\infty) = \rbrkt{\begin{matrix}
+0.5 & 0 \\
+0 & 0.5 
+\end{matrix}}.
+\]
+Following the open system approach this should be understood as the consequence of the entanglement of the qubit with the environment. The same density matrix we will obtain trying to find out in which state
+is the qubit $A$ when it's a part of a composite system $A \otimes B$ of two qubits being in a Bell  state $\ket{\Psi^+} = \frac{1}{\sqrt{2}}(\ket{0}_A\otimes\ket{1}_B+\ket{1}_A\otimes\ket{0}_B)$. From the quantum point of view therefore the process of dephasing is irreversible.
+\begin{figure}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qdeph_bloch}
+\caption{Dephasing on the Bloch sphere.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qdeph_bloch_rf}
+\caption{Same within the rotating frame.}
+\end{subfigure}
 
-The dynamics of this equation can be seen on
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qdeph_xyz}
+\caption{Decay of the $\langle \hat \sigma_{x, y} \rangle$ components.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qdeph_xyz_rf}
+\caption{Same within the rotating frame.}
+\end{subfigure}
+\caption{Dephasing treated quantum-mechanically shows exponential decrease of the coherences of the density matrix.}
+\label{fig:qdeph}
+\end{figure}
 
+\section{Classical derivation of dephasing}
+
+The classical derivation will be presented below in detail. This method, just as in the case of interaction of an atom with a classical field, just includes an additional time-dependent term in the Hamiltonian, representing fluctuations of the system's parameters. For the pure dephasing this term looks like $f(t) \hat \sigma_z$, where $f(t)$ is the random noise. It is possible to write down the evolution of the density matrix for such noisy Schrödinger equation. Until specified, the unitary evolution will be discussed, although using density matrix. In the rotating frame:
+\[
+\hat \rho_s (t) = \hat U^\dag(t, 0)\ \hat\rho\ \hat U(t, 0), 
+\]
+where 
+\[
+U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
+\]
+From the fact that $\hat \sigma_z$ is diagonal it can be shown that
+\[
+\begin{gathered}
+\hat \rho_s (t) = \rbrkt{\begin{matrix}
+\exp \left\{\frac{i}{\hbar} \int_0^t f(\tau_1) \diff\tau_1\right\} & 0\\
+0 & \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau_1) \diff\tau_1\right\}
+\end{matrix}}\cdot\\
+\cdot\rbrkt{\begin{matrix}
+1/2 - N(0)/2 & \rho(0) \\
+\rho^*(0) & 1/2 + N(0)/2 
+\end{matrix}}\cdot\\
+\cdot\rbrkt{\begin{matrix}
+\exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau_2)\diff\tau_2\right\} & 0\\
+0 & \exp \left\{+\frac{i}{\hbar} \int_0^t f(\tau_2)\diff\tau_2\right\}
+\end{matrix}},
+\end{gathered}
+\] 
+where the integral variables $\tau_1$ and $\tau_2$, coherence $\rho(t)$ and inversion $N(t)$ where introduced. From above it is obvious that
+\begin{gather}
+N(t) = N(0)\\
+\rho(t) = \rho(0)\exp \left\{ -\frac{1}{\hbar^2}\int_0^t\int_0^t f(\tau_1) f(\tau_2) \diff \tau_1 \diff \tau_2 \right\}. \label{eq:rho_t}
+\end{gather}
+This equations can be visualized with numerical simulation, taking $f(t)$ be, for instance, normally distributed. Phase will experience random drifts, which lead to random rotations of the Bloch vector on the equator of the sphere, see \autoref{fig:cdeph}~(a), (c).
+
+However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have:
+\[
+\langle \rho(t) \rangle = \rho(0)\exp \left\{ -\frac{1}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff \tau_1 \diff \tau_2 \right\}
+\]
+Presuming that $f(t)$ is a stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
+\begin{equation}
+\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{1}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S(\omega)\diff \omega \right\}.\label{eq:cdeph}
+\end{equation}
+It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S(\omega) = S(0) = const$) or for a sufficient time $t$ where 
+$$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
+acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases dephasing rate $\Gamma_2$ exists in a usual sense and $\Gamma_2 \propto S(0)$.
+
+The averaged evolution can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
+\begin{figure}
+\begingroup
+\captionsetup[subfigure]{width=0.9\textwidth}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_bloch_rf}
+\caption{Random noise affecting the phase in the rotating frame.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_bloch_rf_avg}
+\caption{Averaged dynamics in the rotating frame.}
+\end{subfigure}
+
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_xyz_rf}
+\caption{Behaviour of the $xyz$ components in the rotating frame.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_xyz_rf_avg}
+\caption{Averaged behaviour of the $xyz$ components in the rotating frame.}
+\end{subfigure}
+\caption{Classically treated pure dephasing.}
+\label{fig:cdeph}
+\endgroup
+\end{figure}
 
 
 \bibliographystyle{ugost2008}
