@@ -294,23 +294,25 @@ From the fact that $\hat \sigma_z$ is diagonal it can be shown that
 where the integral variables $\tau_1$ and $\tau_2$, coherence $\rho(t)$ and inversion $N(t)$ where introduced. From above it is obvious that
 \begin{gather}
 N(t) = N(0)\\
-\rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar^2}\int_0^t f(\tau)  \diff \tau \right\}. \label{eq:rho_t}
+\rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar}\int_0^t f(\tau)  \diff \tau \right\}. \label{eq:rho_t}
 \end{gather}
 This equations can be visualized with numerical simulation, taking $f(t)$ be, for instance, normally distributed. Phase will experience random drifts, which lead to random rotations of the Bloch vector on the equator of the sphere, see \autoref{fig:cdeph}~(a), (c).
 
-However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have:
-\[
-\langle \rho(t) \rangle = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff \tau_1 \diff \tau_2 \right\}.
-\]
-This equation can be acquired for the Gaussian noise only. Presuming that $f(t)$ is a stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
+However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have (presuming Gaussian instantaneous distribution of $f(t)$ and $x = \frac{2}{\hbar}\int_0^t f(\tau)  \diff \tau$):
+\begin{gather}
+\langle \rho(t) \rangle = \int_{-\infty}^{+\infty} e^{ix}\, \mathbb{N}_{0,\sigma}(x) \diff x = e^{-\sigma^2/2} = e^{-\langle x^2 \rangle/2} \\
+= \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff \tau_1 \diff \tau_2 \right\}.
+\end{gather}
+Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
 \begin{equation}
 \langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S(\omega)\diff \omega \right\}.\label{eq:cdeph}
 \end{equation}
-It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S(\omega) = S(0) = const$) or for a sufficient time $t$ where 
+It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S(\omega) = S(0) = const$) or for a sufficiently large time $t$ where 
 $$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
-acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases pure dephasing rate $\Gamma^*_2$ exists in a usual sense and $\Gamma^*_2 \propto S(0)$.
+acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases pure dephasing rate $\Gamma^*_2$ exists in a usual sense and $\Gamma^*_2 \propto S(0)$. In case of, for example, 1/f noise the decay curve will have the shape of $e^{-t^2}$ in the vicinity of $t=0$.
 
-The averaged evolution can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
+The averaged evolution for the white noise case can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
+In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise is shown. For the averaged case ((b), (d)) 2500 trajectories where used. One can see that a plateau is present for the yellow graph near $t=0$, in accordance with theoretical predictions.
 \begin{figure}
 \begingroup
 \captionsetup[subfigure]{width=0.9\textwidth}
@@ -318,7 +320,7 @@ The averaged evolution can be observed in \autoref{fig:cdeph}~(b), (d). It is ve
 \begin{subfigure}[t]{0.45\textwidth}
 \centering
 \includegraphics[width=0.9\textwidth]{cdeph_bloch_rf}
-\caption{Random noise affecting the phase in the rotating frame.}
+\caption{White Gaussian noise affecting the phase in the rotating frame.}
 \end{subfigure}
 \begin{subfigure}[t]{0.45\textwidth}
 \centering
@@ -336,8 +338,38 @@ The averaged evolution can be observed in \autoref{fig:cdeph}~(b), (d). It is ve
 \includegraphics[width=0.9\textwidth]{cdeph_xyz_rf_avg}
 \caption{Averaged behaviour of the $xyz$ components in the rotating frame.}
 \end{subfigure}
-\caption{Classically treated pure dephasing.}
+\caption{Classically treated pure dephasing for white noise.}
 \label{fig:cdeph}
+\endgroup
+\end{figure}
+
+\begin{figure}
+\begingroup
+\captionsetup[subfigure]{width=0.9\textwidth}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_bloch_rf_pink}
+\caption{1/f Gaussian noise affecting the phase in the rotating frame.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_bloch_rf_avg_pink}
+\caption{Averaged dynamics in the rotating frame.}
+\end{subfigure}
+
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_xyz_rf_pink}
+\caption{Behaviour of the $xyz$ components in the rotating frame.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cdeph_xyz_rf_avg_pink}
+\caption{Averaged behaviour of the $xyz$ components in the rotating frame.}
+\end{subfigure}
+\caption{Classically treated pure dephasing for 1/f noise.}
+\label{fig:cdeph_pink}
 \endgroup
 \end{figure}
 
@@ -347,11 +379,44 @@ Although the classical approach statistically gives the same result as the quant
 
 Obviously, spin-echo experiment can be reproduced within the classical model only. For every run the pulse sequence will reverse low frequency drifts thus in average decreasing the rate with which the Bloch vector floats away from the starting point and thus will increase time $T^*_2 = 1/\Gamma^*_2$ after averaging, like in the \autoref{fig:cdeph}~(d). However same trick with the Lindblad equation can't be used. As long as the system gets entangled with the environment, no pulse sequence can reverse that process. 
 
-The quantum approach insists that even in a single experiment we will totally loose information about the qubit state and it only will succumb  to the density matrix description. In this sense we can say that the density matrix \textit{exists} as a real physical entity. 
+The quantum approach insists that even in a single experiment we will totally loose information about the qubit state and it only will succumb  to the density matrix description. In this sense we can say that the density matrix \textit{exists} as a real physical entity.
 
 In contrary, classical approach only uses density matrix just is an instrument to describe probabilities. In every experiment we now all about the qubit state and then just calculate an average. And then, just for aesthetics we call what we've done a ``density matrix''.
 
-So what happens in reality? Do we observe entanglement? The spin-echo experiment tells us that no, we don't. Of course one could say that there are two these processes at the same time. But then we need a unifying theory, which does not appear to be developed yet.
+So what happens in reality? Do we observe entanglement? The spin-echo experiment which is capable of reducing the classical noise effects (\autoref{fig:se}) tells us that we have both. The slow components of the bath's noise do not lead to entanglement, they only shift the energy by a constant random value on the time scale of a single evolution experiment. However fast components lead to irreversible dephasing and entanglement.
+
+However it is unclear why quantum theory does not generalize the classical.
+
+\begin{figure}
+\begingroup
+\captionsetup[subfigure]{width=0.9\textwidth}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cse_bloch_rf}
+\caption{Schrödinger equation solution with driving and classical dephasing caused by the single $S(0)$ spectral component of the noise.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qse_bloch_rf}
+\caption{Master equation solution with driving and quantum dephasing.}
+\end{subfigure}
+
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{cse_xyz_rf}
+\caption{Same in $xyz$. Dephasing is linear in time and reversible for this case.}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{qse_xyz_rf}
+\caption{Same in $xyz$. Dephasing destroys the coherence and is irreversible.}
+\end{subfigure}
+\caption{Classical versus quantum spin-echo experiment modelling. Spin-echo can't cope with quantum noise.}
+\label{fig:se}
+\endgroup
+
+\end{figure}
 
 \bibliographystyle{ugost2008}
 \bibliography{report.bib}
