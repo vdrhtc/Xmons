@@ -26,7 +26,7 @@
     % internal navigation ('pdf bookmarks' for the table of contents,
     % internal cross-reference links, web links for URLs, etc.)
     \usepackage{longtable} % longtable support required by pandoc >1.10
-
+\usepackage{bbm}
 
 \newcommand{\diff}{\,\mathrm{d}} 	
  \renewcommand{\figureautorefname}{Fig.}%
@@ -52,14 +52,14 @@
 \setcounter{tocdepth}{3}
 
 
-\title{Reverse engineering of the XMon qubits}
+\title{Reverse engineering of the Xmon qubits}
 
 \graphicspath{{Pictures/}}
 
 \begin{document}
 \maketitle
 
-\chapter{Design of the coupling to readout resonator}
+\chapter{Resonator-feedline coupling}
 
 \section{Equations for quality factors}
 
@@ -126,9 +126,9 @@ In the following two subsections we will discuss the scattering matrix for the t
 To calculate S-parameters one needs to treat voltages and currents, which can be calculated from Kirchhoff's laws, as a sum of the incident and reflected components (``+'' corresponds to the incident wave and ``$-$'' to the reflected wave):
 \begin{gather*}
 V_{1,2} = V_{1,2}^+ + V_{1,2}^- \\
-I_{1,2} = I_{1,2}^+ - I_{1,2}^- = \frac{V_{1,2}}{Z_0},
+I_{1,2} = I_{1,2}^+ + I_{1,2}^- = \frac{ V_{1,2}^+ - V_{1,2}^- }{Z_0},
 \end{gather*}
-where the difference in the second expression comes from telegrapher's equations. Solving these with respect to incident and reflected components, one can get
+where the difference in the second expression arises from telegrapher's equations. Solving these with respect to incident and reflected components, one can get
 \begin{equation*}
 V_{1,2}^\pm = \frac{1}{2}(V_{1,2} \pm Z_0 I_{1,2}).
 \end{equation*}
@@ -211,6 +211,20 @@ where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ i
 \begin{equation}
 S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 \end{equation}
+
+\chapter{Xmon-resonator coupling}
+\section{Hamiltonian for the coupled system}
+
+\begin{gather*}
+\mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
++ \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J \cos \frac{2\pi}{\hbar}\hat \phi_q }_\text{qubit}
++ \underbrace{\frac{C_g\hat Q_r \hat Q_q}{C_*^2}}_\text{coupling} = \\
+=  \hbar\omega_r \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \\
++E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1}  \\
++ 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n 
+\end{gather*}
+
+
 
 \appendix
 
@@ -298,9 +312,9 @@ N(t) = N(0)\\
 \end{gather}
 This equations can be visualized with numerical simulation, taking $f(t)$ be, for instance, normally distributed. Phase will experience random drifts, which lead to random rotations of the Bloch vector on the equator of the sphere, see \autoref{fig:cdeph}~(a), (c).
 
-However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have (presuming Gaussian instantaneous distribution of $f(t)$ and $x = \frac{2}{\hbar}\int_0^t f(\tau)  \diff \tau$):
+However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have (presuming Gaussian instantaneous distribution of $f(t)$ and $x(t) = \frac{2}{\hbar}\int_0^t f(\tau)  \diff \tau$):
 \begin{gather}
-\langle \rho(t) \rangle = \int_{-\infty}^{+\infty} e^{ix}\, \mathbb{N}_{0,\sigma}(x) \diff x = e^{-\sigma^2/2} = e^{-\langle x^2 \rangle/2} \\
+\langle \rho(t) \rangle = \rho(0) \int_{-\infty}^{+\infty} e^{ix}\, \mathbb{N}_{0,\sigma}(x) \diff x = \rho(0) e^{-\sigma^2/2} = \rho(0) e^{-\langle x^2 \rangle/2} \\
 = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff \tau_1 \diff \tau_2 \right\}.
 \end{gather}
 Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
@@ -383,9 +397,9 @@ The quantum approach insists that even in a single experiment we will totally lo
 
 In contrary, classical approach only uses density matrix just is an instrument to describe probabilities. In every experiment we now all about the qubit state and then just calculate an average. And then, just for aesthetics we call what we've done a ``density matrix''.
 
-So what happens in reality? Do we observe entanglement? The spin-echo experiment which is capable of reducing the classical noise effects (\autoref{fig:se}) tells us that we have both. The slow components of the bath's noise do not lead to entanglement, they only shift the energy by a constant random value on the time scale of a single evolution experiment. However fast components lead to irreversible dephasing and entanglement.
+So what happens in reality? Do we observe entanglement? The spin-echo experiment which is capable of reducing the classical noise effects (\autoref{fig:se}) tells us that reversible dephasing exists. Obviously, entanglement also should exist as a fundamental concept. It's possible that the slow components of the bath's noise do not lead to entanglement, they only shift the energy by a constant random value on the time scale of a single evolution experiment. However fast components lead to irreversible dephasing and entanglement.
 
-However it is unclear why quantum theory does not generalize the classical.
+However it is unclear why quantum theory does not generalize the classical. Maybe Bloch-Redfield ME will help.
 
 \begin{figure}
 \begingroup
@@ -404,12 +418,12 @@ However it is unclear why quantum theory does not generalize the classical.
 
 \begin{subfigure}[t]{0.45\textwidth}
 \centering
-\includegraphics[width=0.9\textwidth]{cse_xyz_rf}
+\includegraphics[width=0.99\textwidth]{cse_xyz_rf}
 \caption{Same in $xyz$. Dephasing is linear in time and reversible for this case.}
 \end{subfigure}
 \begin{subfigure}[t]{0.45\textwidth}
 \centering
-\includegraphics[width=0.9\textwidth]{qse_xyz_rf}
+\includegraphics[width=0.99\textwidth]{qse_xyz_rf}
 \caption{Same in $xyz$. Dephasing destroys the coherence and is irreversible.}
 \end{subfigure}
 \caption{Classical versus quantum spin-echo experiment modelling. Spin-echo can't cope with quantum noise.}
