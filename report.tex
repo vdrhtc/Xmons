@@ -58,6 +58,7 @@
 
 \begin{document}
 \maketitle
+\tableofcontents
 
 \chapter{Resonator-feedline coupling}
 
@@ -146,11 +147,12 @@ S_{21} & S_{22}
 V_1^+ \\
 V_2^+
 \end{matrix}}.
+\label{eq:S_def}
 \end{equation}
 However, it's often more convenient to use indirect methods of calculating S-parameters, for example, to extract them from $ABCD$-matrix.
 
 \subsection{Coupled (shunting) design}
-For a coupled design one needs to treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Then there are two similar ways to calculate the S-matrix. First is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
+For a coupled design one can treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Except by the definition \eqref{eq:S_def} there are two other ways to calculate the S-matrix. First one is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
 \begin{gather}    
 \Gamma = \frac{Z_{eff} - Z_{0}}{Z_{eff} + Z_{0}} = S_{11} = S_{22} \label{eGamma}\\
 T = \frac{2Z_{eff}}{Z_{eff}+Z_0} \overset{!}{=} S_{21} = S_{12}, \label{eT}
@@ -168,7 +170,7 @@ where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold 
 \label{fig:S21s}
 \end{figure}
 
-Another way (totally reliable) is to calculate $ABCD$ matrix or impedance matrix and convert it to the S-matrix with corresponding formulae\cite{pozar2012}. From both this approaches the simplified expressions for the S-parameters follow:
+Another way is to calculate $ABCD$ matrix or impedance matrix and convert it to the S-matrix with corresponding formulae\cite{pozar2012}. In the ``shunted'' case from both this approaches the simplified expressions for the S-parameters follow:
 \begin{gather}
 S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22} \\
 S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12} \label{eq:S21}
@@ -197,7 +199,7 @@ For the embedded resonator it's possible to draw a similar equivalent circuit as
 \label{fS21s_series}
 \end{figure}
 
-For this kind of connection of the resonator to the transmission line \eqref{eT} is now not valid (however, \eqref{eGamma} still holds true). To calculate transmission in this case one can find the transmission matrix and then convert it to the S-matrix. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
+For this kind of connection of the resonator to the transmission line \eqref{eT} is now not valid (however, \eqref{eGamma} still holds true). To calculate transmission in this case one can find the transmission matrix and then convert it to the S-matrix or use Kirchhoff's laws and \eqref{eq:S_def}. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
 \begin{equation}
 \hat T = \rbrkt{\begin{matrix}
 A & B \\
@@ -213,16 +215,38 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 \end{equation}
 
 \chapter{Xmon-resonator coupling}
-\section{Hamiltonian for the coupled system}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{xmon_resonator}
+\caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator.}
+\label{fig:xmon-resonator}
+\end{figure}
+
+\section{Hamiltonian for the compound system}
+
+Here we will use the results acquired by Bader\cite{Bader2013} and Koch\cite{Koch2007}. Using \autoref{fig:xmon-resonator} it is possible to obtain the quantized Hamiltonian for the compound circuit:
 
 \begin{gather*}
 \mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
-+ \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J \cos \frac{2\pi}{\hbar}\hat \phi_q }_\text{qubit}
++ \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J (\Phi_{ext}) \cos \frac{2e}{\hbar}\hat \phi_q }_\text{qubit}
 + \underbrace{\frac{C_g\hat Q_r \hat Q_q}{C_*^2}}_\text{coupling} = \\
 =  \hbar\omega_r \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \\
-+E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1}  \\
-+ 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n 
++ E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J(\Phi_{ext})}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1}  \\
+- 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n, 
 \end{gather*}
+where 
+$$C_*^2 = C_q C_g + C_q C_\kappa + C_g C_\kappa + C_q C_r + C_g C_r, $$
+$$E_J(\Phi_{ext}) = E_{J,\Sigma} \cos(\Phi/\Phi_0),\ \Phi_{ext} = I_\Phi M.$$
+Presuming the coupling is not very strong ($C_g \ll C_q, C_r$) it is possible also to include simple driving terms for both subsystems:
+\begin{gather*}
+\mathcal{\hat H}_r^d = \frac{C_\kappa V_\kappa(t)}{C_r + C_\kappa} \hat Q_r \propto f_r(t)\ i(\hat a^\dag - \hat a) \otimes \mathbbm{\hat 1}_q \\
+\mathcal{\hat H}_q^d = \frac{C_e V_e(t)}{C_q + C_e} \hat Q_q \propto f_q(t)\  \mathbbm{\hat 1}_r \otimes \hat n,
+\end{gather*}
+where $f_{q, r} (t)$ are the effective values of the drive magnitude.
+
+\section{Energy spectrum of the compound system}
+
 
 
 
