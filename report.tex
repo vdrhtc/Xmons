@@ -218,8 +218,8 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.9\textwidth]{xmon_resonator}
-\caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator.}
+\includegraphics[width=0.8\textwidth]{xmon_resonator}
+\caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator. Colors show nodes (or branches) containing system's degrees of freedom according to Devoret's theory\cite{Devoret1995}.}
 \label{fig:xmon-resonator}
 \end{figure}
 
@@ -227,14 +227,16 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 
 Here we will use the results acquired by Bader\cite{Bader2013} and Koch\cite{Koch2007}. Using \autoref{fig:xmon-resonator} it is possible to obtain the quantized Hamiltonian for the compound circuit:
 
-\begin{gather*}
+\begin{equation}
+\begin{gathered}
 \mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
 + \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J (\Phi_{ext}) \cos \frac{2e}{\hbar}\hat \phi_q }_\text{qubit}
 + \underbrace{\frac{C_g\hat Q_r \hat Q_q}{C_*^2}}_\text{coupling} = \\
-=  \hbar\omega_r \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \\
+=  \hbar\omega_r\ \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \\
 + E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J(\Phi_{ext})}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1}  \\
 - 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n, 
-\end{gather*}
+\end{gathered}\label{eq:hamiltonian}
+\end{equation}
 where 
 $$C_*^2 = C_q C_g + C_q C_\kappa + C_g C_\kappa + C_q C_r + C_g C_r, $$
 $$E_J(\Phi_{ext}) = E_{J,\Sigma} \cos(\Phi/\Phi_0),\ \Phi_{ext} = I_\Phi M.$$
@@ -247,7 +249,26 @@ where $f_{q, r} (t)$ are the effective values of the drive magnitude.
 
 \section{Energy spectrum of the compound system}
 
+Using QuTiP\cite{Johansson2011} it is straightforward to solve the truncated matrix eigenproblem with the Hamiltonian \eqref{eq:hamiltonian}. The results for the XMon design values
+$$
+C_\kappa = 5 fF,\ C_g = 2 fF,\ C_q = 90 fF,\ C_r = 500 fF,\ L_r = 20 nH
+$$
+can be observed in \autoref{fig:levels}.
 
+\begin{figure}
+\centering
+\begin{subfigure}[t]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{levels}
+\end{subfigure}
+
+\begin{subfigure}[t]{\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{freqs}
+\end{subfigure}
+\caption{Energy structure of the studied system depending on $\Phi_{ext}$.}
+\label{fig:levels}
+\end{figure}
 
 
 \appendix
