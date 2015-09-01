@@ -35,6 +35,8 @@
 \DeclarePairedDelimiter\ket{\lvert}{\rangle}
 \DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
 \newcommand{\rbrkt}[1]{\left( #1 \right)}
+\newcommand{\sbrkt}[1]{\left[ #1 \right]}
+
 \renewcommand*{\backreftwosep}{ and~}
 \renewcommand*{\backreflastsep}{ and~}
 \renewcommand*{\backref}[1]{}
@@ -93,12 +95,12 @@ The common way of connection is the capacitive coupling $C_\kappa$ to the transm
  
 The external Q-factor can be derived in a bit more complicated way\cite{Goppl2008}. We can transform the circuit on the \autoref{fig:resonator_equiv}~(a) to explicitly include the external parameters in the internal ones. To do so one needs to convert the series connection of the coupling capacitor and the characteristic impedances into parallel, as done on the \autoref{fig:resonator_equiv}~(b). The $R^*$ and $C^*$ impedances should be chosen in such a way that total impedance of the external circuit was the same as before the transformation. To achieve this $R^*$ and $C^*$ must be calculated as follows:
 \begin{gather}
-R^{*} = \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	} \\
+R^{*} = \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	}, \\
 C^{*} = \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2} \approx C_\kappa (\text{for our case}). \label{eq:C_ast}
 \end{gather}
 From this and \autoref{fig:resonator_equiv}~(b) it is simple to write down the expression for the external and loaded quality factors:
 \begin{gather}
-Q_e = \omega (C+C^{*}) R^{*} \\
+Q_e = \omega (C+C^{*}) R^{*}, \\
 Q_l = \omega (C+C^{*})  \frac{1}{1/R^{*}+1/R_{in}}. \label{eq:Q_l}
 \end{gather}
 If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:qfactor}. The values been used in the simulations are: $C = 350$ fF, $L = 2$ nH, $R_{in}=10^7$ Ohm, $Z_0 = 50$ Ohm.
@@ -126,7 +128,7 @@ In the following two subsections we will discuss the scattering matrix for the t
 
 To calculate S-parameters one needs to treat voltages and currents, which can be calculated from Kirchhoff's laws, as a sum of the incident and reflected components (``+'' corresponds to the incident wave and ``$-$'' to the reflected wave):
 \begin{gather*}
-V_{1,2} = V_{1,2}^+ + V_{1,2}^- \\
+V_{1,2} = V_{1,2}^+ + V_{1,2}^- ,\\
 I_{1,2} = I_{1,2}^+ + I_{1,2}^- = \frac{ V_{1,2}^+ - V_{1,2}^- }{Z_0},
 \end{gather*}
 where the difference in the second expression arises from telegrapher's equations. Solving these with respect to incident and reflected components, one can get
@@ -154,7 +156,7 @@ However, it's often more convenient to use indirect methods of calculating S-par
 \subsection{Coupled (shunting) design}
 For a coupled design one can treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Except by the definition \eqref{eq:S_def} there are two other ways to calculate the S-matrix. First one is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
 \begin{gather}    
-\Gamma = \frac{Z_{eff} - Z_{0}}{Z_{eff} + Z_{0}} = S_{11} = S_{22} \label{eGamma}\\
+\Gamma = \frac{Z_{eff} - Z_{0}}{Z_{eff} + Z_{0}} = S_{11} = S_{22}, \label{eGamma}\\
 T = \frac{2Z_{eff}}{Z_{eff}+Z_0} \overset{!}{=} S_{21} = S_{12}, \label{eT}
 \end{gather}
 where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold due to the symmetry.\begin{figure}[h]
@@ -172,14 +174,14 @@ where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold 
 
 Another way is to calculate $ABCD$ matrix or impedance matrix and convert it to the S-matrix with corresponding formulae\cite{pozar2012}. In the ``shunted'' case from both this approaches the simplified expressions for the S-parameters follow:
 \begin{gather}
-S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22} \\
-S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12} \label{eq:S21}
+S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22}, \\
+S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12}. \label{eq:S21}
 \end{gather}
 The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method. It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast} and $Q_l$ decreases.
 
 In \autoref{fig:S21s} the resonance frequencies calculated from the equivalent circuit in \autoref{fig:resonator_equiv}~(b) are shown along with the analytically calculated depths of the peaks:
 \begin{equation}
-\min_f S_{21} = \frac{2 L \left(C + C_{\kappa}\right)}{\sqrt{C_{\kappa}^{2} L Z_{0}^{2} \left(C + C_{\kappa}\right) + \left(2 (C+C_\kappa) L + C_{k}^{2} R_{in} Z_{0} \right)^{2}}}
+\min_f S_{21} = \frac{2 L \left(C + C_{\kappa}\right)}{\sqrt{C_{\kappa}^{2} L Z_{0}^{2} \left(C + C_{\kappa}\right) + \left(2 (C+C_\kappa) L + C_{k}^{2} R_{in} Z_{0} \right)^{2}}}.
 \end{equation}
 
 \subsection{Embedded (series) design}
@@ -211,7 +213,7 @@ C & D
 \end{equation}
 where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ is  plotted in \autoref{fS21s_series} and can be calculated as\cite{pozar2012} 
 \begin{equation}
-S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
+S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}.
 \end{equation}
 
 \chapter{Xmon-resonator coupling}
@@ -219,42 +221,9 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}
 \begin{figure}
 \centering
 \includegraphics[width=0.8\textwidth]{xmon_resonator}
-\caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator. Colors show nodes (or branches) containing system's degrees of freedom according to Devoret's theory\cite{Devoret1995}.}
+\caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator. Colors show nodes (or branches) containing system's degrees of freedom according to M. Devoret's theory\cite{Devoret1995}.}
 \label{fig:xmon-resonator}
 \end{figure}
-
-\section{Hamiltonian for the compound system}
-
-Here we will use the results acquired by Bader\cite{Bader2013} and Koch\cite{Koch2007}. Using \autoref{fig:xmon-resonator} it is possible to obtain the quantized Hamiltonian for the compound circuit:
-
-\begin{equation}
-\begin{gathered}
-\mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
-+ \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J (\Phi_{ext}) \cos \frac{2e}{\hbar}\hat \phi_q }_\text{qubit}
-+ \underbrace{\frac{C_g\hat Q_r \hat Q_q}{C_*^2}}_\text{coupling} = \\
-=  \hbar\omega_r\ \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \\
-+ E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J(\Phi_{ext})}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1}  \\
-- 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n, 
-\end{gathered}\label{eq:hamiltonian}
-\end{equation}
-where 
-$$C_*^2 = C_q C_g + C_q C_\kappa + C_g C_\kappa + C_q C_r + C_g C_r, $$
-$$E_J(\Phi_{ext}) = E_{J,\Sigma} \cos(\Phi/\Phi_0),\ \Phi_{ext} = I_\Phi M.$$
-Presuming the coupling is not very strong ($C_g \ll C_q, C_r$) it is possible also to include simple driving terms for both subsystems:
-\begin{gather*}
-\mathcal{\hat H}_r^d = \frac{C_\kappa V_\kappa(t)}{C_r + C_\kappa} \hat Q_r \propto f_r(t)\ i(\hat a^\dag - \hat a) \otimes \mathbbm{\hat 1}_q \\
-\mathcal{\hat H}_q^d = \frac{C_e V_e(t)}{C_q + C_e} \hat Q_q \propto f_q(t)\  \mathbbm{\hat 1}_r \otimes \hat n,
-\end{gather*}
-where $f_{q, r} (t)$ are the effective values of the drive magnitude.
-
-\section{Energy spectrum of the compound system}
-
-Using QuTiP\cite{Johansson2011} it is straightforward to solve the truncated matrix eigenproblem with the Hamiltonian \eqref{eq:hamiltonian}. The results for the XMon design values
-$$
-C_\kappa = 5 fF,\ C_g = 2 fF,\ C_q = 90 fF,\ C_r = 500 fF,\ L_r = 20 nH
-$$
-can be observed in \autoref{fig:levels}.
-
 \begin{figure}
 \centering
 \begin{subfigure}[t]{\textwidth}
@@ -269,7 +238,99 @@ can be observed in \autoref{fig:levels}.
 \caption{Energy structure of the studied system depending on $\Phi_{ext}$.}
 \label{fig:levels}
 \end{figure}
+\section{Hamiltonian for the compound system}
 
+Here we will use the results acquired by Bader\cite{Bader2013} and Koch\cite{Koch2007}. Using \autoref{fig:xmon-resonator} it is possible to obtain the quantized Hamiltonian for the compound circuit:
+
+\begin{equation}
+\begin{gathered}
+\mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
++ \underbrace{\frac{(C_g + C_\kappa + C_r) \hat Q^2_q}{2C_*^2} - E_J (\Phi_{ext}) \cos \frac{2e}{\hbar}\hat \phi_q }_\text{qubit}
++ \underbrace{\frac{C_g\hat Q_r \hat Q_q}{C_*^2}}_\text{coupling} = \\
+=  \hbar\omega_r\ \hat a^\dag \hat a \otimes \mathbbm{\hat 1}_q \quad (\mathcal{\hat H}_r) \\
++ 4 E_C\ \mathbbm{\hat 1}_r \otimes \hat n^2 - \frac{E_J(\Phi_{ext})}{2}\ \mathbbm{\hat 1}_r\otimes \sum_{n=-\infty}^{+\infty} \ket{n+1}\bra{n} + \ket{n}\bra{n+1} \quad (\mathcal{\hat H}_q) \\
+- 2e \frac{C_g}{C_*} \sqrt{\frac{\hbar \omega_r }{2(C_q+C_g)}}\ i(\hat a^\dag - \hat a) \otimes \hat n, \quad (\mathcal{\hat H}_i)
+\end{gathered}\label{eq:hamiltonian}
+\end{equation}
+where 
+$$C_*^2 = C_q C_g + C_q C_\kappa + C_g C_\kappa + C_q C_r + C_g C_r, $$
+$$\omega_r = 1/\sqrt{L_r C_*^2/(C_q+C_g)}, $$
+$$E_C = \frac{(C_g+C_\kappa+C_r)e^2}{C_*^2}, $$
+$$E_J(\Phi_{ext}) = E_{J,\Sigma} \cos(\Phi_{ext}/\Phi_0),\ \Phi_{ext} = I_\Phi M.$$
+Presuming the coupling is not very strong ($C_g \ll C_q, C_r$) it is possible also to include simple time-dependent driving terms for both subsystems:
+\begin{gather}
+\mathcal{\hat H}_r^d(t) = \frac{C_\kappa V_\kappa(t)}{C_r + C_\kappa} \hat Q_r \propto f_r(t)\ i(\hat a^\dag - \hat a) \otimes \mathbbm{\hat 1}_q, \notag \\
+\mathcal{\hat H}_q^d(t) = \frac{C_e V_e(t)}{C_q + C_e} \hat Q_q \propto f_q(t)\  \mathbbm{\hat 1}_r \otimes \hat n,
+\label{eq:driving_q}
+\end{gather}
+where $f_{q, r} (t)$ are the effective values of the drive magnitude at time $t$.
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{diagram}
+\caption{Energy level diagram for the transmon-resonator system in the sweet spot.}
+\label{fig:diagram}
+\end{figure}
+
+
+\section{Energy spectrum of the compound system}
+
+Using QuTiP\cite{Johansson2011} it is straightforward to solve the truncated matrix eigenproblem with the Hamiltonian \eqref{eq:hamiltonian}. The results for the typical design values
+$$
+C_\kappa = 5 \text{ fF},\ C_g = 2 \text{ fF},\ C_q = 90 \text{ fF},\ C_r = 500 \text{ fF},\ L_r = 20 \text{ nH}, $$
+$$E_{J, \Sigma} = (h \nu_q + E_C)^2/8 E_C\ \text{for\cite{Koch2007}}\ \nu_q = 6\ \text{GHz}
+$$
+can be observed in \autoref{fig:levels}.
+
+In \autoref{fig:diagram} the energy structure of the compound system in the sweet-spot ($\Phi_{ext}=0$) is shown. The dispersively shifted frequencies can be calculated from perturbation theory. For example, for the transition $\ket{0, g}\rightarrow \ket{1, g}$ the shift is defined to the second order as
+\begin{align*}
+\chi_0 &=  E_{1g}^{(1)} + E_{1g}^{(2)} - E_{0g}^{(1)} - E_{0g}^{(2)}\\
+ &= \bra{1, g}\mathcal{\hat H}_i\ket{1,g} + \sum_{i, \alpha \neq 1, g} \frac{|\bra{g, 1}\mathcal{\hat H}_i\ket{i,\alpha} |^2}{E_{1g} - E_{i\alpha}}\\
+ & - \bra{0, g}\mathcal{\hat H}_i\ket{0,g} - \sum_{i, \alpha \neq 0, g} \frac{|\bra{g, 0}\mathcal{\hat H}_i\ket{i,\alpha} |^2}{E_{1g} - E_{i\alpha}}.
+\end{align*}
+As long as $\mathcal{\hat H}_i$ mixes only adjacent resonator states the first order corrections vanish and so do the summations over $i$: $\sum_{i, \alpha} \rightarrow \sum_{0,\alpha} + \sum_{2,\alpha} (\sum_{1,\alpha})$. These sums then can be further truncated:
+\begin{equation}
+E_{1g}^{(2)} - E_{0g}^{(2)} \approx \frac{|\bra{g,1}\mathcal{\hat H}_i\ket{0,e}|^2}{\omega_r - \omega_{ge}} + \frac{|\bra{g,1}\mathcal{\hat H}_i\ket{2,e}|^2}{\omega_r - 2\omega_r - \omega_{ge}} -
+\frac{|\bra{g,0}\mathcal{\hat H}_i\ket{1,e}|^2}{-\omega_r - \omega_{ge}}\label{eq:chi0_truncsums}
+\end{equation} 
+due to the selection rule of $\hat n$: $\bra{E^q_n}\hat n \ket{E^q_{n+2k}} = 0,\ k \in \mathbb{Z}$ and the fast (exponential from numerics) decay of its matrix elements over distance between transmon energy eigenstates. It can be easily proven that last two elements of \eqref{eq:chi0_truncsums} are equal up to the factor of $\sqrt{2}^2$ and final equation for $\chi_0$ follows
+\begin{equation}
+\chi_0 = g^2\sbrkt{\frac{n_{ge}^2}{\omega_r - \omega_{ge}}-\frac{n_{ge}^2}{\omega_r + \omega_{ge}}}.
+\end{equation}
+Similarly, dispersive shifts for the other two transmon states are derived:
+\begin{gather*}
+\chi_1 = g^2\sbrkt{\frac{n_{ef}^2}{\omega_r - \omega_{ef}} - \frac{n_{ef}^2}{\omega_r + \omega_{ef}} + \frac{n_{eg}^2}{\omega_r + \omega_{ge}}+ \frac{n_{eg}^2}{\omega_{ge}-\omega_r }},\\
+\chi_2 = g^2\sbrkt{\frac{n_{fd}^2}{\omega_r - \omega_{fd}} -\frac{n_{fd}^2}{\omega_r + \omega_{fd}} + \frac{n_{fe}^2}{\omega_r + \omega_{ef}}+ \frac{n_{fe}^2}{\omega_{ef}-\omega_r}},
+\end{gather*}
+where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\alpha\beta} = \bra{\alpha} \hat n \ket{\beta}$ is the matrix element of $\hat n$ and $g = \frac{\mathcal{\hat H}_i}{i(\hat a^\dag  - \hat a)\otimes \hat n}$ is the coupling parameter which precedes the operator part in the interaction Hamiltonian. These formulas were compared to the numerical solution and have relative errors less than 1\%.
+\chapter{Dynamics}
+
+\section{Driving of an isolated transmon (Xmon)}
+
+To simulate the dynamics in the unitary case without taking into account the dissipative processes it is enough to solve Schrödinger equation with the Hamiltonian \eqref{eq:hamiltonian} summed with the driving part \eqref{eq:driving_q}. To consider the isolated qubit only it is sufficient to put $C_g = 0$. The final state after some time of the evolution $t$ will be described with a Dyson series or a $\hat T$-exponent:
+\begin{equation}
+\ket{\psi}(t) = \hat T \exp\left\{-\frac{i}{\hbar} \rbrkt{\mathcal{\hat H}t + \int_0^t \mathcal{\hat H}_q^d(\tau) \diff\tau}\right\} \ket{E_0^q}= \sum_k c_k(t) \ket{E^q_k},
+\end{equation} 
+where $\ket{E_k^q}$ denotes the $k$'s eigenstate of the qubit Hamiltonian. The simulation can also be reduced to a standard linear ODE solution which is also possible within QuTiP framework using the \textit{mesolve} routine.
+
+\begin{figure}[h!]
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{tr_weak_dr}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{tr_int_dr}
+\end{subfigure}
+
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{tr_str_dr}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\includegraphics[width=\textwidth]{tr_vstr_dr}
+\end{subfigure}
+\caption{Dynamics of the isolated driven transmon qubit with different drive strengths $f_q$ = 0.01-0.5 GHz, where $f_q$ is an effective amplitude of the drive \eqref{eq:driving_q} $f_q (t) = f_q \sin(\omega_{01} t)$. It can be seen that significant distortions and leakage to higher levels occur when amplitude is too large.}
+\label{eq:driven_tr}
+\end{figure}
 
 \appendix
 
