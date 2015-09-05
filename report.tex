@@ -302,7 +302,7 @@ Similarly, dispersive shifts for the other two transmon states are derived:
 \chi_1 = g^2\sbrkt{\frac{n_{ef}^2}{\omega_r - \omega_{ef}} - \frac{n_{ef}^2}{\omega_r + \omega_{ef}} + \frac{n_{eg}^2}{\omega_r + \omega_{ge}}+ \frac{n_{eg}^2}{\omega_{ge}-\omega_r }},\\
 \chi_2 = g^2\sbrkt{\frac{n_{fd}^2}{\omega_r - \omega_{fd}} -\frac{n_{fd}^2}{\omega_r + \omega_{fd}} + \frac{n_{fe}^2}{\omega_r + \omega_{ef}}+ \frac{n_{fe}^2}{\omega_{ef}-\omega_r}},
 \end{gather*}
-where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\alpha\beta} = \bra{\alpha} \hat n \ket{\beta}$ is the matrix element of $\hat n$ and $g = \frac{\mathcal{\hat H}_i}{i(\hat a^\dag  - \hat a)\otimes \hat n}$ is the coupling parameter which precedes the operator part in the interaction Hamiltonian. These formulas were compared to the numerical solution and have relative errors less than 1\%.
+where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\alpha\beta} = \bra{\alpha} \hat n \ket{\beta}$ is the matrix element of $\hat n$ and $g = \left.|\frac{\mathcal{\hat H}_i}{i(\hat a^\dag  - \hat a)\otimes \hat n}|\right.$ is the coupling parameter which precedes the operator part in the interaction Hamiltonian. These formulas were compared to the numerical solution and have relative errors of less than 1\%.
 \chapter{Dynamics}
 
 \section{Driving of an isolated transmon (Xmon)}
@@ -493,19 +493,40 @@ In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise i
 \endgroup
 \end{figure}
 
+\section{Spin-echo experiment}
+
+The spin-echo experiment in the simplest case (Hahn echo) is a modification of a Ramsey pulse sequence with an additional $\pi_y$-pulse right in between the $\frac{\pi}{2}_x$ ones. The idea is that during the second period (after the $\pi_y$-pulse)  slow components of the noise will cancel out the phase difference they've imposed during the first period. This can be understood easily in the limit of constant noise and infinitely fast rotations. There are also more sophisticated echo sequences such as CP, CPMG and UDD\cite{Bylander2011} which use more than one $\pi_y$-pulse during the free evolution, however for our case it is enough to regard the simplest Hahn echo.
+
+Mathematically Hahn echo within the previous formulations acts as follows. Before the  $\pi_y$-pulse at time $t/2$ we have the same dynamics described by the \eqref{eq:rho_t}. Than instantaneously the coherences of the density matrix are complex conjugated as a result of an infinitely fast $\pi_y$-pulse. This can be understood from the result of $\pi_y$-pulse on the Bloch sphere: $\left< \hat \sigma_x \right> = \rho + \rho^* \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_x \right>,\ \left< \hat \sigma_y \right> = i(\rho - \rho^*) \overset{\pi_y}{\rightarrow} -\left< \hat \sigma_y \right>,\ \left< \hat \sigma_z \right> = N  \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_z \right>$. Finally, for the changed initial condition at $t/2$ again evolution \eqref{eq:rho_t} is applied. Therefore, at the end of the period the coherence is defined as
+\begin{equation*}
+\rho(t) = \rho(0)\exp \left\{ - \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau + \frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau \right\}.
+\end{equation*}
+Performing the ensemble averaging one can get
+\begin{gather*}
+\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\hbar^2} \left< \left( \int_0^{t/2} f(\tau_1)  \diff \tau_1 + \int_{t/2}^{t} f(\tau_2)  \diff \tau_2 \right)\cdot \right. \right. \\
+\cdot \left. \left. \left( \int_0^{t/2} f(\tau_3)  \diff \tau_3 + \int_{t/2}^{t} f(\tau_4)  \diff \tau_4 \right) \right> \right\}.
+\end{gather*}
+Expanding the brackets, again putting a Fourier transform of the power spectral density $S(\omega)$ instead of the autocorrelation functions and factoring the expression back to the initial representation it is possible to obtain\cite{Preskill} the final expression for the coherence expectation:
+\begin{equation}
+\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S(\omega) W_t (\omega) \right\},
+\label{eq:cdeph_se}
+\end{equation}
+where
+\begin{align*}
+ W_t (\omega)  &= \left| - \int_0^{t/2} e^{i \omega \tau}\diff \tau + \int_{t/2}^{t} e^{i\omega\tau}  \diff \tau  \right|^2 \\
+& =  \left| 1-2e^{i\omega t/2} + e^{i\omega t} \right| \\
+&= \left| \frac{(1-e^{i\omega t/2})}{(1+e^{i\omega t/2})} (1+e^{i\omega t/2})(1-e^{i\omega t/2})\right|\\
+& = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
+\end{align*}
+It's obvious from \eqref{eq:cdeph_se}  that the noise influence is now suppressed at low frequencies (compare with \eqref{eq:cdeph}) however it is enhanced at some higher frequency. This leads to the full inefficiency of Hahn echo and similar techniques when the noise is white.
+
 \section{The problem}
 
-Although the classical approach statistically gives the same result as the quantum approach (quantum approach uses white noise, and for the white noise both methods yield same exponential decay of the coherences) the meanings of these two results are completely different. Quantum approach tells us that the density matrix will emerge even in a single experiment as a consequence of entanglement with the environment. Classical approach tells us that everything that  happens to the system in a single experiment is unitary, and if we want to, we can find out what state the qubit ended his evolution in at every final time $t$.
+The interesting correspondence between quantum and classical derivation can be noted within the spin echo experiment. For the white noise both of the descriptions yield same results, the exponential decay of coherences with an equal rate. However the meanings of these two results are completely different. Quantum approach tells us that the density matrix will emerge even in a single experiment as a consequence of entanglement with the environment. Classical approach tells us that everything that  happens to the system in a single experiment is unitary, and if we knew the noise beforehand, we would be able to find out what state the qubit ended his evolution in at every final time $t$. Classical description only knows that the noise is white, non-correlated -- and this same idea is used in the derivation of the master equation when Markov approximation is applied.
 
-Obviously, spin-echo experiment can be reproduced within the classical model only. For every run the pulse sequence will reverse low frequency drifts thus in average decreasing the rate with which the Bloch vector floats away from the starting point and thus will increase time $T^*_2 = 1/\Gamma^*_2$ after averaging, like in the \autoref{fig:cdeph}~(d). However same trick with the Lindblad equation can't be used. As long as the system gets entangled with the environment, no pulse sequence can reverse that process. 
+This correspondence is lucky, but what happens if the noise \textit{is} correlated? The classical model now allows for (at least partially) reversible dynamics. In contrast, the entanglement process is completely irreversible, so the quantum model should not simply entangle the system with the environment for the correlated bath.
 
-The quantum approach insists that even in a single experiment we will totally loose information about the qubit state and it only will succumb  to the density matrix description. In this sense we can say that the density matrix \textit{exists} as a real physical entity.
-
-In contrary, classical approach only uses density matrix just is an instrument to describe probabilities. In every experiment we now all about the qubit state and then just calculate an average. And then, just for aesthetics we call what we've done a ``density matrix''.
-
-So what happens in reality? Do we observe entanglement? The spin-echo experiment which is capable of reducing the classical noise effects (\autoref{fig:se}) tells us that reversible dephasing exists. Obviously, entanglement also should exist as a fundamental concept. It's possible that the slow components of the bath's noise do not lead to entanglement, they only shift the energy by a constant random value on the time scale of a single evolution experiment. However fast components lead to irreversible dephasing and entanglement.
-
-However it is unclear why quantum theory does not generalize the classical. Maybe Bloch-Redfield ME will help.
+At this point it is safe to say that density matrix really exists (that means it is not just a way to describe statistical distribution of states, but is the only approach to describe an open quantum system), but the quantum model of decoherence for the correlated noise should go beyond the Markovian master equations to keep up with experiments and naive (but still correct!) classical description.\cite{Zurek2003}
 
 \begin{figure}
 \begingroup
