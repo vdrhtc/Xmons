@@ -313,6 +313,8 @@ To simulate the dynamics in the unitary case without taking into account the dis
 \end{equation} 
 where $\ket{E_k^q}$ denotes the $k$'s eigenstate of the qubit Hamiltonian. The simulation can also be reduced to a standard linear ODE solution which is also possible within QuTiP framework using the \textit{mesolve} routine.
 
+The result of such simulation can be observed in \autoref{fig:driven_tr}. As one can see when the driving amplitude (in GHz) becomes comparable to the anharmonicity of the transmon significant leakage to higher states occurs.
+
 \begin{figure}[h!]
 \centering
 \begin{subfigure}[t]{0.45\textwidth}
@@ -329,7 +331,7 @@ where $\ket{E_k^q}$ denotes the $k$'s eigenstate of the qubit Hamiltonian. The s
 \includegraphics[width=\textwidth]{tr_vstr_dr}
 \end{subfigure}
 \caption{Dynamics of the isolated driven transmon qubit with different drive strengths $f_q$ = 0.01-0.5 GHz, where $f_q$ is an effective amplitude of the drive \eqref{eq:driving_q} $f_q (t) = f_q \sin(\omega_{01} t)$. It can be seen that significant distortions and leakage to higher levels occur when amplitude is too large.}
-\label{eq:driven_tr}
+\label{fig:driven_tr}
 \end{figure}
 
 \appendix
@@ -518,9 +520,36 @@ where
 &= \left| \frac{(1-e^{i\omega t/2})}{(1+e^{i\omega t/2})} (1+e^{i\omega t/2})(1-e^{i\omega t/2})\right|\\
 & = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
 \end{align*}
-It's obvious from \eqref{eq:cdeph_se}  that the noise influence is now suppressed at low frequencies (compare with \eqref{eq:cdeph}) however it is enhanced at some higher frequency. This leads to the full inefficiency of Hahn echo and similar techniques when the noise is white.
+It's obvious from \eqref{eq:cdeph_se}  that the noise influence is now suppressed at low frequencies (compare with \eqref{eq:cdeph}) however it is enhanced at some higher frequency. This leads to inefficiency of Hahn echo and similar techniques when the noise is white and a good $T_2^*$ improvement when it's 1/f, see \autoref{fig:cdeph_both}.
 
-\section{The problem}
+
+\begin{figure}
+\begingroup
+\captionsetup[subfigure]{width=0.9\textwidth}
+\centering
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{deph_white}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{deph_pink}
+\end{subfigure}
+
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{deph_white_se}
+\end{subfigure}
+\begin{subfigure}[t]{0.45\textwidth}
+\centering
+\includegraphics[width=0.9\textwidth]{deph_pink_se}
+\end{subfigure}
+\caption{Decoherence under white (left) and 1/f (right) noises with (bottom) and without (top) a refocusing $\pi_y$-pulse.}
+\label{fig:cdeph_both}
+\endgroup
+\end{figure}
+
+\section{The problem (of Markovian MEs)}
 
 The interesting correspondence between quantum and classical derivation can be noted within the spin echo experiment. For the white noise both of the descriptions yield same results, the exponential decay of coherences with an equal rate. However the meanings of these two results are completely different. Quantum approach tells us that the density matrix will emerge even in a single experiment as a consequence of entanglement with the environment. Classical approach tells us that everything that  happens to the system in a single experiment is unitary, and if we knew the noise beforehand, we would be able to find out what state the qubit ended his evolution in at every final time $t$. Classical description only knows that the noise is white, non-correlated -- and this same idea is used in the derivation of the master equation when Markov approximation is applied.
 
