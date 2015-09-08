@@ -66,7 +66,7 @@
 
 \section{Equations for quality factors}
 
-The observed quality factor of a microwave transmission line resonator (TLR) $Q_l$ (loaded quality factor) can be calculated as a sum of two parts -- the internal and external quality factors. The internal quality factor $Q_i$ describes how excitations leave the resonator in the absence of coupling to the transmission line, so damping in this case comes from the internal defects of the resonator itself. When, however, the resonator is coupled to the external circuitry with some active resistance, the damping is enhanced and the observed Q-factor is reduced according to the following formula:
+The total quality factor of a microwave transmission line resonator (TLR) $Q_l$ (loaded quality factor) can be calculated as a sum of two parts -- the internal and external quality factors. The internal quality factor $Q_i$ describes how excitations leave the resonator in the absence of coupling to the transmission line, so damping in this case comes from the internal defects (i.e. two-level systems) in the resonator itself. When, however, the resonator is coupled to the external circuitry with some active resistance, the damping is enhanced and the total Q-factor is reduced according to the following formula:
 \begin{equation}
 Q_l^{-1} = Q_i^{-1}+Q_e^{-1},
 \label{eq:qfactor}
@@ -98,12 +98,14 @@ The external Q-factor can be derived in a bit more complicated way\cite{Goppl200
 R^{*} = \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	}, \\
 C^{*} = \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2} \approx C_\kappa (\text{for our case}). \label{eq:C_ast}
 \end{gather}
-From this and \autoref{fig:resonator_equiv}~(b) it is simple to write down the expression for the external and loaded quality factors:
+From this and \autoref{fig:resonator_equiv}~(b) it is simple to write down the expression for the internal, external and loaded quality factors:
 \begin{gather}
+Q_i =  \omega (C+C^{*}) R_{in}\\
 Q_e = \omega (C+C^{*}) R^{*}, \\
 Q_l = \omega (C+C^{*})  \frac{1}{1/R^{*}+1/R_{in}}. \label{eq:Q_l}
 \end{gather}
-If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:qfactor}. The values been used in the simulations are: $C = 350$ fF, $L = 2$ nH, $R_{in}=10^7$ Ohm, $Z_0 = 50$ Ohm.
+The above expressions readily justify \eqref{eq:qfactor}. The values been used in the simulations are: $C = 350$ fF, $L = 2$ nH, $R_{in}=10^7$ Ohm, $Z_0 = 50$ Ohm. 
+
 
 \begin{figure}
 \centering
@@ -111,14 +113,21 @@ If one considers $C^{*} \ll C$ the above expressions readily justify \eqref{eq:q
 \caption{Q-factors dependence on $C_\kappa$ according to \eqref{eq:Q_l}.}
 \end{figure}
 
-
-
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{tl_scheme_general}
-\caption{A scheme for the two-port network.}
-\label{fgeneral2port}
-\end{figure}
+\subsection{About the lumped-element model of a coplanar waveguide resonator}
+Here we will discuss the $\lambda/4$ coplanar waveguide (CPW) resonator which is near resonance is equivalent by impedance to a lumped element parallel resonance circuit, as in \autoref{fig:resonator_equiv}. $L$ and $C$ for the lumped-element models of CPW resonators are bound not only by the resonance frequency condition $\omega = 1/\sqrt{LC}$ but also by the geometry of the waveguide or, in other words, $C^\prime$ and $L^\prime$ -- the transmission line capacitance and inductance per unit length. To show this one would write down the impedance of the CPW resonator near its resonance frequency $\omega_0$ and compare it to the lumped-element one's\cite{pozar2012}. Such comparison leads to the following expressions:
+\[
+R_{in} = \frac{Z_0}{\alpha l}, \quad C = \frac{\pi}{4\omega_0 Z_0},
+\]
+where $l$ is the resonator length, $Z_0 = \sqrt{L^\prime/C^\prime}$ is the wave resistance and $\alpha$ is the decay constant of the line. Then the resonance condition for the wavelength ($\lambda = 4 l$) is used along with the phase velocity expression $v_{ph} = 1/\sqrt{L^\prime C^\prime}$:
+\[
+\omega_0 = \frac{2\pi}{\lambda v_{ph}} =  \frac{\pi}{2 l v_{ph}} \Rightarrow  C = \frac{C^\prime l}{2}.
+\]
+For the inductance one can use $L = 1/\omega_0^2 C = \frac{8 L^\prime}{\pi^2}$. Finally, the expressions for $C^\prime$ and $L^\prime$:
+\begin{gather*}
+C^\prime = 4\varepsilon_0\varepsilon_{eff} \frac{K(k_0)}{K(k_0^\prime)},\\
+L^\prime = \frac{\mu_0}{4} \frac{K(k_0^\prime)}{K(k_0)},
+\end{gather*}
+where $K(x)$ is the complete elliptic integral of the first kind, $\varepsilon_{eff} = \frac{1+\varepsilon_{substrate}}{2}$, $k_0 = \frac{W}{W+2G}$ where $W$ is the width of the hotwire and $G$ is the width of the gaps and finally $k_0^\prime = \sqrt{1-k_0^2}$.
 
 \section{S-parameters}
 
@@ -153,6 +162,14 @@ V_2^+
 \end{equation}
 However, it's often more convenient to use indirect methods of calculating S-parameters, for example, to extract them from $ABCD$-matrix.
 
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{tl_scheme_general}
+\caption{A scheme for the two-port network.}
+\label{fgeneral2port}
+\end{figure}
+
+
 \subsection{Coupled (shunting) design}
 For a coupled design one can treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Except by the definition \eqref{eq:S_def} there are two other ways to calculate the S-matrix. First one is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
 \begin{gather}    
@@ -177,7 +194,7 @@ Another way is to calculate $ABCD$ matrix or impedance matrix and convert it to 
 S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22}, \\
 S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12}. \label{eq:S21}
 \end{gather}
-The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method. It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast} and $Q_l$ decreases.
+The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method ($Q_L \approx \omega_0/\Delta\omega_{3db}$). It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast} and $Q_l$ decreases.
 
 In \autoref{fig:S21s} the resonance frequencies calculated from the equivalent circuit in \autoref{fig:resonator_equiv}~(b) are shown along with the analytically calculated depths of the peaks:
 \begin{equation}
