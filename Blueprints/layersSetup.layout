@@ -1,0 +1,29 @@
+
+void setupLayers() {
+    layers::enableAllLayer();
+    layers::num[0].name="M";
+    layers::num[0].setStyle(9);
+    layers::num[0].setColor(255,143,14);
+    layers::num[0].mapToLayer= 0;
+    layers::num[0].mapToDatatype= -1;
+    layers::num[1].name="protect";
+    layers::num[1].setStyle(26);
+    layers::num[1].setColor(100,100,100);
+    layers::num[1].mapToLayer= 1;
+    layers::num[1].mapToDatatype= -1;
+    layers::num[2].name="ground";
+    layers::num[2].setStyle(1);
+    layers::num[2].setColor(255,143,14);
+    layers::num[2].mapToLayer= 2;
+    layers::num[2].mapToDatatype= -1;
+    layers::num[3].name="mask";
+    layers::num[3].setStyle(9);
+    layers::num[3].setColor(0,0,125);
+    layers::num[3].mapToLayer= 3;
+    layers::num[3].mapToDatatype= -1;
+    layers::num[4].name="total";
+    layers::num[4].setStyle(9);
+    layers::num[4].setColor(0,125,0);
+    layers::num[4].mapToLayer= 4;
+    layers::num[4].mapToDatatype= -1;
+}

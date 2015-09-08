@@ -1,0 +1,61 @@
+/*
+    Claw coupler for the resonator. Anchor point is in the symmetry plane of the claw, offset to the egde of M layer towards the resonator
+
+*/
+
+
+        int w_thinGround = 5e3;
+        int L_claw = 60e3;
+        int w_claw = 20e3;
+
+point addClaw(cell* curCell, point anchorPoint, string direction) {
+
+        
+    point cursor;
+    point start;
+    start.set(anchorPoint.x(), anchorPoint.y()-w_res/2);
+
+    //=========Metal===========
+    
+    cursor = wire(curCell, M, start, "r", w_q/2+g_q+2*w_thinGround+w_claw, w_res);
+    cursor.set(cursor.x()-w_claw/2, cursor.y()-w_res/2);
+    wire(curCell, M, cursor, "d", L_claw, w_claw);
+    
+    cursor = wire(curCell, M, start, "l", w_q/2+g_q+2*w_thinGround+w_claw, w_res);
+    cursor.set(cursor.x()+w_claw/2, cursor.y()-w_res/2);
+    wire(curCell, M, cursor, "d", L_claw, w_claw);
+    
+    //=========Protect===========
+
+    cursor = wire(curCell, protect, start, "r", w_q/2+g_q+2*w_thinGround+w_claw, w_res+2*w_thinGround);
+    cursor.set(cursor.x()-w_claw/2, cursor.y()+w_res/2+w_thinGround);
+    wire(curCell, protect, cursor, "d", L_claw+2*w_thinGround+w_res, w_claw+2*w_thinGround);
+    
+    cursor = wire(curCell, protect, start, "l", w_q/2+g_q+2*w_thinGround+w_claw, w_res+2*w_thinGround);
+    cursor.set(cursor.x()+w_claw/2, cursor.y()+w_res/2+w_thinGround);
+    wire(curCell, protect, cursor, "d", L_claw+2*w_thinGround+w_res, w_claw+2*w_thinGround);
+    
+    //=========Rotate===========
+    
+    rect selection;
+    selection.set(anchorPoint.x() - (w_q/2+g_q+3*w_thinGround+w_claw), anchorPoint.y()-w_res-L_claw-w_thinGround, 
+                 anchorPoint.x()+(w_q/2+g_q+3*w_thinGround+w_claw), anchorPoint.y()+w_thinGround);
+    
+    rotateSelection(curCell, selection, anchorPoint, direction);
+
+    point retPoint;
+
+    if (direction=="d") {
+        retPoint.set(anchorPoint.x(), anchorPoint.y()-w_res-2*w_thinGround);
+        return retPoint;
+    } else if(direction=="l") {
+        retPoint.set(anchorPoint.x()-(w_res+2*w_thinGround), anchorPoint.y());
+        return retPoint; 
+    } else if(direction=="r") {
+        retPoint.set(anchorPoint.x()+(w_res+2*w_thinGround), anchorPoint.y());
+        return retPoint; 
+    } else  {
+        retPoint.set(anchorPoint.x(), anchorPoint.y()+w_res+2*w_thinGround);
+        return retPoint; 
+    }
+}

@@ -1,0 +1,91 @@
+/*
+  Feedline with contact pads at the ends. Lengths of the contact pads with ground connectors are included 
+    in the corresponding segment lengths.
+  _____                              _____
+ | |   ___\                         /___   | |
+x |  |___ >=====~======<  ___|  | x
+ | | ____/                         \_____ | |
+ 
+*/
+
+#include "wiring.layout"
+
+
+    int pad_len  = 200e3;
+    int w_pad = 200e3;
+    int g_pad = w_pad;
+    int bottom_g_pad = g_pad/3; 
+    int transition_len = 150e3;
+    int ground_connector_width = 50e3;   
+    int totalPadLen = ground_connector_width+bottom_g_pad+pad_len+transition_len;
+
+
+point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
+    
+
+    point cursor;
+    cursor.set(anchor.x(), anchor.y() - ground_connector_width);
+    
+    curCell->addBox(cursor.x()-w_pad/2, cursor.y()-bottom_g_pad, w_pad, -pad_len, M);
+    pointArray ps;
+    ps.attach(cursor.x()-w_pad/2, cursor.y()-pad_len-bottom_g_pad);
+    ps.attach(cursor.x()-w_feed/2, cursor.y()-pad_len-transition_len-bottom_g_pad);
+    ps.attach(cursor.x()+w_feed/2, cursor.y()-pad_len-transition_len-bottom_g_pad);
+    ps.attach(cursor.x()+w_pad/2, cursor.y()-pad_len-bottom_g_pad);
+    curCell->addPolygon(ps, M);
+    
+    curCell->addBox(cursor.x()-w_pad/2-g_pad, cursor.y(), w_pad+2*g_pad, -pad_len-bottom_g_pad, protect);
+    pointArray ps;
+    ps.attach(cursor.x()-w_pad/2-g_pad, cursor.y()-pad_len-bottom_g_pad);
+    ps.attach(cursor.x()-w_feed/2-g_feed, cursor.y()-pad_len-transition_len-bottom_g_pad);
+    ps.attach(cursor.x()+w_feed/2+g_feed, cursor.y()-pad_len-transition_len-bottom_g_pad);
+    ps.attach(cursor.x()+w_pad/2+g_pad, cursor.y()-pad_len-bottom_g_pad);
+    
+    curCell->addPolygon(ps,  protect);
+    
+    rect selection;
+    selection.set(anchor.x()-w_pad/2-g_pad, anchor.y()-totalPadLen, anchor.x()+w_pad/2+g_pad, anchor.y());
+    rotateSelection(curCell, selection, anchor, direction);
+    if (direction=="d") anchor.set(anchor.x(), anchor.y()-totalPadLen);
+    else if (direction=="u") anchor.set(anchor.x(), anchor.y()+totalPadLen);
+    else if (direction=="l") anchor.set(anchor.x()-totalPadLen, anchor.y());
+    else if (direction=="r") anchor.set(anchor.x()+totalPadLen, anchor.y());
+    return anchor;
+}
+
+
+void addFeedline(cell* curCell, point start, int w_feed, int g_feed, int N_turns, intList segmentLengths, stringList directions) {
+    
+    int turnRad = 10*w_feed;
+    int i, M=0, protect=1;
+    point cursor;
+    start = contactPad(curCell, M, protect, start, w_feed, g_feed, directions.at(0));
+    if(N_turns==0) 
+        cursor = start;
+    else {  
+        wire(curCell, M, start, directions.at(0), segmentLengths.at(0) - turnRad-totalPadLen, w_feed);
+        cursor = wire(curCell, protect, start, directions.at(0), segmentLengths.at(0) - turnRad - totalPadLen, w_feed+2*g_feed);
+        torusTurn(curCell, M, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
+        cursor = torusTurn(curCell, protect, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);    
+    }
+    for (i=1; i<N_turns; i++) {
+        wire(curCell, M, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed);
+        cursor = wire(curCell, protect, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
+        torusTurn(curCell, M, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
+        cursor = torusTurn(curCell, protect, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed+2*g_feed);
+    }
+    wire(curCell, M, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed);
+    cursor = wire(curCell, protect, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed+2*g_feed);
+    
+    string direction = directions.at(N_turns);
+    if (direction=="d") cursor.set(cursor.x(), cursor.y()-totalPadLen);
+    else if (direction=="u") cursor.set(cursor.x(), cursor.y()+totalPadLen);
+    else if (direction=="l") cursor.set(cursor.x()-totalPadLen, cursor.y());
+    else if (direction=="r") cursor.set(cursor.x()+totalPadLen, cursor.y());
+    
+    contactPad(curCell, M, protect, cursor, w_feed, g_feed, opposite(direction));
+    
+    
+    
+    
+}

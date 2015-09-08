@@ -1,0 +1,149 @@
+/*
+ Coupled lamda/4 resonator.
+ 
+ Coupling point is in the center of coupling area, offset to the edge of protect layer towards feedline.
+ Schematic:
+ 
+ ===============
+  ________x________
+ |                               |
+*/
+
+
+
+#include "wiring.layout"
+
+    int resTurnRad = 50e3;
+    int meanderSegmentLength = 250e3;
+
+void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int length, int layer) {
+    
+    int curLength = 0;
+    point start;
+    start.set(cursor.x(), cursor.y());
+    
+    cursor = wire(curCell, layer, cursor, "r", 200e3, width);
+    curLength+=200e3;
+    cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+    curLength+=resTurnRad*math::pi_2;
+    cursor = wire(curCell, layer, cursor, "d", tailLen, width);
+    curLength+=tailLen;
+    
+    cursor.set(start.x(), start.y());
+    
+    cursor = wire(curCell, layer, cursor, "l", 150e3, width);
+    curLength+=150e3;
+    cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
+    curLength+=resTurnRad*math::pi_2;
+    cursor = wire(curCell, layer, cursor, "d", 50e3, width);
+    curLength+=50e3;
+    cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
+    curLength+=resTurnRad*math::pi_2;
+    
+    int meanderStepLength = 0;
+    while ((length -curLength)>meanderStepLength) {
+        meanderStepLength = 0;
+        cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
+        meanderStepLength += meanderSegmentLength;
+        cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+        cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
+        meanderStepLength += 2*resTurnRad*math::pi_2;
+        cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength, width);
+        meanderStepLength += meanderSegmentLength;
+        cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
+        cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
+        meanderStepLength += 2*resTurnRad*math::pi_2;
+        curLength+=meanderStepLength;
+    }
+    
+    if (length - curLength >= meanderSegmentLength+2*resTurnRad*math::pi_2) {
+        cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
+        cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+        cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
+        curLength+= meanderSegmentLength+2*resTurnRad*math::pi_2;
+        if (length - curLength >= meanderSegmentLength) {
+            cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength, width);
+            curLength += meanderSegmentLength;
+            cursor = torusArbAngleTurn(curCell, layer, cursor, "ld", resTurnRad, width, (length-curLength)/2/math::pi/resTurnRad*360);
+        } else {
+            cursor = wire(curCell, layer, cursor, "l", length - curLength, width);
+        }
+    } else if (length - curLength >= meanderSegmentLength) {
+        cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
+        curLength+=meanderSegmentLength;
+        cursor = torusArbAngleTurn(curCell, layer, cursor, "rd", resTurnRad, width, (length-curLength)/2/math::pi/resTurnRad*360);
+    } else {
+        cursor = wire(curCell, layer, cursor, "r", length - curLength, width);
+        curLength+=length - curLength;
+    }
+    
+}
+
+
+point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, int length, int tailLen, string direction) {
+   
+    point cursor;
+    cursor.set(couplingPoint.x(), couplingPoint.y()-w_res/2 - g_res);
+    
+    generateStructure(curCell, cursor, w_res, tailLen, length, M);
+    generateStructure(curCell, cursor, w_res+2*g_res, tailLen+g_res, length+g_res, protect);
+    
+    rect selection;
+    selection.set(couplingPoint.x() - 150e3-resTurnRad-w_res-g_res, couplingPoint.y()-tailLen-resTurnRad - w_res - 2*g_res, couplingPoint.x()+200e3 + resTurnRad+w_res+g_res, couplingPoint.y());
+    
+    rotateSelection(curCell, selection, couplingPoint, direction);
+
+    point retPoint;
+
+    if (direction=="d") {
+        retPoint.set(couplingPoint.x()+200e3+resTurnRad, couplingPoint.y()-(g_res+w_res/2+resTurnRad+tailLen));
+        return retPoint;
+    } else if(direction=="l") {
+        retPoint.set(couplingPoint.x()-(g_res+w_res/2+resTurnRad+tailLen), couplingPoint.y()-(200e3+resTurnRad));
+        return retPoint; 
+    } else if(direction=="r") {
+        retPoint.set(couplingPoint.x()+(g_res+w_res/2+resTurnRad+tailLen), couplingPoint.y()+(200e3+resTurnRad));
+        return retPoint; 
+    } else  {
+        retPoint.set(couplingPoint.x()+200e3+resTurnRad, couplingPoint.y()+(g_res+w_res/2+resTurnRad+tailLen));
+        return retPoint; 
+    }
+}
+
+
+void addResonatorNoMeander(cell* curCell, point couplingPoint, int w_res, int g_res, int length, int tailLen) {
+    
+    point cursor;
+    cursor.set(couplingPoint.x(), couplingPoint.y()-w_res/2 - g_res);
+    
+    int curLength = 0;
+    point start;
+    start.set(cursor.x(), cursor.y());
+    int layer;
+    int width = w_res;
+    for (layer=0; layer<2; layer++){
+        curLength = 0;
+        cursor = wire(curCell, layer, start, "r", 200e3, width);
+        curLength+=200e3;
+        cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+        curLength+=resTurnRad*math::pi_2;
+        cursor = wire(curCell, layer, cursor, "d", tailLen, width);
+        curLength+=tailLen;
+        
+        cursor.set(start.x(), start.y());
+        
+        cursor = wire(curCell, layer, cursor, "l", 150e3, width);
+        curLength+=150e3;
+        cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
+        curLength+=resTurnRad*math::pi_2;
+        cursor = wire(curCell, layer, cursor, "d", length-curLength, width);
+        width = 2*g_res+w_res;
+        tailLen += g_res;
+        length += g_res;
+    }
+    
+
+
+
+
+}
