@@ -21,10 +21,16 @@ point addXmon(cell* curCell, point anchorPoint, string direction) {
     cursor.set(cursor.x()+arm_len/2, cursor.y()-arm_len/2-g_q);
 
     rect selection;
-    selection.set(anchorPoint.x() - (arm_len/2+g_q), anchorPoint.y()-w_res-L_claw-w_thinGround, 
-                 anchorPoint.x()+(arm_len/2+g_q), anchorPoint.y());
+    selection.set(anchorPoint.x() - g_q-w_q/2, anchorPoint.y()-2*g_q-arm_len, 
+                 anchorPoint.x()+g_q+w_q/2, anchorPoint.y());
     
-    //rotateSelection(curCell, selection, anchorPoint, direction);
+    rotateSelection(curCell, selection, anchorPoint, direction);
+    
+    rect selection;
+    selection.set(anchorPoint.x() - (arm_len/2+g_q), anchorPoint.y()-arm_len/2-g_q-w_q/2-g_q, 
+                 anchorPoint.x()+(arm_len/2+g_q), anchorPoint.y()-arm_len/2-g_q+w_q/2+g_q);
+    
+    rotateSelection(curCell, selection, anchorPoint, direction);
 
     return cursor;
 }
