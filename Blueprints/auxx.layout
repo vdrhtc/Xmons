@@ -31,3 +31,24 @@ point copyPoint(point p) {
     cp.set(p.x(), p.y());
     return cp;
 }
+
+string roman(int i){
+    int k;
+    string ret="";
+    
+    if (i<4){
+        for(k=0;k<i;k++)
+            ret+="I";
+        return ret;
+    } else if(i==4) 
+        return "IV";
+    else if(i==5) 
+        return "V";
+    else if(i<9) {
+        ret += "V";
+        return ret+roman(i-5);
+    } else if(i==9) 
+        return "IX";
+    else if(i==10) 
+        return "X";
+}

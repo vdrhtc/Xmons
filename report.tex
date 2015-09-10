@@ -316,8 +316,8 @@ due to the selection rule of $\hat n$: $\bra{E^q_n}\hat n \ket{E^q_{n+2k}} = 0,\
 \end{equation}
 Similarly, dispersive shifts for the other two transmon states are derived:
 \begin{gather*}
-\chi_1 = g^2\sbrkt{\frac{n_{ef}^2}{\omega_r - \omega_{ef}} - \frac{n_{ef}^2}{\omega_r + \omega_{ef}} + \frac{n_{eg}^2}{\omega_r + \omega_{ge}}+ \frac{n_{eg}^2}{\omega_{ge}-\omega_r }},\\
-\chi_2 = g^2\sbrkt{\frac{n_{fd}^2}{\omega_r - \omega_{fd}} -\frac{n_{fd}^2}{\omega_r + \omega_{fd}} + \frac{n_{fe}^2}{\omega_r + \omega_{ef}}+ \frac{n_{fe}^2}{\omega_{ef}-\omega_r}},
+\chi_1 = g^2\sbrkt{\frac{n_{ef}^2}{\omega_r - \omega_{ef}} - \frac{n_{ef}^2}{\omega_r + \omega_{ef}} + \frac{n_{eg}^2}{\omega_r + \omega_{ge}}-\frac{n_{eg}^2}{\omega_r - \omega_{ge} }},\\
+\chi_2 = g^2\sbrkt{\frac{n_{fd}^2}{\omega_r - \omega_{fd}} -\frac{n_{fd}^2}{\omega_r + \omega_{fd}} + \frac{n_{fe}^2}{\omega_r + \omega_{ef}}- \frac{n_{fe}^2}{\omega_r -\omega_{ef}}},
 \end{gather*}
 where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\alpha\beta} = \bra{\alpha} \hat n \ket{\beta}$ is the matrix element of $\hat n$ and $g = \left.|\frac{\mathcal{\hat H}_i}{i(\hat a^\dag  - \hat a)\otimes \hat n}|\right.$ is the coupling parameter which precedes the operator part in the interaction Hamiltonian. These formulas were compared to the numerical solution and have relative errors of less than 1\%.
 \chapter{Dynamics}

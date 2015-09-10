@@ -4,10 +4,6 @@
 */
 
 
-        int w_thinGround = 5e3;
-        int L_claw = 60e3;
-        int w_claw = 20e3;
-
 point addClaw(cell* curCell, point anchorPoint, string direction) {
 
         

@@ -9,28 +9,42 @@
 #include "feedline.layout"
 #include "claw.layout"
 #include "Xmon.layout"
-
+#include "qr.layout"
 
         int M = 0;
         int protect = 1;
         int ground = 2;
         int mask = 3;
         int total = 4;
-        
-        int w_res =8e3;
-        int g_res = 4e3;
-        int x = 5e3;
-        int tailLen = 750e3;
-        
-        int w_feed = 16e3;
-        int g_feed = 8e3;
+
         
         int chip_height = 5e6;
         int chip_width = 10e6;
-        int feedlineDepth = chip_height/6;
+        int feedlineDepth = chip_height/4;
+        double ɛ = 11.9;
+        double c = 299792458.0;
 
+        doubleList res_freqs;
+        
+        int w_res =4e3;
+        int g_res = 2e3;
+        int x = 5e3;
+        int tailLen = 750e3;
+        int w_thinGround = 5e3;
+        int L_claw = 60e3;
+        int w_claw = 20e3;
+        
+        int w_feed = 16e3;
+        int g_feed = 8e3;
+      
         int w_q = 20e3;
         int g_q = 20e3;
+        int arm_len = 300e3;
+
+        int qrSize = 500e3;
+        int qrCodePositionX = chip_width/2*9/10-qrSize;
+        int qrCodePositionY = chip_height/2*4/5-qrSize;
+
 
 int main() {
     setupLayers();
@@ -50,12 +64,12 @@ int main() {
     directions.append("r");   directions.append("u");
     directions.append("r");
     
-    segmentLengths.append(chip_width/10);     segmentLengths.append(feedlineDepth);
-    segmentLengths.append(4*chip_width/5);    segmentLengths.append(feedlineDepth);
-    segmentLengths.append(chip_width/10);
+    segmentLengths.append(chip_width/8);     segmentLengths.append(feedlineDepth);
+    segmentLengths.append(6*chip_width/8);    segmentLengths.append(feedlineDepth);
+    segmentLengths.append(chip_width/8);
    
     cursor.set(-chip_width/2, chip_height/4.);
-    addFeedline(curCell, cursor, w_feed, g_feed, 4 , segmentLengths, directions);
+    //addFeedline(curCell, cursor, w_feed, g_feed, 4 , segmentLengths, directions);
    
     stringList directions;
     directions.append("r");    directions.append("u");    
@@ -68,36 +82,40 @@ int main() {
     // Ground plane
     curCell->addBox(-chip_width/2, -chip_height/2, chip_width, chip_height, ground);
     
-    int resonatorPositionsX = -chip_width/10;
+    int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;  
-    
-    int j = 0;
+    res_freqs.append(6); res_freqs.append(6.5); res_freqs.append(6.9); res_freqs.append(7); res_freqs.append(7.1); res_freqs.append(8);
+
+    double j = -0.25;
+    int k =0;
     point cursor2;
     for (i=0; i<5; i+=2){
-        cursor.set(resonatorPositionsX+chip_width/10*j, resonatorPositionsY);
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, 2904e3, (4-i)*tailLen/4, "d");
+        cursor.set(resonatorPositionsX+chip_width/5*j, resonatorPositionsY);
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k), tailLen, "d");
         cursor2 = addClaw(curCell, cursor2, "d");
         addXmon(curCell, cursor2, "d");
 
         
-        cursor.set(resonatorPositionsX+chip_width/10*j, -resonatorPositionsY);
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, 2904e3+12e3*i, tailLen, "u");
+        cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u");
         cursor2 = addClaw(curCell, cursor2, "u");
         addXmon(curCell, cursor2, "u");
         j++;
+        k+=2;
     }
+    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize);
     
-    
-    //layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
-    //layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
 
     int hd;
     layout->backgroundTool->clearBackground();
     hd = layout->backgroundTool->addBackground("background.png");
     layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);
     layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);
-    
-    
-    
+
+
+
+
     
 }
