@@ -32,6 +32,25 @@ point copyPoint(point p) {
     return cp;
 }
 
+point rotateVector(point vec, point anchor, string direction) {
+
+    point retPoint;
+    if (direction=="d") {
+        retPoint.set(anchor.x() + vec.x(), anchor.y()+vec.y());
+        return retPoint;
+    } else if(direction=="l") {
+        retPoint.set(anchor.x()+ vec.y(), anchor.y()+vec.x());
+        return retPoint; 
+    } else if(direction=="r") {
+        retPoint.set(anchor.x() -vec.y(), anchor.y()-vec.x());
+        return retPoint; 
+    } else  {
+        retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y());
+        return retPoint; 
+    }
+
+}
+
 string roman(int i){
     int k;
     string ret="";

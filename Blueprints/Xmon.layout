@@ -31,6 +31,7 @@ point addXmon(cell* curCell, point anchorPoint, string direction) {
                  anchorPoint.x()+(arm_len/2+g_q), anchorPoint.y()-arm_len/2-g_q+w_q/2+g_q);
     
     rotateSelection(curCell, selection, anchorPoint, direction);
-
-    return cursor;
+    point retPoint;
+    retPoint.set(0, -arm_len-2*g_q);
+    return rotateVector(retPoint, anchorPoint, direction);
 }

@@ -5,7 +5,15 @@
  | |   ___\                                  /___   | |
 x |  |___ >=====~======<  ___|  | x
  | | ____/                                  \_____| |
- 
+
+    Or a flux bias line (see Kelley's thesis)
+__
+|  |________                              _____
+|   _________\                         /___   | |
+x  |     ______>====~====< ___|  | x
+|  |    |______/                         \____ | |
+|_|
+    
 */
 
 #include "wiring.layout"
@@ -19,6 +27,28 @@ x |  |___ >=====~======<  ___|  | x
     int ground_connector_width = 50e3;   
     int totalPadLen = ground_connector_width+bottom_g_pad+pad_len+transition_len;
 
+    int fluxBiasLen = 0;
+
+    
+point fluxBias(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
+    point cursor;
+    cursor.set(anchor.x(), anchor.y()-1.5*g_feed);
+    wire(curCell, protect, cursor, "r", w_q/2, g_feed);
+    wire(curCell, protect, cursor, "l", w_q/2, g_feed);
+    cursor.set(cursor.x(), cursor.y()-0.5*g_feed);
+    wire(curCell, protect, cursor, "d", w_feed, 2*g_feed+w_feed);
+    cursor.set(cursor.x()+w_feed/2, cursor.y()-0.5*w_feed);
+    wire(curCell, M, cursor, "l", w_feed+g_feed, w_feed);
+    cursor.set(anchor.x(), anchor.y()-2*g_feed-w_feed);
+    fluxBiasLen = 2*g_feed+w_feed;
+    
+    rect selection;
+    selection.set(anchor.x()-w_q/2, anchor.y()-fluxBiasLen, anchor.x()+w_q/2, anchor.y());
+    rotateSelection(curCell, selection, anchor, direction);
+    point retPoint;
+    retPoint.set(0, -fluxBiasLen);
+    return rotateVector(retPoint, anchor, direction);
+}
 
 point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
     
@@ -46,25 +76,34 @@ point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, in
     rect selection;
     selection.set(anchor.x()-w_pad/2-g_pad, anchor.y()-totalPadLen, anchor.x()+w_pad/2+g_pad, anchor.y());
     rotateSelection(curCell, selection, anchor, direction);
-    if (direction=="d") anchor.set(anchor.x(), anchor.y()-totalPadLen);
-    else if (direction=="u") anchor.set(anchor.x(), anchor.y()+totalPadLen);
-    else if (direction=="l") anchor.set(anchor.x()-totalPadLen, anchor.y());
-    else if (direction=="r") anchor.set(anchor.x()+totalPadLen, anchor.y());
-    return anchor;
+    point retPoint;
+    retPoint.set(0, -totalPadLen);
+    return rotateVector(retPoint, anchor, direction);
 }
 
 
-void addFeedline(cell* curCell, point start, int w_feed, int g_feed, int N_turns, intList segmentLengths, stringList directions) {
+void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList segmentLengths, stringList directions, string type) {
     
     int turnRad = 20*w_feed;
+    int N_turns = directions.size()-1;
     int i, M=0, protect=1;
     point cursor;
-    start = contactPad(curCell, M, protect, start, w_feed, g_feed, directions.at(0));
-    if(N_turns==0) 
+    if (type=="cp") {
+        start = contactPad(curCell, M, protect, start, w_feed, g_feed, directions.at(0));
+        segmentLengths.set(0, segmentLengths.at(0) - totalPadLen);
+    }
+    else if (type=="fb") {
+        start = fluxBias(curCell, start, w_feed, g_feed, directions.at(0));
+        segmentLengths.set(0, segmentLengths.at(0) - fluxBiasLen);
+    }
+
+    if(N_turns==0) {
         cursor = start;
+        turnRad = 0;
+    }
     else {  
-        wire(curCell, M, start, directions.at(0), segmentLengths.at(0) - turnRad-totalPadLen, w_feed);
-        cursor = wire(curCell, protect, start, directions.at(0), segmentLengths.at(0) - turnRad - totalPadLen, w_feed+2*g_feed);
+        wire(curCell, M, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed);
+        cursor = wire(curCell, protect, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
         torusTurn(curCell, M, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
         cursor = torusTurn(curCell, protect, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);    
     }
@@ -78,10 +117,9 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, int N_turns
     cursor = wire(curCell, protect, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed+2*g_feed);
     
     string direction = directions.at(N_turns);
-    if (direction=="d") cursor.set(cursor.x(), cursor.y()-totalPadLen);
-    else if (direction=="u") cursor.set(cursor.x(), cursor.y()+totalPadLen);
-    else if (direction=="l") cursor.set(cursor.x()-totalPadLen, cursor.y());
-    else if (direction=="r") cursor.set(cursor.x()+totalPadLen, cursor.y());
+    point vec;
+    vec.set(0, -totalPadLen);
+    cursor = rotateVector(vec, cursor, direction);
     
     contactPad(curCell, M, protect, cursor, w_feed, g_feed, opposite(direction));
     

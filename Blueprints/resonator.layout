@@ -99,20 +99,8 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
     rotateSelection(curCell, selection, couplingPoint, direction);
 
     point retPoint;
-
-    if (direction=="d") {
-        retPoint.set(couplingPoint.x()+200e3+resTurnRad, couplingPoint.y()-(g_res+w_res/2+resTurnRad+tailLen));
-        return retPoint;
-    } else if(direction=="l") {
-        retPoint.set(couplingPoint.x()-(g_res+w_res/2+resTurnRad+tailLen), couplingPoint.y()-(200e3+resTurnRad));
-        return retPoint; 
-    } else if(direction=="r") {
-        retPoint.set(couplingPoint.x()+(g_res+w_res/2+resTurnRad+tailLen), couplingPoint.y()+(200e3+resTurnRad));
-        return retPoint; 
-    } else  {
-        retPoint.set(couplingPoint.x()+200e3+resTurnRad, couplingPoint.y()+(g_res+w_res/2+resTurnRad+tailLen));
-        return retPoint; 
-    }
+    retPoint.set(200e3+resTurnRad, -(g_res+w_res/2+resTurnRad+tailLen));
+    return rotateVector(retPoint, couplingPoint, direction);
 }
 
 
