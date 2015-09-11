@@ -89,20 +89,28 @@ int main() {
     double j = -0.25;
     int k =0;
     point cursor2;
+    point cursor3;
     for (i=0; i<5; i+=2){
         cursor.set(resonatorPositionsX+chip_width/5*j, resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k), tailLen, "d");
         cursor2 = addClaw(curCell, cursor2, "d");
         addXmon(curCell, cursor2, "d");
-
+        element* marker;
+        cursor3.set(cursor2.x()-400e3, cursor2.y());
+        marker = curCell->addText(protect, cursor3, roman(k+1));
         
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u");
         cursor2 = addClaw(curCell, cursor2, "u");
         addXmon(curCell, cursor2, "u");
+        cursor3.set(cursor2.x()-400e3, cursor2.y());
+        marker = curCell->addText(protect, cursor3, roman(k+2));
+        debug(marker->isPolygon());
+        
         j++;
         k+=2;
     }
+    curCell->textToPolygon(100e3);
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize);
     
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
@@ -114,6 +122,7 @@ int main() {
     layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);
     layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);
 
+    debug->show();
 
 
 

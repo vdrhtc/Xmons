@@ -29,13 +29,13 @@ void addQR(cell* curCell, int x1, int y1, int width, int height) {
                 data += roman(i+1);
                 data+= ": "+res_freqs.at(i);
                 if(i==res_freqs.size()-1) 
-                    data+= "\n";
+                    data+= "\n ";
                 else
                     data+=", ";
             }
         data+= "Xmons:\n  ";
             data += "C ~ 77 fF, E_C ~ 250 MHz"; data+="\n  ";
-            data += "C = 77 fF"; data+="\n";
+            data += "C_g ~ 2 fF, g ~ 30 MHz"; data+="\n";
     layout->barcodeTool->setQrCode();
     layout->barcodeTool->data = data;
     layout->drawing->activeLayer=M;
