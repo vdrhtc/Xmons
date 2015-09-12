@@ -11,6 +11,8 @@ void addQR(cell* curCell, int x1, int y1, int width, int height) {
     string data ="Chip size: "+chip_width/1e6;
     data+= "x"+chip_height/1e6;
     data+=" mm\n";
+    data+="Substrate ɛ: "+ɛ;
+    data+="\n";
     data+= "Common geometric parameters (um):\n ";
         data+= "Resonators:\n  ";
             data += "w_res: "+w_res/1e3; data+="\n  ";
@@ -23,6 +25,8 @@ void addQR(cell* curCell, int x1, int y1, int width, int height) {
             data += "armlen: "+arm_len/1e3;data+="\n";
     data+= "Expected electric parameters:\n ";
         data+= "Resonators:\n  ";
+            data+="Q-factors:\n   ";
+                data+="Q_e ~ 10 000\n  ";
             data+= "Frequencies (GHz):\n   ";
             int i;
             for (i=0; i<res_freqs.size(); i++) {

@@ -14,9 +14,10 @@
 #include "wiring.layout"
 
     int meanderSegmentLength = 250e3;
-
+    double clawPhaseShift = 12.2;
+    
 int length_from_frequency(double frequency) {
-    return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6;
+    return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6 - 1./180.*clawPhaseShift/frequency/1e9*c/2/math::sqrt(ɛ/2.+1./2.)/2.*1e6;
 }
 
 void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int length,  int resTurnRad, int layer) {

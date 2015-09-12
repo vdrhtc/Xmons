@@ -43,7 +43,10 @@ point fluxBias(cell* curCell, point anchor, int w_feed, int g_feed, string direc
     fluxBiasLen = 2*g_feed+w_feed;
     
     rect selection;
-    selection.set(anchor.x()-w_q/2, anchor.y()-fluxBiasLen, anchor.x()+w_q/2, anchor.y());
+    selection.set(anchor.x()-w_q/2, anchor.y()-2*g_feed, anchor.x()+w_q/2, anchor.y()-g_feed);
+    rotateSelection(curCell, selection, anchor, direction);
+    rect selection;
+    selection.set(anchor.x()-w_q/2, anchor.y()-fluxBiasLen, anchor.x()+w_q/2, anchor.y()-2*g_feed);
     rotateSelection(curCell, selection, anchor, direction);
     point retPoint;
     retPoint.set(0, -fluxBiasLen);
@@ -86,7 +89,7 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     
     int turnRad = 20*w_feed;
     int N_turns = directions.size()-1;
-    int i, M=0, protect=1;
+    int i;
     point cursor;
     if (type=="cp") {
         start = contactPad(curCell, M, protect, start, w_feed, g_feed, directions.at(0));

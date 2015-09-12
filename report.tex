@@ -114,19 +114,19 @@ The above expressions readily justify \eqref{eq:qfactor}. The values been used i
 \end{figure}
 
 \subsection{About the lumped-element model of a coplanar waveguide resonator}
-Here we will discuss the $\lambda/4$ coplanar waveguide (CPW) resonator which is near resonance is equivalent by impedance to a lumped element parallel resonance circuit, as in \autoref{fig:resonator_equiv}. $L$ and $C$ for the lumped-element models of CPW resonators are bound not only by the resonance frequency condition $\omega = 1/\sqrt{LC}$ but also by the geometry of the waveguide or, in other words, $C^\prime$ and $L^\prime$ -- the transmission line capacitance and inductance per unit length. To show this one would write down the impedance of the CPW resonator near its resonance frequency $\omega_0$ and compare it to the lumped-element one's\cite{pozar2012}. Such comparison leads to the following expressions:
+Here we will discuss the $\lambda/4$ coplanar waveguide (CPW) resonator which is near resonance is equivalent by impedance to a lumped element parallel resonance circuit, as in \autoref{fig:resonator_equiv}. $L$ and $C$ for the lumped-element models of CPW resonators are bound not only by the resonance frequency condition $\omega_0 = 1/\sqrt{LC}$ but also by the geometry of the waveguide or, in other words, $C^\prime$ and $L^\prime$ -- the transmission line capacitance and inductance per unit length. To show this one would write down the impedance of the CPW resonator near its resonance frequency $\omega_0$ and compare it to the lumped-element one's\cite{pozar2012}. Such comparison leads to the following expressions:
 \[
 R_{in} = \frac{Z_0}{\alpha l}, \quad C = \frac{\pi}{4\omega_0 Z_0},
 \]
 where $l$ is the resonator length, $Z_0 = \sqrt{L^\prime/C^\prime}$ is the wave resistance and $\alpha$ is the decay constant of the line. Then the resonance condition for the wavelength ($\lambda = 4 l$) is used along with the phase velocity expression $v_{ph} = 1/\sqrt{L^\prime C^\prime}$:
 \[
-\omega_0 = \frac{2\pi}{\lambda v_{ph}} =  \frac{\pi}{2 l v_{ph}} \Rightarrow  C = \frac{C^\prime l}{2}.
+\omega_0 = \frac{2\pi}{\lambda v_{ph}} =  \frac{\pi}{2 l\, v_{ph}} \Rightarrow  C = \frac{C^\prime l}{2}.
 \]
-For the inductance one can use $L = 1/\omega_0^2 C = \frac{8 L^\prime}{\pi^2}$. Finally, the expressions for $C^\prime$ and $L^\prime$:
-\begin{gather*}
-C^\prime = 4\varepsilon_0\varepsilon_{eff} \frac{K(k_0)}{K(k_0^\prime)},\\
+For the inductance one can use $L = 1/\omega_0^2 C = 8 l\, L^\prime/\pi^2$. Finally, the expressions for $C^\prime$ and $L^\prime$:
+\[
+C^\prime = 4\varepsilon_0\varepsilon_{eff} \frac{K(k_0)}{K(k_0^\prime)},\quad
 L^\prime = \frac{\mu_0}{4} \frac{K(k_0^\prime)}{K(k_0)},
-\end{gather*}
+\]
 where $K(x)$ is the complete elliptic integral of the first kind, $\varepsilon_{eff} = \frac{1+\varepsilon_{substrate}}{2}$, $k_0 = \frac{W}{W+2G}$ where $W$ is the width of the hotwire and $G$ is the width of the gaps and finally $k_0^\prime = \sqrt{1-k_0^2}$.
 
 \section{S-parameters}

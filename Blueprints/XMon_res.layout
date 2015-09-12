@@ -12,10 +12,12 @@
 #include "qr.layout"
 
         int M = 0;
-        int protect = 1;
-        int ground = 2;
-        int mask = 3;
-        int total = 4;
+        int M1 = 1;
+        int protect = 2;
+        int ground = 3;
+        int mask = 4;
+        int total = 5;
+        int aux = 6;
 
         
         int chip_height = 5e6;
@@ -120,8 +122,8 @@ int main() {
     curCell->textToPolygon(100e3);
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize);
     
-    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
+    //layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 1, 1, 3);
+    //layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 1, 1, 3);
 
     int hd;
     layout->backgroundTool->clearBackground();
@@ -129,8 +131,7 @@ int main() {
     layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);
     layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);
 
-
     //debug.show();
-
+    //debug.clear();
     
 }
