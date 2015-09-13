@@ -1,0 +1,48 @@
+ \mode<presentation>
+
+\definecolor{mipt}{RGB}{76,121,188}
+\definecolor{miptorange}{cmyk}{0,.4,.9,0}
+\definecolor{miptblue}{cmyk}{.4,.1,0,0}
+\definecolor{miptgreen}{RGB}{58,144,93}
+
+
+\setbeamertemplate{background}{
+  \begin{tikzpicture}
+  \useasboundingbox (0,0) rectangle(\the\paperwidth,\the\paperheight);
+
+  \fill[color=miptgreen] (0,2) rectangle (\the\paperwidth,\the\paperheight); % Title rect
+  \fill[color=white] (0,0) rectangle(2.95,1.9); % Picture rect
+  \fill[color=white] (3.05,0) rectangle(\the\paperwidth,1.9);	% Author rect
+  \ifnum\thepage>1\relax%
+   \fill[white,opacity=1] (0,0) rectangle(\the\paperwidth,\the\paperheight);
+   \fi
+  \ifnum\thepage=1
+	 \includegraphics[scale=0.1]{eng_inversion_2.jpg}
+  \fi 
+  \end{tikzpicture}
+}
+
+% Title page
+\defbeamertemplate*{title page}{mipt_beamer}[1][]
+{ 
+   \vspace{6.5cm}%
+    \begin{beamercolorbox}[ht=0cm,wd=12cm,leftskip=1.8cm,sep=8pt,#1]{title page header}
+     \usebeamerfont{title}\inserttitle\par%
+    \end{beamercolorbox}%
+       \addvspace{0.7cm}
+    \begin{beamercolorbox}[wd=18cm,leftskip=4cm,#1]{author}
+      \usebeamerfont{author}\insertauthor%
+    \end{beamercolorbox}
+     \addvspace{0.2cm}%
+    \begin{beamercolorbox}[wd=12cm,leftskip=3cm,#1]{date}
+      \usebeamerfont{author}\insertdate%
+    \end{beamercolorbox}
+    \vfill
+}
+% Items
+\setbeamertemplate{items}[square]
+\setbeamertemplate{sections/subsections in toc}[square]
+
+
+\mode
+<all>
