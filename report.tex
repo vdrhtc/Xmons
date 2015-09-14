@@ -442,13 +442,13 @@ However, we can now use the other side of the density matrix, the property for w
 \langle \rho(t) \rangle = \rho(0) \int_{-\infty}^{+\infty} e^{ix}\, \mathbb{N}_{0,\sigma}(x) \diff x = \rho(0) e^{-\sigma^2/2} = \rho(0) e^{-\langle x^2 \rangle/2} \\
 = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff \tau_1 \diff \tau_2 \right\}.
 \end{gather}
-Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
+Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K_f(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S_f(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S_f(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
 \begin{equation}
-\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S(\omega)\diff \omega \right\}.\label{eq:cdeph}
+\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega \right\}.\label{eq:cdeph}
 \end{equation}
-It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S(\omega) = S(0) = const$) or for a sufficiently large time $t$ where 
+It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S_f(\omega) = S_f(0) = const$) or for a sufficiently large time $t$ where 
 $$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
-acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases pure dephasing rate $\Gamma^*_2$ exists in a usual sense and $\Gamma^*_2 \propto S(0)$. In case of, for example, 1/f noise the decay curve will have the shape of $e^{-t^2}$ in the vicinity of $t=0$.
+acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases pure dephasing rate $\Gamma^*_2$ exists in a usual sense and $\Gamma^*_2 \propto S_f(0)$. In case of, for example, 1/f noise the decay curve will have the shape of $e^{-t^2}$ in the vicinity of $t=0$.
 
 The averaged evolution for the white noise case can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
 In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise is shown. For the averaged case ((b), (d)) 2500 trajectories where used. One can see that a plateau is present for the yellow graph near $t=0$, in accordance with theoretical predictions.
@@ -525,9 +525,9 @@ Performing the ensemble averaging one can get
 \left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\hbar^2} \left< \left( \int_0^{t/2} f(\tau_1)  \diff \tau_1 + \int_{t/2}^{t} f(\tau_2)  \diff \tau_2 \right)\cdot \right. \right. \\
 \cdot \left. \left. \left( \int_0^{t/2} f(\tau_3)  \diff \tau_3 + \int_{t/2}^{t} f(\tau_4)  \diff \tau_4 \right) \right> \right\}.
 \end{gather*}
-Expanding the brackets, again putting a Fourier transform of the power spectral density $S(\omega)$ instead of the autocorrelation functions and factoring the expression back to the initial representation it is possible to obtain\cite{Preskill} the final expression for the coherence expectation:
+Expanding the brackets, again putting a Fourier transform of the power spectral density $S_f(\omega)$ instead of the autocorrelation functions and factoring the expression back to the initial representation it is possible to obtain\cite{Preskill} the final expression for the coherence expectation:
 \begin{equation}
-\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S(\omega) W_t (\omega) \right\},
+\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S_f(\omega) W_t (\omega) \diff\omega \right\},
 \label{eq:cdeph_se}
 \end{equation}
 where
