@@ -14,6 +14,7 @@
 \DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
 \newcommand{\rbrkt}[1]{\left( #1 \right)}
 \newcommand{\lbrkt}[1]{\left< #1 \right>}
+\newcommand{\diff}{\,\mathrm{d}} 	
 
 
 \graphicspath{{Pics/}{../Pictures/}}
@@ -167,7 +168,7 @@ Unconventional coupling area:
  $$M_\kappa =\ ?$$
 ``Claw'' coupler at the open end. Adds up some phase $\phi(\omega)$ and can be replaced by
 $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
-with extreme accuracy.
+with high accuracy.
 \end{columns}
 \end{frame}
 
@@ -175,7 +176,7 @@ with extreme accuracy.
 \subsection{Simulations}
 \begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
 \only<1>{
-	Resonator without a claw. Frequency expected from the length and $C_\kappa$ (extracted from $Q_L \approx 10^4$) is 7.925 GHz.
+	Resonator without a claw. Frequency expected from the length and $C_\kappa\approx 6$ fF (extracted from $Q_L \approx 10^4$) is 7.925 GHz.
 
 	\vspace{0.5cm}
 	\begin{columns}[c]
@@ -197,7 +198,7 @@ with extreme accuracy.
 	\includegraphics[height=0.7\textheight]{xmonres_sim_claw}
 	\column{0.6\textwidth}
 	\centering
-	\includegraphics[width=\textwidth]{xmonres_sim_noclaw_res}
+	\includegraphics[width=\textwidth]{xmonres_sim_claw_res}
 	\end{columns}
 }
 
@@ -206,20 +207,89 @@ with extreme accuracy.
 \section{Noise and decoherence versus Hahn echo technique}
 \subsection{Quantum-mechanically treated dephasing}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-
+\only<1> {
+	System-bath interaction Hamiltonian:
+	\[
+	\mathcal{\hat H}_{sb} = \hat \sigma_z \otimes \hat O_b, 
+	\]
+	where $\hat O_b$ is an arbitrary bath operator. Master equation is then developed:
+	\[
+	\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
+	\]
+	Steady state is a maximally mixed state:
+	\[
+	\hat \rho_s (\infty) = \rbrkt{\begin{matrix}
+	0.5 & 0 \\
+	0 & 0.5 
+	\end{matrix}}.
+	\]
+}
+\only<2>{
+	\begin{columns}[c]
+	\column{0.4\textwidth}
+	\includegraphics[width=\textwidth]{qdeph_bloch}
+	\column{0.6\textwidth}
+	\includegraphics[width=\textwidth]{qdeph_xyz}
+	\end{columns}
+}
+\only<3>{
+	\begin{columns}[c]
+	\column{0.4\textwidth}
+	\includegraphics[width=\textwidth]{qdeph_bloch_rf}
+	\column{0.6\textwidth}
+	\includegraphics[width=\textwidth]{qdeph_xyz_rf}
+	\end{columns}
+}
 }
 \subsection{Classically treated dephasing}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-
+\only<1>{
+	Unitary evolution under $f(t) \hat \sigma_z$, where $f(t)$ is random. In the rotating frame:
+	\[
+	\hat \rho_s (t) = \hat U^\dag(t, 0)\ \hat\rho\ \hat U(t, 0), \quad U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
+	\]
+	\[
+	\hat \rho_s (t) = \rbrkt{\begin{matrix}
+	1/2 - N(t)/2 & \rho(t) \\
+	\rho^*(t) & 1/2 + N(t)/2 
+	\end{matrix}},
+	\]
+	\begin{gather*}
+	N(t) = N(0),\\
+	\rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar}\int_0^t f(\tau)  \diff \tau \right\}. 
+	\end{gather*}
 }
-
+\only<2>{
+	Presuming Gaussian instantaneous distribution of $f(t)$ and $x(t) = \frac{2}{\hbar}\int_0^t f(\tau)  		\diff \tau$:
+	\begin{gather*}
+	\langle \rho(t) \rangle = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff\tau_1 \diff \tau_2 \right\}.
+	\end{gather*}
+	Presuming also that $f(t)$ is a wide-sense stationary process: $$\langle f(\tau_1) f(\tau_2) 				\rangle = K(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega.$$ 
+	Taking the time integrals:
+	\[
+	\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S(\omega)\diff \omega \right\}.\label{eq:cdeph}
+	\]
+}
+}
 
 \subsection{Hahn echo}
 \begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
-
+It can be shown that for Hahn echo sequence the accumulated phase expression reads
+\begin{equation*}
+\rho(t) = \rho(0)\exp \left\{ - \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau + \frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau \right\}.
+\end{equation*}
+And after averaging as in the previous slides:
+\[
+\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S(\omega) W_t (\omega) \right\},
+\label{eq:cdeph_se}
+\]
+where
+\[
+W_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
+\]
 \end{frame}
 
-\subsection{Noise PSD}
+\subsection{Noise PSD filtration}
 \begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
 
 \end{frame}
