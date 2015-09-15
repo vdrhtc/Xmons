@@ -1,32 +1,32 @@
-\documentclass[aspectratio=169, 13pt]{beamer}
-\usepackage[russian, english]{babel}
-\usepackage[utf8]{inputenc}
+\documentclass[aspectratio=169, 13pt, t]{beamer}
 
-\usepackage{graphicx}
-\usepackage{sidecap}
-\usepackage{mathtools}
-\usepackage{appendixnumberbeamer}
-\usepackage{bbm}
-
-\newcommand{\sbrkt}[1]{\left[ #1 \right]}
-\DeclarePairedDelimiter\bra{\langle}{\rvert}
-\DeclarePairedDelimiter\ket{\lvert}{\rangle}
-\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
-\newcommand{\rbrkt}[1]{\left( #1 \right)}
-\newcommand{\lbrkt}[1]{\left< #1 \right>}
-\newcommand{\diff}{\,\mathrm{d}} 	
-
-\makeatletter
-\newcommand\supervisor[1]{\def\@supervisor{{Supervisor: #1}}}
-\makeatother
-
-\graphicspath{{./Pics/}{../Pictures/}}
-%beamer  theme's used to be here :)
-\usetheme{mipt_beamer}
-\usefonttheme[onlymath]{serif}
+	\usepackage[russian, english]{babel}
+	\usepackage[utf8]{inputenc}
+	
+	\usepackage{graphicx}
+	\usepackage{sidecap}
+	\usepackage{mathtools}
+	\usepackage{appendixnumberbeamer}
+	\usepackage{bbm}
+	
+	\newcommand{\sbrkt}[1]{\left[ #1 \right]}
+	\DeclarePairedDelimiter\bra{\langle}{\rvert}
+	\DeclarePairedDelimiter\ket{\lvert}{\rangle}
+	\DeclarePairedDelimiterX\braket[2]{\langle}{\rangle}{#1 \delimsize\vert #2}
+	\newcommand{\rbrkt}[1]{\left( #1 \right)}
+	\newcommand{\lbrkt}[1]{\left< #1 \right>}
+	\newcommand{\diff}{\,\mathrm{d}} 	
+	
+	\makeatletter
+	\newcommand\supervisor[1]{\def\@supervisor{{Supervisor: #1}}}
+	\makeatother
+	
+	\graphicspath{{./Pics/}{../Pictures/}}
+	\usetheme{mipt_beamer}
+	\usefonttheme[onlymath]{serif}
 
 \title{CPW resonators\\Noise and Decoherence vs Spin Echo\\Xmon cQED}
-\author{\bf Fedorov G. P.\normalfont, Moscow Institute of Physics and Technology}
+\author{\bf Fedorov G. P. \normalfont\quad (Moscow Institute of Physics and Technology)}
 \date{\today}
 \supervisor{A. Bilmes}
 
@@ -34,7 +34,6 @@
 \setbeamertemplate{footline}[page number]
 \renewcommand*{\inserttotalframenumber}{\insertpresentationendpage}
 \newcommand{\Tr}[1]{\text{Tr}\left[#1\right]}
-
 
 \begin{document}
   
@@ -50,7 +49,18 @@
 
 \section{Coplanar waveguide resonators}
 \frame[plain]{
-	\tableofcontents[currentsection]
+	\begin{columns}[c]
+	\column{0.7\textwidth}    
+	    \tableofcontents[currentsection]
+	\column{0.3\textwidth}
+		\centering
+		\hspace{-2cm}\includegraphics[height=0.3\textheight]{xmonres_sim_claw}
+		
+		\hspace{-2cm}\includegraphics[height=0.3\textheight]{qdeph_bloch}
+    
+    	\hspace{-2cm}\includegraphics[height=0.3\textheight]{tr_CPD}
+
+  \end{columns}
 }
 \addtocounter{page}{-1}
 
@@ -62,7 +72,7 @@
   \end{frame}
 }
 \subsection{Quality factors and effective parameters}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 
 Capacitively coupled CPW resonator as a lumped-element model: 
 
@@ -77,14 +87,15 @@ Capacitively coupled CPW resonator as a lumped-element model:
 \onslide<2,3>{
 	\column{0.1\textwidth}
 	\centering
-	{ \Huge $\Rightarrow$ }
+	{ \Huge $\Leftrightarrow$ }
 \column{0.45\textwidth}
 
 \includegraphics[width=0.9\textwidth]{resonator_equiv}
 }
 \end{columns}
 \only<1>{
-	\vfill
+	
+	\vspace{2cm}
 }
 \only<2>{
 \vspace{0.5cm}
@@ -104,7 +115,7 @@ Capacitively coupled CPW resonator as a lumped-element model:
 \end{frame}
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Loaded, internal and external quality factors depending on $C_\kappa$:
+Q-factors depending on $C_\kappa$:
 
 \centering
 
@@ -113,7 +124,8 @@ Loaded, internal and external quality factors depending on $C_\kappa$:
 }
 
 \subsection{S-parameters}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
+
 General algorithm for calculating S-parameters of a given device:
 
 \vspace{0.5cm}
@@ -152,7 +164,7 @@ V_2^+
 \end{frame}
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Transmission spectra for the shunting resonator depending on $C_\kappa$:
+Analytical $S_{21}(C_\kappa, \omega) = (1+Z_0/2Z_{sh})^{-1},\ Z_{sh} = 1/i\omega C_\kappa + Z_{res}$:
 
 \centering
 \vspace{0.5cm}
@@ -163,27 +175,31 @@ Transmission spectra for the shunting resonator depending on $C_\kappa$:
 \begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
 \begin{columns}[c]
 \column{0.3\textwidth}
-\includegraphics[height=0.9\textheight]{xmonres}
+{\footnotesize Designed in LayoutEditor}
+
+\includegraphics[height=0.85\textheight]{xmonres}
 \column{0.7\textwidth}
 $l = \lambda/4$ coplanar resonators, $W=4\,\mu m,\ G=2\,\mu m$.
 
 \vspace{0.5cm}
-Unconventional coupling area:
- $$C_\kappa^{eff} = C_\kappa \cos \frac{\pi x_\kappa}{2 l}\ ?$$
+Unconventional coupling to the feedline:
+ $$C_\kappa^{eff} = C_\kappa \cos \frac{\pi x_\kappa}{2 l}\ ? \text{ [1]}$$
  $$M_\kappa =\ ?$$
-``Claw'' coupler at the open end. Adds up some phase $\phi(\omega)$ and can be replaced by
+``Claw'' coupler at the open end. Adds up some phase $\phi(\omega)$ and can be replaced [1] with high accuracy by
 $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
-with high accuracy.
+
+
+{\footnotesize[1] D. Sank, PhD Thesis, 2014}
 \end{columns}
 \end{frame}
 
 
-\subsection{Simulations}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\subsection{Sonnet simulations}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 \only<1>{
 	Resonator without a claw. Frequency expected from the length and $C_\kappa\approx 6$ fF (extracted from $Q_L \approx 10^4$) is 7.925 GHz.
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\centering
@@ -196,7 +212,7 @@ with high accuracy.
 \only<2>{
 	Resonator with a claw. Frequency expected from the previous simulation and $\phi$ (also simulated separately for the given claw) is 7.4255 GHz.
 	
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\centering
@@ -278,7 +294,7 @@ with high accuracy.
 }
 
 \subsection{Hahn echo}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 It can be shown that for Hahn echo sequence the accumulated phase expression reads
 \begin{equation*}
 \rho(t) = \rho(0)\exp \left\{ - \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau + \frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau \right\}.
@@ -295,7 +311,7 @@ W_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
 \end{frame}
 
 \subsection{Noise PSD filtration}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 In both Ramsey and Hahn echo experiments the noise PSD gets convolved with a corresponding filter function $W_t(\omega)$. For $t=5$:
 
 \vspace{0.5cm}
@@ -309,7 +325,7 @@ In both Ramsey and Hahn echo experiments the noise PSD gets convolved with a cor
 \end{frame}
 
 \subsection{Who wins?}
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 $S(\omega) = \delta(\omega)$ ($f(t) = const$):
 \only<1>{
 
@@ -328,7 +344,7 @@ $S(\omega) = \delta(\omega)$ ($f(t) = const$):
 }
 \end{frame}
 
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 Master equation:
 \only<1>{
 
@@ -347,7 +363,7 @@ Master equation:
 }
 \end{frame}
 
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 $S(\omega) =1/\omega$ (pink noise):
 \only<1>{
 
@@ -380,7 +396,7 @@ $S(\omega) =1/\omega$ (pink noise):
 }
 \end{frame}
 
-\begin{frame}[c]\frametitle{\secname}\framesubtitle{\subsecname}
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 $S(\omega) =S(0) = const$ (white noise):
 \only<1>{
 
@@ -548,8 +564,5 @@ The shifts depend on the detuning and thus $\Phi_{ext}$ ($\Delta_\omega = \omega
 \end{columns}
 
 }
-
-\appendix
-
 
 \end{document}
