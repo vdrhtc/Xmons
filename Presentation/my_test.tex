@@ -8,6 +8,8 @@
 	\usepackage{mathtools}
 	\usepackage{appendixnumberbeamer}
 	\usepackage{bbm}
+	\usepackage{tcolorbox}
+
 	
 	\newcommand{\sbrkt}[1]{\left[ #1 \right]}
 	\DeclarePairedDelimiter\bra{\langle}{\rvert}
@@ -35,6 +37,16 @@
 \renewcommand*{\inserttotalframenumber}{\insertpresentationendpage}
 \newcommand{\Tr}[1]{\text{Tr}\left[#1\right]}
 
+
+\newtcolorbox{mybox}[1][]{
+colback=white,
+colbacktitle=white,
+colframe=miptgreen,
+boxrule=1pt,
+titlerule=0pt,
+arc=15pt,
+}
+
 \begin{document}
   
 {
@@ -54,7 +66,7 @@
 	    \tableofcontents[currentsection]
 	\column{0.3\textwidth}
 		\centering
-		\hspace{-2cm}\includegraphics[height=0.3\textheight]{xmonres_sim_claw}
+		\hspace{-2cm}\includegraphics[height=0.3\textheight]{xmonres_sim_claw_h}
 		
 		\hspace{-2cm}\includegraphics[height=0.3\textheight]{qdeph_bloch}
     
@@ -197,7 +209,7 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 \subsection{Sonnet simulations}
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 \only<1>{
-	Resonator without a claw. Frequency expected from the length and $C_\kappa\approx 6$ fF (extracted from $Q_L \approx 10^4$) is 7.925 GHz.
+	Resonator without a claw. Frequency expected from the length and $C_\kappa\approx 6$ fF (extracted from $Q_l \approx 10^4$) is 7.925 GHz.
 
 	\vspace{0.2cm}
 	\begin{columns}[c]
@@ -226,26 +238,31 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 \end{frame}
 
 \section{Noise and decoherence versus Hahn echo technique}
-\subsection{Quantum-mechanically treated dephasing}
+\subsection{Quantum-mechanically treated pure dephasing (Ramsey)}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
 \only<1> {
-	System-bath interaction Hamiltonian:
+	Qubit-environment interaction Hamiltonian:
 	\[
-	\mathcal{\hat H}_{sb} = \hat \sigma_z \otimes \hat O_b, 
+	\mathcal{\hat H}_{qe} = \hat O_e \otimes  \hat \sigma_z.
 	\]
-	where $\hat O_b$ is an arbitrary bath operator. Master equation is then developed:
+	$\hat O_e$ is an arbitrary environment operator, $\hat \sigma_z$ -- qubit observable.
+	
+	~
+	
+	 Master equation:
 	\[
-	\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
+	\partial_t \hat \rho_q = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
 	\]
-	Steady state is a maximally mixed state:
+	Steady state:
 	\[
-	\hat \rho_s (\infty) = \rbrkt{\begin{matrix}
-	0.5 & 0 \\
-	0 & 0.5 
+	\hat \rho_q (\infty) = \rbrkt{\begin{matrix}
+	\rho_{11}(0) & 0 \\
+	0 & \rho_{22}(0) 
 	\end{matrix}}.
 	\]
 }
 \only<2>{
+	Example: pure dephasing of the $\ket{+}$  state, \bf lab frame.
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\includegraphics[width=\textwidth]{qdeph_bloch}
@@ -254,6 +271,8 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	\end{columns}
 }
 \only<3>{
+	Example: pure dephasing of the $\ket{+}$  state, \bf rotating frame.
+
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\includegraphics[width=\textwidth]{qdeph_bloch_rf}
@@ -262,71 +281,90 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	\end{columns}
 }
 }
-\subsection{Classically treated dephasing}
+\subsection{Classically treated pure dephasing (Ramsey)}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
 \only<1>{
-	Unitary evolution under $f(t) \hat \sigma_z$, where $f(t)$ is random. In the rotating frame:
+	$$\hat O_e \otimes \hat  \sigma_z \rightarrow f(t) \cdot \hat \sigma_z,\ f(t)\ \text{is random}$$ 
+	
+	Rotating frame evolution:
 	\[
-	\hat \rho_q (t) = \hat U^\dag(t, 0)\ \hat\rho(0)\ \hat U(t, 0), \quad U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
+	\hat \rho_q (t) = \hat U^\dag(t, 0)\ \hat\rho_q(0)\ \hat U(t, 0), \quad \hat U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
 	\]
 	\[
-	\hat \rho_s (t) = \rbrkt{\begin{matrix}
+	\hat \rho_q (t) = \rbrkt{\begin{matrix}
 	1/2 - N(t)/2 & \rho(t) \\
 	\rho^*(t) & 1/2 + N(t)/2 
 	\end{matrix}},
 	\]
-	\begin{gather*}
+	\begin{mybox}
+	\[
+	\left. \begin{gathered}
 	N(t) = N(0),\\
-	\rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar}\int_0^t f(\tau)  \diff \tau \right\}. 
-	\end{gather*}
+	\rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar}\int_0^t f(\tau)  \diff \tau \right\} 
+	\end{gathered}\right\}
+	 \Rightarrow \begin{matrix} \text{\bf unitary random walk,}\\ \text{\bf no dephasing!}\end{matrix}
+	\]
+	\end{mybox}
 }
 \only<2>{
-	Presuming Gaussian instantaneous distribution of $f(t)$ and $x(t) = \frac{2}{\hbar}\int_0^t f(\tau)  		\diff \tau$:
+	\textbf{Averaging.} For Gaussian instantaneous distribution of $f(t),\ \frac{2}{\hbar}\int_0^t f(\tau) \diff \tau$:
 	\begin{gather*}
 	\langle \rho(t) \rangle = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff\tau_1 \diff \tau_2 \right\}.
 	\end{gather*}
-	Presuming also that $f(t)$ is a wide-sense stationary process: $$\langle f(\tau_1) f(\tau_2) 				\rangle = K_f(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S_f(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega.$$ 
-	Taking the time integrals:
+	Presuming also that $f(t)$ is a wide-sense stationary process: $$\langle f(\tau_1) f(\tau_2) 				\rangle = K_f(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_{-\infty}^{\infty} S_f(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega.$$ 
+	\begin{mybox}
 	\[
-	\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega \right\}.\label{eq:cdeph}
+	\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_{-\infty}^{\infty}  \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega \right\} \equiv \rho(0)e^{-\alpha (t)}
 	\]
+	\centering
+	$\Rightarrow$ \bf  ensemble averaged behaviour is non-unitary!
+	\end{mybox}
 }
 }
 
 \subsection{Hahn echo}
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-It can be shown that for Hahn echo sequence the accumulated phase expression reads
+\textbf{Add one instant $\pi$-pulse}. Accumulated phase:
 \begin{equation*}
-\rho(t) = \rho(0)\exp \left\{ - \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau + \frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau \right\}.
+\rho(t) = \rho(0)\exp \Big\{ \underbrace{- \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau}_{\text{before }\pi\text{-pulse}} + \underbrace{\frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau}_{\text{after }\pi\text{-pulse}} \Big	\}.
 \end{equation*}
-And after averaging as in the previous slides:
+After averaging:
+\begin{mybox}
 \[
-\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S_f(\omega) W_t (\omega)\diff \omega \right\},
-\label{eq:cdeph_se}
-\]
-where
-\[
+\begin{gathered}
+\left<\rho(t)\right> = \rho(0)\exp \Big\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int\limits_{-\infty}^{\infty}  S_f(\omega) W_t (\omega)\diff \omega \Big\},\\
 W_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
+\end{gathered}
 \]
+\end{mybox}
 \end{frame}
 
 \subsection{Noise PSD filtration}
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-In both Ramsey and Hahn echo experiments the noise PSD gets convolved with a corresponding filter function $W_t(\omega)$. For $t=5$:
-
-\vspace{0.5cm}
 \begin{columns}[c]
 \column{0.5\textwidth}
-\centering\includegraphics[width=0.9\textwidth]{ramsey_filter}
+\centering\includegraphics[width=\textwidth]{ramsey_filter}
+
+\vspace{0.1cm}
+\begin{itemize}
+\item Ramsey: $\int  \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega $ 
+\end{itemize}
 \column{0.5\textwidth}
-\centering\includegraphics[width=0.9\textwidth]{hahn_filter}
+\centering\includegraphics[width=\textwidth]{hahn_filter}
+
+\vspace{0.1cm}
+\begin{itemize}
+
+\item Hahn: $\int \tan^2(\omega t/4) \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega  $ 
+
+\end{itemize}
 \end{columns}
 
 \end{frame}
 
 \subsection{Who wins?}
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-$S(\omega) = \delta(\omega)$ ($f(t) = const$):
+$S_f(\omega) = \delta(\omega)$ ($f(t) = const$ in each single run):
 \only<1>{
 
 	\vspace{10cm}
@@ -334,40 +372,29 @@ $S(\omega) = \delta(\omega)$ ($f(t) = const$):
 }
 \only<2>{
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\includegraphics[width=\textwidth]{cse_bloch_rf}
 	\column{0.6\textwidth}
 	\includegraphics[width=\textwidth]{cse_xyz_rf}
+	
+	
+	\vspace{-0.3cm}
+	\begin{itemize}
+	\centering	
+	\item \bf full efficiency for instant pulses
+	\end{itemize}
 	\end{columns}
 }
 \end{frame}
 
-\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-Master equation:
-\only<1>{
-
-	\vspace{10cm}
-	\vfill
-}
-\only<2>{
-
-	\vspace{0.5cm}
-	\begin{columns}[c]
-	\column{0.4\textwidth}
-	\includegraphics[width=\textwidth]{qse_bloch_rf}
-	\column{0.6\textwidth}
-	\includegraphics[width=\textwidth]{qse_xyz_rf}
-	\end{columns}
-}
-\end{frame}
 
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-$S(\omega) =1/\omega$ (pink noise):
+$S_f(\omega) =1/\omega$ (pink noise):
 \only<1>{
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.5\textwidth}
 	\centering
@@ -380,7 +407,7 @@ $S(\omega) =1/\omega$ (pink noise):
 }
 \only<2>{
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.5\textwidth}
 	\centering
@@ -393,14 +420,21 @@ $S(\omega) =1/\omega$ (pink noise):
 	
 	Echo
 	\end{columns}
+	
+	
+	\vspace{0.2cm}
+	\begin{itemize}
+	\centering	
+	\item \bf efficient!
+	\end{itemize}
 }
 \end{frame}
 
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-$S(\omega) =S(0) = const$ (white noise):
+$S_f(\omega) =S_f(0) = const$ (white noise):
 \only<1>{
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.5\textwidth}
 	\centering
@@ -413,7 +447,7 @@ $S(\omega) =S(0) = const$ (white noise):
 }
 \only<2>{
 
-	\vspace{0.5cm}
+	\vspace{0.2cm}
 	\begin{columns}[c]
 	\column{0.5\textwidth}
 	\centering
@@ -426,10 +460,17 @@ $S(\omega) =S(0) = const$ (white noise):
 	
 	Echo
 	\end{columns}
+	
+	\vspace{0.2cm}
+	\begin{itemize}
+		\centering	
+	\item \textbf{totally inefficient}, same for the master equation description
+	\end{itemize}
+	
 }
 \end{frame}
 
-\section{Xmon cQED}
+\section{Xmon cQED (QuTiP simulations)}
 
 
 \subsection{Circuit quantization}
@@ -438,12 +479,10 @@ Equivalent circuit for the transmon-resonator system:
 
 \centering
 \vspace{0.5cm}
-\includegraphics[width=0.8\textwidth]{xmon_resonator}
+\includegraphics[width=0.8\textwidth]{xmon-resonator}
 }
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Hamiltonian:
-
 \[
 \begin{gathered}
 \mathcal{\hat H} =  \underbrace{\frac{\hat \phi_r^2}{2 L_r} + \frac{(C_q+C_g) \hat Q_r^2}{2C_*^2}}_\text{resonator} 
@@ -456,42 +495,27 @@ Hamiltonian:
 \]
 }
 
-\subsection{Eigenproblem for an isolated Xmon}
+\subsection{Cooper pair distribution for an isolated Xmon}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Cooper pairs distribution in the transmon eigenstates:
-
-\vspace{0.5cm}
 \begin{columns}[c]
 \column{0.5\textwidth}
 \centering
-\includegraphics[width=0.95\textwidth]{tr_CPD_0}
+\includegraphics[width=\textwidth]{tr_CPD_0}
 
-\includegraphics[width=0.95\textwidth]{tr_CPD_1}
+\includegraphics[width=\textwidth]{tr_CPD_1}
 \column{0.5\textwidth}
 \centering
-\includegraphics[width=0.95\textwidth]{tr_CPD_2}
+\includegraphics[width=\textwidth]{tr_CPD_2}
 
-\includegraphics[width=0.95\textwidth]{tr_CPD_3}
+\includegraphics[width=\textwidth]{tr_CPD_3}
 \end{columns}
 
 }
 
-\subsection{Strong driving}
-\frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Evolution of the transmon wavefunction is defined with
-\[
-\ket{\psi}(t) = \hat T \exp\left\{-\frac{i}{\hbar} \rbrkt{\mathcal{\hat H}t + \int_0^t \mathcal{\hat H}_q^d(\tau) \diff\tau}\right\} \ket{E_0^q}= \sum_k c_k(t) \ket{E^q_k},
-\]
-where 
-\[
-\mathcal{\hat H}_q^d(t) = \frac{C_e V_e(t)}{C_q + C_e} \hat Q_q \propto f_q(t)\  \mathbbm{\hat 1}_r \otimes \hat n.
-\]
-}
 
-\frame{\frametitle{\secname}\framesubtitle{\subsecname}
-For weak driving the two-level dynamics is preserved:
+\frame[c]{\frametitle{\secname}\framesubtitle{\subsecname}
+For weak driving the two-level dynamics is preserved ($\ket{\psi(t)}= \sum_k c_k(t) \ket{E_k}$):
 
-\vspace{0.1cm}
 \begin{columns}[c]
 \column{0.5\textwidth}
 \centering
@@ -502,10 +526,9 @@ For weak driving the two-level dynamics is preserved:
 \end{columns}
 }
 
-\frame{\frametitle{\secname}\framesubtitle{\subsecname}
-But not for the stronger one:
+\frame[c]{\frametitle{\secname}\framesubtitle{\subsecname}
+But not for the strong drive ($\ket{\psi(t)} = \sum_k c_k(t) \ket{E_k}$):
 
-\vspace{0.1cm}
 \begin{columns}[c]
 \column{0.5\textwidth}
 \centering
@@ -519,14 +542,14 @@ But not for the stronger one:
 
 \subsection{Eigenproblem for a qubit-resonator system}
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Energy levels:
+Energy level structure:
 
 \vspace{0.5cm}
 \includegraphics[width=\textwidth]{levels.pdf}
 }
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname}
-Frequencies:
+Frequencies $f_{0n} = (E_n - E_0)/h$ for $\omega_q > \omega_r$:
 
 \vspace{0.5cm}
 \includegraphics[width=\textwidth]{freqs.pdf}
@@ -541,7 +564,7 @@ Dispersive shifts originate from the level structure of the whole composite syst
 }
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname} 
-It's possible to estimate these shifts with high accuracy using the second order perturbation theory:
+It's possible to determine these shifts with high accuracy using the second order perturbation theory:
 \begin{gather*}
 \chi_0 = g^2\sbrkt{\frac{n_{ge}^2}{\omega_r - \omega_{ge}}-\frac{n_{ge}^2}{\omega_r + \omega_{ge}}},\\
 \chi_1 = g^2\sbrkt{\frac{n_{ef}^2}{\omega_r - \omega_{ef}} - \frac{n_{ef}^2}{\omega_r + \omega_{ef}} + \frac{n_{eg}^2}{\omega_r + \omega_{ge}}-\frac{n_{eg}^2}{\omega_r - \omega_{ge} }},\\
@@ -550,7 +573,7 @@ It's possible to estimate these shifts with high accuracy using the second order
 }
 
 \frame{\frametitle{\secname}\framesubtitle{\subsecname} 
-The shifts depend on the detuning and thus $\Phi_{ext}$ ($\Delta_\omega = \omega_r - \omega_{ge}$):
+The shifts depend on the detuning  $\Delta_\omega = \omega_r - \omega_{ge}$ and  $\Phi_{ext}$:
 
 \vspace{0.5cm}
 \begin{columns}[c]
@@ -562,7 +585,49 @@ The shifts depend on the detuning and thus $\Phi_{ext}$ ($\Delta_\omega = \omega
 \includegraphics[height=0.65\textheight]{shifts-10}
 
 \end{columns}
+}
 
+\section*{Final words}
+\subsection*{Summary}
+\frame{\frametitle{\secname}\framesubtitle{\subsecname} 
+\begin{columns}[c]
+\column{0.5\textwidth}
+\begin{itemize}
+\item \textbf{Quality factors} and \textbf{coupling capacitance} calculations, simulations of \textbf{CPW resonators} and \textbf{extraction of capacitances} using Sonnet
+\item Investigation of \textbf{classical} and \textbf{quantum noise} influence on the qubit, numerical simulations of the \textbf{pure dephasing under different types of noise}
+\item \textbf{Quantization of Xmon-resonator} circuit to transform capacitances and quality factors to the \textbf{coupling strengths, driving amplitudes} and \textbf{decay rates} 
+\end{itemize}
+\column{0.5\textwidth}
+\centering
+
+\hspace{-0.2cm} \includegraphics[height=0.2\textheight]{xmonres_sim_claw_h}
+
+\vspace{0.1cm}
+\hspace{-0.7cm}	\includegraphics[height=0.3\textheight]{deph_white_se}
+
+\includegraphics[height=0.3\textheight]{diagram}
+\end{columns}
+}
+
+\appendix
+
+\subsection*{Acknowledgements}
+\frame[c]{\frametitle{\secname}\framesubtitle{\subsecname} 
+
+{\large
+\begin{itemize}
+\centering
+\item A. V. Ustinov
+
+\vspace{0.5cm}
+\item J. Lisenfeld and A. Bilmes
+\end{itemize}
+}
+}
+\frame[c]{\frametitle{\secname}\framesubtitle{\subsecname} 
+\begin{center}
+{\huge Thank you!}
+\end{center}
 }
 
 \end{document}

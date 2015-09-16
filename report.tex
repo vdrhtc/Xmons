@@ -237,7 +237,7 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}.
 
 \begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{xmon_resonator}
+\includegraphics[width=0.8\textwidth]{xmon-resonator}
 \caption{Equivalent circuit for coupled system of a tunable transmon qubit and a resonator. Colors show nodes (or branches) containing system's degrees of freedom according to M. Devoret's theory\cite{Devoret1995}.}
 \label{fig:xmon-resonator}
 \end{figure}
@@ -326,7 +326,7 @@ where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\a
 
 To simulate the dynamics in the unitary case without taking into account the dissipative processes it is enough to solve Schrödinger equation with the Hamiltonian \eqref{eq:hamiltonian} summed with the driving part \eqref{eq:driving_q}. To consider the isolated qubit only it is sufficient to put $C_g = 0$. The final state after some time of the evolution $t$ will be described with a Dyson series or a $\hat T$-exponent:
 \begin{equation}
-\ket{\psi}(t) = \hat T \exp\left\{-\frac{i}{\hbar} \rbrkt{\mathcal{\hat H}t + \int_0^t \mathcal{\hat H}_q^d(\tau) \diff\tau}\right\} \ket{E_0^q}= \sum_k c_k(t) \ket{E^q_k},
+\ket{\psi (t)} = \hat T \exp\left\{-\frac{i}{\hbar} \rbrkt{\mathcal{\hat H}t + \int_0^t \mathcal{\hat H}_q^d(\tau) \diff\tau}\right\} \ket{E_0^q}= \sum_k c_k(t) \ket{E^q_k},
 \end{equation} 
 where $\ket{E_k^q}$ denotes the $k$'s eigenstate of the qubit Hamiltonian. The simulation can also be reduced to a standard linear ODE solution which is also possible within QuTiP framework using the \textit{mesolve} routine.
 
@@ -359,19 +359,19 @@ There are two ways of describing pure dephasing. One is developed from the syste
 
 \section{Quantum derivation of dephasing}
 
-For the derivation of this phase-destroying process in a quantum way the system-bath interaction Hamiltonian part is chosen as
+For the derivation of this phase-destroying process in a quantum way the system-environment interaction Hamiltonian part is chosen as
 \[
-\mathcal{\hat H}_{sb} = \hat \sigma_z \otimes \hat O_b, 
+\mathcal{\hat H}_{qe} = \hat \sigma_z \otimes \hat O_e, 
 \]
-where $\hat O_b$ is an arbitrary bath operator. From this interaction term a master equation is then developed:
+where $\hat O_e$ is an arbitrary environment operator. From this interaction term a master equation is then developed:
 \[
 \partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
 \]
 The dynamics of this equation can be seen in \autoref{fig:qdeph}.  At $t \rightarrow \infty$ the state of the system is a totally mixed state:
 \[
 \hat \rho_s (\infty) = \rbrkt{\begin{matrix}
-0.5 & 0 \\
-0 & 0.5 
+\rho_{11}(0) & 0 \\
+0 & \rho_{22}(0) 
 \end{matrix}}.
 \]
 Following the open system approach this should be understood as the consequence of the entanglement of the qubit with the environment. The same density matrix we will obtain trying to find out in which state
@@ -411,7 +411,7 @@ The classical derivation will be presented below in detail. This method, just as
 \]
 where 
 \[
-U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
+\hat U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
 \]
 From the fact that $\hat \sigma_z$ is diagonal it can be shown that
 \[

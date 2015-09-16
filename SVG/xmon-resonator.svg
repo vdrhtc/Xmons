@@ -10,8 +10,8 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="2970"
-   height="2100"
+   width="2632.8118"
+   height="1332.9348"
    id="svg4136"
    inkscape:version="0.91 r13725"
    sodipodi:docname="xmon-resonator.svg"
@@ -39,15 +39,15 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1366"
-     inkscape:window-height="706"
+     inkscape:window-width="1280"
+     inkscape:window-height="962"
      id="namedview4228"
      showgrid="false"
      inkscape:zoom="0.19371028"
-     inkscape:cx="1257.2848"
-     inkscape:cy="1385.786"
-     inkscape:window-x="0"
-     inkscape:window-y="27"
+     inkscape:cx="1234.85"
+     inkscape:cy="632.77805"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg4136"
      inkscape:snap-center="false"
@@ -57,7 +57,17 @@
      inkscape:object-nodes="true"
      inkscape:snap-smooth-nodes="true"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true"
+     inkscape:snap-text-baseline="true"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0">
+    <sodipodi:guide
+       position="683.09186,1327.5138"
+       orientation="0,1"
+       id="guide4403" />
+  </sodipodi:namedview>
   <title
      id="title4138">scheme</title>
   <defs
@@ -65,156 +75,167 @@
     <marker
        inkscape:stockid="Arrow1Send"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker6257"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path6259"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) rotate(180) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Sstart"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker6253"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path6255"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Mend"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow1Mend"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5211"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.4) rotate(180) translate(10,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Sstart"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker5501"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5503"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Lstart"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow1Lstart"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5202"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.8) translate(12.5,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(0.8,0,0,0.8,10,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Send"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="marker5495"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5497"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) rotate(180) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="TriangleOutS"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="TriangleOutS"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5350"
-         d="M 5.77,0.0 L -2.88,5.0 L -2.88,-5.0 L 5.77,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2)" />
+         d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="scale(0.2,0.2)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow2Mend"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow2Mend"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5229"
-         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
-         transform="scale(0.6) rotate(180) translate(0,0)" />
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         transform="scale(-0.6,-0.6)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Sstart"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow1Sstart"
        style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5214"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(0.2,0,0,0.2,1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:stockid="Arrow1Send"
        orient="auto"
-       refY="0.0"
-       refX="0.0"
+       refY="0"
+       refX="0"
        id="Arrow1Send"
-       style="overflow:visible;"
+       style="overflow:visible"
        inkscape:isstock="true">
       <path
          id="path5217"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         transform="scale(0.2) rotate(180) translate(6,0)" />
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         transform="matrix(-0.2,0,0,-0.2,-1.2,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <marker
        inkscape:isstock="true"
-       style="overflow:visible;"
+       style="overflow:visible"
        id="marker5441"
-       refX="0.0"
-       refY="0.0"
+       refX="0"
+       refY="0"
        orient="auto"
        inkscape:stockid="Arrow1Lend">
       <path
-         transform="scale(0.8) rotate(180) translate(12.5,0)"
-         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#000000;fill-opacity:1"
-         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
-         id="path5443" />
+         transform="matrix(-0.8,0,0,-0.8,-10,0)"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
+         id="path5443"
+         inkscape:connector-curvature="0" />
     </marker>
     <style
        type="text/css"
@@ -236,7 +257,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
          inkscape:connector-curvature="0"
          id="path5350-6"
          d="m 5.77,0 -8.65,5 0,-10 8.65,5 z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
          transform="scale(0.2,0.2)" />
     </marker>
     <marker
@@ -251,7 +272,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
          inkscape:connector-curvature="0"
          id="path5503-8"
          d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
          transform="matrix(0.2,0,0,0.2,1.2,0)" />
     </marker>
     <marker
@@ -266,12 +287,12 @@ circle {stroke-linecap:round; stroke-linejoin:round}
          inkscape:connector-curvature="0"
          id="path5503-7"
          d="M 0,0 5,-5 -12.5,0 5,5 0,0 Z"
-         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
          transform="matrix(0.2,0,0,0.2,1.2,0)" />
     </marker>
   </defs>
   <path
-     d="m 1072.0244,1037.6068 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4965 9.6206,-3.9551 4.65,-2.5121 8.6586,-5.8258 4.0619,-3.3138 7.3757,-7.3757 3.3138,-4.0086 5.8258,-8.6586 2.4586,-4.5965 3.9551,-9.62064 1.55,-5.0241 2.0311,-10.2084 0.5345,-5.238 0,-10.4758 -0.4811,-5.1844 -2.0311,-10.2084 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.65 -5.8258,-8.65849 -3.3138,-4.0621 -7.3757,-7.3759 -4.0086,-3.3137 -8.6586,-5.8257 -4.5964,-2.4586 -9.6206,-3.9551 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5345 -5.2379,-0.5345 l 0,0"
+     d="m 889.82476,818.73604 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4965 9.6206,-3.9551 4.65,-2.5121 8.6586,-5.8258 4.0619,-3.3138 7.3757,-7.3757 3.3138,-4.0086 5.8258,-8.6586 2.4586,-4.5965 3.9551,-9.62064 1.55,-5.0241 2.0311,-10.2084 0.5345,-5.238 0,-10.4758 -0.4811,-5.1844 -2.0311,-10.2084 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.65 -5.8258,-8.65849 -3.3138,-4.0621 -7.3757,-7.3759 -4.0086,-3.3137 -8.6586,-5.8257 -4.5964,-2.4586 -9.6206,-3.9551 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5345 -5.2379,-0.5345 l 0,0"
      id="path4178"
      inkscape:connector-curvature="0"
      style="fill:none;stroke:#000000;stroke-width:10.6895256;stroke-linecap:round;stroke-linejoin:round"
@@ -279,7 +300,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
-     d="m 1072.0244,1144.5021 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4966 9.6206,-3.9551 4.65,-2.5121 8.6586,-5.8258 4.0619,-3.3138 7.3757,-7.3758 3.3138,-4.0086 5.8258,-8.6586 2.4586,-4.5964 3.9551,-9.6205 1.55,-5.0241 2.0311,-10.2085 0.5345,-5.2378 0,-10.4758 -0.4811,-5.1843 -2.0311,-10.2084 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.65 -5.8258,-8.6586 -3.3138,-4.0619 -7.3757,-7.3757 -4.0086,-3.3137 -8.6586,-5.8258 -4.5964,-2.4586 -9.6206,-3.9551 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5345 -5.2379,-0.5345 l 0,0"
+     d="m 889.82476,925.63134 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4966 9.6206,-3.9551 4.65,-2.5121 8.6586,-5.8258 4.0619,-3.3138 7.3757,-7.3758 3.3138,-4.0086 5.8258,-8.6586 2.4586,-4.5964 3.9551,-9.6205 1.55,-5.0241 2.0311,-10.2085 0.5345,-5.2378 0,-10.4758 -0.4811,-5.1843 -2.0311,-10.2084 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.65 -5.8258,-8.6586 -3.3138,-4.0619 -7.3757,-7.3757 -4.0086,-3.3137 -8.6586,-5.8258 -4.5964,-2.4586 -9.6206,-3.9551 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5345 -5.2379,-0.5345 l 0,0"
      id="path4180"
      inkscape:connector-curvature="0"
      style="fill:none;stroke:#000000;stroke-width:10.6895256;stroke-linecap:round;stroke-linejoin:round"
@@ -289,7 +310,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="420.00 911.00 420.00 941.00 400.00 941.00 440.00 941.00"
      id="polyline4182"
-     transform="matrix(5.3447629,0,0,5.3447629,-724.72904,-3955.7503)"
+     transform="matrix(5.3447629,0,0,5.3447629,-906.92868,-4174.6211)"
      style="fill:none;stroke:#3654ab;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -297,7 +318,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="400.00 951.00 440.00 951.00 420.00 951.00 420.00 981.00"
      id="polyline4184"
-     transform="matrix(5.3447629,0,0,5.3447629,-724.72904,-3955.7503)"
+     transform="matrix(5.3447629,0,0,5.3447629,-906.92868,-4174.6211)"
      style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -305,7 +326,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="480.00 861.00 480.00 876.00 460.00 876.00 500.00 876.00"
      id="polyline4200"
-     transform="matrix(-5.3447629,0,0,5.3447629,4239.1775,-3973.0616)"
+     transform="matrix(-5.3447629,0,0,5.3447629,4056.9779,-4191.9324)"
      style="fill:none;stroke:#41d600;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -313,7 +334,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="460.00 886.00 500.00 886.00 480.00 886.00 480.00 901.00"
      id="polyline4202"
-     transform="matrix(-5.3447629,0,0,5.3447629,4239.1775,-3973.0616)"
+     transform="matrix(-5.3447629,0,0,5.3447629,4056.9779,-4191.9324)"
      style="fill:none;stroke:#3654ab;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -322,7 +343,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(184.78686,-46.895344)"
+     transform="translate(2.5872244,-265.76611)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -340,10 +361,10 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-11"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(561.87487,247.87887)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
-     inkscape:export-ydpi="90"><flowRegion
+     inkscape:export-ydpi="90"
+     transform="translate(379.67523,29.008106)"><flowRegion
        id="flowRegion4186-97"><rect
          id="rect4188-9"
          width="241.9238"
@@ -360,7 +381,8 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:STIX;-inkscape-font-specification:'STIX Italic';fill:#000000;fill-opacity:1;stroke:none;stroke-width:11.36400032;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
-     inkscape:export-ydpi="90"><flowRegion
+     inkscape:export-ydpi="90"
+     transform="translate(-182.19964,-218.87076)"><flowRegion
        id="flowRegion5380"><rect
          id="rect5382"
          width="175.15489"
@@ -372,7 +394,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-53-4"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(253.28007,-408.09253)"
+     transform="translate(71.080434,-626.96329)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -388,7 +410,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
    style="font-size:64.99999762%;baseline-shift:sub"
    id="flowSpan4296-1">κ</flowSpan></flowPara></flowRoot>  <g
      id="g4238"
-     transform="translate(728.19888,976.70826)"
+     transform="translate(545.99924,757.8375)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -410,7 +432,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   </g>
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1673.6913,1410.3059 0,-122.8438"
+     d="m 1491.4917,1191.4351 0,-122.8438"
      id="path4271"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -418,7 +440,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1673.6913,1287.4621 153.6199,0"
+     d="m 1491.4917,1068.5913 153.6199,0"
      id="path4307"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -426,7 +448,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1520.0714,1287.4621 153.6199,0"
+     d="m 1337.8718,1068.5913 153.6199,0"
      id="path4307-1"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -434,7 +456,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1673.6913,913.32857 153.6199,0"
+     d="m 1491.4917,694.45781 153.6199,0"
      id="path4307-3"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -442,7 +464,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1520.0714,913.32857 153.6199,0"
+     d="m 1337.8718,694.45781 153.6199,0"
      id="path4307-1-4"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -450,7 +472,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,1410.3059 0,-122.8438"
+     d="m 736.20488,1191.4351 0,-122.8438"
      id="path4271-9"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -458,7 +480,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,1287.4621 153.61988,0"
+     d="m 736.20488,1068.5913 153.61988,0"
      id="path4307-7"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -466,7 +488,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 764.78462,1287.4621 153.6199,0"
+     d="m 582.58498,1068.5913 153.6199,0"
      id="path4307-1-42"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -475,7 +497,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="420.00 911.00 420.00 941.00 400.00 941.00 440.00 941.00"
      id="polyline4182-7"
-     transform="matrix(5.3447629,0,0,5.3447629,-1480.0159,-4071.9826)"
+     transform="matrix(5.3447629,0,0,5.3447629,-1662.2155,-4290.8534)"
      style="fill:none;stroke:#41d600;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -483,14 +505,14 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="400.00 951.00 440.00 951.00 420.00 951.00 420.00 981.00"
      id="polyline4184-4"
-     transform="matrix(5.3447629,0,0,5.3447629,-1480.0159,-4071.9826)"
+     transform="matrix(5.3447629,0,0,5.3447629,-1662.2155,-4290.8534)"
      style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,680.86407 153.61988,0"
+     d="m 736.20488,461.99331 153.61988,0"
      id="path4307-3-6"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -498,7 +520,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 764.78462,680.86407 153.6199,0"
+     d="m 582.58498,461.99331 153.6199,0"
      id="path4307-1-4-2"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -506,7 +528,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,680.86407 0,-122.84381"
+     d="m 736.20488,461.99331 0,-122.84381"
      id="path4271-0-5"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -514,7 +536,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1072.0244,797.09641 0,26.7199"
+     d="m 889.82476,578.22565 0,26.7199"
      id="path4526"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -522,7 +544,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1072.0244,1144.5021 0,26.7277"
+     d="m 889.82476,925.63134 0,26.7277"
      id="path4528"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -530,7 +552,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1296.0479,1410.3059 0,87.1743"
+     d="m 1113.8483,1191.4351 0,87.1743"
      id="path4551"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -538,7 +560,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 764.78462,1171.2298 0,116.2323"
+     d="m 582.58498,952.35904 0,116.23226"
      id="path4561"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -546,7 +568,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1072.0244,1171.2298 0,116.2323"
+     d="m 889.82476,952.35904 0,116.23226"
      id="path4561-1"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -554,7 +576,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 764.78462,680.86407 0,116.2323"
+     d="m 582.58498,461.99331 0,116.2323"
      id="path4561-3"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -562,7 +584,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1072.0244,680.8641 0,116.23231"
+     d="m 889.82476,461.99334 0,116.23231"
      id="path4561-1-6"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -570,7 +592,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1673.6913,913.32857 0,-73.62521"
+     d="m 1491.4917,694.45781 0,-73.62521"
      id="path4620"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -578,7 +600,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1673.6913,628.77921 0,-70.75895"
+     d="m 1491.4917,409.90845 0,-70.75895"
      id="path4628"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -588,7 +610,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-4"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(1417.8526,-235.15325)"
+     transform="translate(1235.653,-454.02401)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -606,7 +628,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-5"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(974.71612,78.374901)"
+     transform="translate(792.51648,-140.49586)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -624,7 +646,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-11-3"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(1384.1588,534.17468)"
+     transform="translate(1201.9592,315.30392)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -640,7 +662,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
    style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64.99999762%;font-family:STIX;-inkscape-font-specification:'STIX Italic';baseline-shift:sub"
    id="flowSpan4812">J, Σ</flowSpan></flowPara></flowRoot>  <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1827.3112,913.32857 0,75.65829"
+     d="m 1645.1116,694.45781 0,75.65829"
      id="path4764"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -648,7 +670,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1827.3112,1211.8038 0,75.6583"
+     d="m 1645.1116,992.93304 0,75.65826"
      id="path4764-6"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -656,7 +678,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1903.3828,1100.5657 0,-111.57884 -76.0716,0 -77.9999,0 0,111.40854"
+     d="m 1721.1832,881.69494 0,-111.57884 -76.0716,0 -77.9999,0 0,111.40854"
      id="path4787"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -664,7 +686,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1903.3828,1100.5658 0,111.5788 -76.0716,0 -77.9999,0 0,-111.4085"
+     d="m 1721.1832,881.69504 0,111.5788 -76.0716,0 -77.9999,0 0,-111.4085"
      id="path4787-5"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -672,7 +694,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <g
      id="g4238-9"
-     transform="translate(-186.7614,982.93026)"
+     transform="translate(-368.96104,764.0595)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -694,7 +716,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   </g>
   <g
      id="g4238-9-7"
-     transform="matrix(-1,0,0,1,3192.8571,982.93026)"
+     transform="matrix(-1,0,0,1,3010.6575,764.0595)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -717,15 +739,15 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <circle
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="path4883"
-     cx="381.08762"
-     cy="917.44452"
+     cx="198.88799"
+     cy="698.57373"
      r="106.47169"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 330.42105,917.97312 c 0,0 26.15095,-46.6981 51.36793,-0.467 25.21698,46.23124 49.96698,-0.9339 49.96698,-0.9339"
+     d="m 148.22141,699.10236 c 0,0 26.15095,-46.6981 51.36793,-0.467 25.21698,46.23124 49.96698,-0.9339 49.96698,-0.9339"
      id="path4895"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -733,7 +755,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2625.0081,1503.7022 0,-236.3946"
+     d="m 2442.8085,1284.8314 0,-236.3946"
      id="path4899-6"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -742,15 +764,15 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <circle
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="path4883-2"
-     cx="2625.0081"
-     cy="1160.8358"
+     cx="2442.8083"
+     cy="941.96503"
      r="106.47169"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2574.3416,1161.3644 c 0,0 26.151,-46.6981 51.368,-0.467 25.2169,46.2312 49.9669,-0.9339 49.9669,-0.9339"
+     d="m 2392.142,942.49364 c 0,0 26.151,-46.6981 51.368,-0.467 25.2169,46.2312 49.9669,-0.9339 49.9669,-0.9339"
      id="path4895-0"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -759,7 +781,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="480.00 861.00 480.00 876.00 460.00 876.00 500.00 876.00"
      id="polyline4200-0"
-     transform="matrix(0,-5.3447629,-5.3447629,0,6858.0858,3405.1896)"
+     transform="matrix(0,-5.3447629,-5.3447629,0,6675.8862,3186.3188)"
      style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -767,7 +789,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="460.00 886.00 500.00 886.00 480.00 886.00 480.00 901.00"
      id="polyline4202-7"
-     transform="matrix(0,-5.3447629,-5.3447629,0,6858.0858,3405.1896)"
+     transform="matrix(0,-5.3447629,-5.3447629,0,6675.8862,3186.3188)"
      style="fill:none;stroke:#3654ab;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -776,7 +798,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-4-9"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(1858.824,-137.23)"
+     transform="translate(1676.6244,-356.10076)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -793,7 +815,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
    id="flowSpan4990">e</flowSpan></flowPara></flowRoot>  <polyline
      points="480.00 861.00 480.00 876.00 460.00 876.00 500.00 876.00"
      id="polyline4200-0-3"
-     transform="matrix(0,-5.3447629,-5.3447629,0,5547.3038,2896.6731)"
+     transform="matrix(0,-5.3447629,-5.3447629,0,5365.1042,2677.8023)"
      style="fill:none;stroke:#41d600;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -801,14 +823,14 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <polyline
      points="460.00 886.00 500.00 886.00 480.00 886.00 480.00 901.00"
      id="polyline4202-7-9"
-     transform="matrix(0,-5.3447629,-5.3447629,0,5547.3038,2896.6731)"
+     transform="matrix(0,-5.3447629,-5.3447629,0,5365.1042,2677.8023)"
      style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,1410.3059 755.28678,0"
+     d="m 736.20488,1191.4351 755.28682,0"
      id="path5031"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -816,7 +838,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 918.40452,558.02026 755.28678,0"
+     d="m 736.20488,339.1495 755.28682,0"
      id="path5033"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -824,7 +846,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <g
      id="g4238-9-7-9"
-     transform="matrix(-1,0,0,1,2949.0666,982.93026)"
+     transform="matrix(-1,0,0,1,2766.867,764.0595)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -846,7 +868,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   </g>
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 731.67245,331.18686 -350.58485,0"
+     d="m 549.47281,112.3161 -350.58485,0"
      id="path5125"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -854,7 +876,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1296.0478,331.18686 -350.58488,0"
+     d="m 1113.8482,112.3161 -350.58492,0"
      id="path5125-3"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -862,7 +884,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1296.0478,331.18686 0,226.8334"
+     d="m 1113.8482,112.3161 0,226.8334"
      id="path5144"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -870,7 +892,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2042.4544,839.70337 -368.7631,0"
+     d="m 1860.2548,620.83261 -368.7631,0"
      id="path5150"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -878,7 +900,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2256.2449,839.70337 368.7632,0 0,214.66083"
+     d="m 2074.0453,620.83261 368.7632,0 0,214.66083"
      id="path5152"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -886,7 +908,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <g
      id="g4238-9-7-9-0"
-     transform="matrix(-1,0,0,1,2709.2761,982.93026)"
+     transform="matrix(-1,0,0,1,2527.0765,764.0595)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -908,7 +930,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   </g>
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2141.4271,1004.8061 0,498.8961"
+     d="m 1959.2275,785.93534 0,498.89606"
      id="path5184"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -918,13 +940,13 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:8.84047985;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8.84048027, 35.36192109;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker5501)"
      id="path5491"
      sodipodi:type="arc"
-     sodipodi:cx="2048.7405"
-     sodipodi:cy="1096.8009"
+     sodipodi:cx="1866.5409"
+     sodipodi:cy="877.93011"
      sodipodi:rx="221.31262"
      sodipodi:ry="127.34638"
      sodipodi:start="3.2887528"
      sodipodi:end="0"
-     d="M 1829.8199,1078.1282 A 221.31262,127.34638 0 0 1 2065.01,969.79909 221.31262,127.34638 0 0 1 2270.0531,1096.8009"
+     d="m 1647.6203,859.25737 a 221.31262,127.34638 0 0 1 235.1901,-108.32906 221.31262,127.34638 0 0 1 205.0431,127.0018"
      sodipodi:open="true"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -932,21 +954,22 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <flowRoot
      xml:space="preserve"
      id="flowRoot5526"
-     style="fill:black;stroke:none;stroke-opacity:1;stroke-width:1px;stroke-linejoin:miter;stroke-linecap:butt;fill-opacity:1;font-family:STIX;font-style:italic;font-weight:normal;font-size:9px;line-height:125%;letter-spacing:0px;word-spacing:0px;-inkscape-font-specification:STIX Italic;font-stretch:normal;font-variant:normal;text-anchor:start;text-align:start;writing-mode:lr"
+     style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9px;line-height:125%;font-family:STIX;-inkscape-font-specification:'STIX Italic';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
-     inkscape:export-ydpi="90"><flowRegion
+     inkscape:export-ydpi="90"
+     transform="translate(-182.19964,-218.87076)"><flowRegion
        id="flowRegion5528"><rect
          id="rect5530"
          width="108.30741"
          height="134.72385"
          x="2055.1992"
          y="1084.2878" /></flowRegion><flowPara
-       id="flowPara5532"></flowPara></flowRoot>  <flowRoot
+       id="flowPara5532" /></flowRoot>  <flowRoot
      xml:space="preserve"
      id="flowRoot4184-5-5-8"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(1643.9321,259.82791)"
+     transform="translate(1461.7325,40.957146)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -966,18 +989,19 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      cx="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
-     inkscape:export-ydpi="90" />
+     inkscape:export-ydpi="90"
+     inkscape:connector-curvature="0" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:8.84047985;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:8.84048027, 35.36192109;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker5501-5)"
      id="path5491-4"
      sodipodi:type="arc"
-     sodipodi:cx="-2048.8877"
-     sodipodi:cy="-1110.1141"
+     sodipodi:cx="-1866.6881"
+     sodipodi:cy="-891.24335"
      sodipodi:rx="221.31262"
      sodipodi:ry="127.34638"
      sodipodi:start="3.2887528"
      sodipodi:end="0"
-     d="m -2267.8083,-1128.7869 a 221.31262,127.34638 0 0 1 235.1901,-108.329 221.31262,127.34638 0 0 1 205.0431,127.0018"
+     d="m -2085.6087,-909.91609 a 221.31262,127.34638 0 0 1 235.1901,-108.32911 221.31262,127.34638 0 0 1 205.0431,127.00185"
      sodipodi:open="true"
      transform="scale(-1,-1)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -985,7 +1009,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#marker6257)"
-     d="m 2381.2176,1327.3392 0,-136.3585"
+     d="m 2199.018,1108.4684 0,-136.35846"
      id="path6249"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -994,15 +1018,15 @@ circle {stroke-linecap:round; stroke-linejoin:round}
   <circle
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
      id="path4883-2-8"
-     cx="2381.2175"
-     cy="1254.254"
+     cx="2199.0178"
+     cy="1035.3833"
      r="106.47169"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2141.4271,1004.8061 239.7905,0"
+     d="m 1959.2275,785.93534 239.7905,0"
      id="path6278"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -1010,7 +1034,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2381.2176,1147.7824 0,-142.9763"
+     d="m 2199.018,928.91164 0,-142.9763"
      id="path6282"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -1018,14 +1042,14 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 2381.2176,1360.7258 0,142.9764"
+     d="m 2199.018,1141.855 0,142.9764"
      id="path6284"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90" />
   <path
-     d="m 1072.0244,930.71157 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4965 9.6206,-3.9552 4.65,-2.5119 8.6586,-5.8257 4.0619,-3.3138 7.3757,-7.3759 3.3138,-4.0086 5.8258,-8.6585 2.4586,-4.5965 3.9551,-9.6205 1.55,-5.0241 2.0311,-10.2086 0.5345,-5.2378 0,-10.4757 -0.4811,-5.1844 -2.0311,-10.2085 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.6499 -5.8258,-8.6585 -3.3138,-4.062 -7.3757,-7.3757 -4.0086,-3.3138 -8.6586,-5.8258 -4.5964,-2.45856 -9.6206,-3.95516 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5344 -5.2379,-0.5344 l 0,0"
+     d="m 889.82476,711.84081 q 0,0 5.2379,-0.5345 5.1844,-0.481 10.2084,-2.031 5.0242,-1.4965 9.6206,-3.9552 4.65,-2.5119 8.6586,-5.8257 4.0619,-3.3138 7.3757,-7.3759 3.3138,-4.0086 5.8258,-8.6585 2.4586,-4.5965 3.9551,-9.6205 1.55,-5.0241 2.0311,-10.2086 0.5345,-5.2378 0,-10.4757 -0.4811,-5.1844 -2.0311,-10.2085 -1.4965,-5.0241 -3.9551,-9.6206 -2.512,-4.6499 -5.8258,-8.6585 -3.3138,-4.062 -7.3757,-7.3757 -4.0086,-3.3138 -8.6586,-5.8258 -4.5964,-2.45856 -9.6206,-3.95516 -5.024,-1.55 -10.2084,-2.031 -5.2379,-0.5344 -5.2379,-0.5344 l 0,0"
      id="path4176"
      inkscape:connector-curvature="0"
      style="fill:none;stroke:#000000;stroke-width:10.6895256;stroke-linecap:round;stroke-linejoin:round"
@@ -1034,7 +1058,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 381.0876,331.18686 0,479.78595"
+     d="m 198.88796,112.3161 0,479.78595"
      id="path6293"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -1042,7 +1066,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 381.0876,1023.9162 0,479.786"
+     d="m 198.88796,805.04544 0,479.78596"
      id="path6295"
      inkscape:connector-curvature="0"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
@@ -1050,7 +1074,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1700.9645,1148.7421 96.6934,-96.6934"
+     d="m 1518.7649,929.87134 96.6934,-96.6934"
      id="path4324"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
@@ -1058,7 +1082,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:connector-curvature="0" />
   <path
      style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:15;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
-     d="m 1797.6579,1148.742 -46.8325,-46.8325 -49.8609,-49.8609"
+     d="m 1615.4583,929.87124 -46.8325,-46.8325 -49.8609,-49.8609"
      id="path4324-4"
      inkscape:connector-curvature="0"
      sodipodi:nodetypes="ccc"
@@ -1067,7 +1091,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      inkscape:export-ydpi="90" />
   <g
      id="g4717-1"
-     transform="translate(-260.12392,-141.38993)"
+     transform="translate(-442.32356,-360.26069)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90">
@@ -1086,7 +1110,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot6332"
      style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9px;line-height:125%;font-family:STIX;-inkscape-font-specification:'STIX Italic';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#41d600;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     transform="translate(-325.22797,33.555266)"
+     transform="translate(-507.42761,-185.3155)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -1104,7 +1128,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot6332-0"
      style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:9px;line-height:125%;font-family:STIX;-inkscape-font-specification:'STIX Italic';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#3654ab;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     transform="translate(86.23613,409.9831)"
+     transform="translate(-95.963506,191.11234)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -1122,7 +1146,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-0"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(-181.86638,224.56359)"
+     transform="translate(-364.06602,5.6928256)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -1140,7 +1164,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-0-6"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(2330.4761,120.74555)"
+     transform="translate(2148.2765,-98.125214)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -1158,7 +1182,7 @@ circle {stroke-linecap:round; stroke-linejoin:round}
      xml:space="preserve"
      id="flowRoot4184-5-0-6-3"
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:'STIX Math';-inkscape-font-specification:'STIX Math';fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.89999998;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-     transform="translate(1842.0902,533.33055)"
+     transform="translate(1659.8906,314.45979)"
      inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
      inkscape:export-xdpi="90"
      inkscape:export-ydpi="90"><flowRegion
@@ -1172,4 +1196,53 @@ circle {stroke-linecap:round; stroke-linejoin:round}
        id="flowPara6464"
        style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:STIX;-inkscape-font-specification:'STIX Italic'">I<flowSpan
    style="font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:64.99999762%;font-family:STIX;-inkscape-font-specification:'STIX Italic';baseline-shift:sub"
-   id="flowSpan6466">Φ</flowSpan></flowPara></flowRoot></svg>
+   id="flowSpan6466">Φ</flowSpan></flowPara></flowRoot>  <flowRoot
+     xml:space="preserve"
+     id="flowRoot4405"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:STIX;-inkscape-font-specification:STIX;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10.68999958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     transform="translate(-182.19964,-218.87076)"><flowRegion
+       id="flowRegion4407"><rect
+         id="rect4409"
+         width="689.91272"
+         height="276.86301"
+         x="2051.4863"
+         y="224.2917" /></flowRegion><flowPara
+       id="flowPara4411"></flowPara></flowRoot>  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:STIX;-inkscape-font-specification:STIX;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10.68999958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     x="1976.4264"
+     y="151.73874"
+     id="text4497"><tspan
+       sodipodi:role="line"
+       id="tspan4499"
+       x="1976.4264"
+       y="151.73874"
+       style="font-size:87.5px;fill:#000000;fill-opacity:1;stroke:none;stroke-opacity:1">Xmon</tspan></text>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:150px;font-family:STIX;-inkscape-font-specification:STIX;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10.68999958;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     x="1976.4264"
+     y="255.50784"
+     id="text4497-0"><tspan
+       sodipodi:role="line"
+       id="tspan4499-5"
+       x="1976.4264"
+       y="255.50784"
+       style="font-size:87.5px;fill:#000000;fill-opacity:1;stroke:none;stroke-opacity:1">resonator</tspan></text>
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#41d600;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 1915.2847,235.63064 -58.2001,0"
+     id="path5125-3-8"
+     inkscape:connector-curvature="0"
+     inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90" />
+  <path
+     style="fill:none;fill-opacity:1;fill-rule:nonzero;stroke:#3654ab;stroke-width:10.68999958;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+     d="m 1915.2847,121.41364 -58.2001,0"
+     id="path5125-3-8-1"
+     inkscape:connector-curvature="0"
+     inkscape:export-filename="/home/gleb/Документы/Science/Reverse engineering of XMons/Pictures/xmon_resonator.png"
+     inkscape:export-xdpi="90"
+     inkscape:export-ydpi="90" />
+</svg>
