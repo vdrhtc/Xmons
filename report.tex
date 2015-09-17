@@ -444,7 +444,7 @@ However, we can now use the other side of the density matrix, the property for w
 \end{gather}
 Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1) f(\tau_2) \rangle = K_f(\tau_2 - \tau_1) = \frac{1}{\sqrt{2\pi}}\int\limits_\mathbb{R} S_f(\omega) e^{i\omega(\tau_2-\tau_1)}\diff\omega$ where $S_f(\omega)$ is the power spectral density of $f(t)$. Taking the time integrals with the exponents, finally we obtain
 \begin{equation}
-\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega \right\}.\label{eq:cdeph}
+\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_\mathbb{R} W_t^R(\omega) S_f(\omega)\diff \omega \right\},\  W_t^R(\omega)  = \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2}\label{eq:cdeph}
 \end{equation}
 It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S_f(\omega) = S_f(0) = const$) or for a sufficiently large time $t$ where 
 $$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
@@ -512,6 +512,13 @@ In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise i
 \endgroup
 \end{figure}
 
+\begin{figure}
+\centering
+\includegraphics[width=0.4\textwidth]{ramsey_filter}\quad
+\includegraphics[width=0.4\textwidth]{hahn_filter}
+\caption{Qualitative plot for noise PSD filtration at $t=10$ s.}
+\end{figure}
+
 \section{Spin-echo experiment}
 
 The spin-echo experiment in the simplest case (Hahn echo) is a modification of a Ramsey pulse sequence with an additional $\pi_y$-pulse right in between the $\frac{\pi}{2}_x$ ones. The idea is that during the second period (after the $\pi_y$-pulse)  slow components of the noise will cancel out the phase difference they've imposed during the first period. This can be understood easily in the limit of constant noise and infinitely fast rotations. There are also more sophisticated echo sequences such as CP, CPMG and UDD\cite{Bylander2011} which use more than one $\pi_y$-pulse during the free evolution, however for our case it is enough to regard the simplest Hahn echo.
@@ -527,12 +534,12 @@ Performing the ensemble averaging one can get
 \end{gather*}
 Expanding the brackets, again putting a Fourier transform of the power spectral density $S_f(\omega)$ instead of the autocorrelation functions and factoring the expression back to the initial representation it is possible to obtain\cite{Preskill} the final expression for the coherence expectation:
 \begin{equation}
-\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S_f(\omega) W_t (\omega) \diff\omega \right\},
+\left<\rho(t)\right> = \rho(0)\exp \left\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int_\mathbb{R} S_f(\omega) W^H_t (\omega) \diff\omega \right\},
 \label{eq:cdeph_se}
 \end{equation}
 where
 \begin{align*}
- W_t (\omega)  &= \left| - \int_0^{t/2} e^{i \omega \tau}\diff \tau + \int_{t/2}^{t} e^{i\omega\tau}  \diff \tau  \right|^2 \\
+ W^H_t (\omega)  &= \left| - \int_0^{t/2} e^{i \omega \tau}\diff \tau + \int_{t/2}^{t} e^{i\omega\tau}  \diff \tau  \right|^2 \\
 & =  \left| 1-2e^{i\omega t/2} + e^{i\omega t} \right| \\
 &= \left| \frac{(1-e^{i\omega t/2})}{(1+e^{i\omega t/2})} (1+e^{i\omega t/2})(1-e^{i\omega t/2})\right|\\
 & = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
