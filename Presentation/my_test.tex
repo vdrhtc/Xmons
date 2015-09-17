@@ -28,7 +28,7 @@
 	\usefonttheme[onlymath]{serif}
 
 \title{CPW resonators\\Noise and Decoherence vs Spin Echo\\Xmon cQED}
-\author{\bf Fedorov G. P. \normalfont\quad (Moscow Institute of Physics and Technology)}
+\author{\bf Fedorov G. P. \normalfont\quad Moscow Institute of Physics and Technology}
 \date{\today}
 \supervisor{A. Bilmes}
 
@@ -109,7 +109,7 @@ Capacitively coupled CPW resonator as a lumped-element model:
 	
 	\vspace{2cm}
 }
-\only<2>{
+\only<2,3>{
 \vspace{0.5cm}
 	\[
 	R^{*} = \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	}, \quad
@@ -117,7 +117,6 @@ Capacitively coupled CPW resonator as a lumped-element model:
 	\]
 }
 \only<3>{
-\vspace{0.5cm}
 	\[
 	Q_i =  \omega (C+C^{*}) R_{in}, \quad
 	Q_e = \omega (C+C^{*}) R^{*}, \quad
@@ -201,7 +200,7 @@ Unconventional coupling to the feedline:
 $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 
 
-{\footnotesize[1] D. Sank, PhD Thesis, 2014}
+{\footnotesize[1] D. Sank, PhD Thesis, 2014 (J. Martinis group)}
 \end{columns}
 \end{frame}
 
@@ -251,7 +250,7 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	
 	 Master equation:
 	\[
-	\partial_t \hat \rho_q = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
+	\partial_t \hat \rho_q = \frac{i}{\hbar}[\hat \rho_q, \mathcal{\hat H}_q] + \gamma_\phi (\hat \sigma_z \hat \rho_q \hat \sigma_z - \hat \rho_q).
 	\]
 	Steady state:
 	\[
@@ -262,22 +261,29 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	\]
 }
 \only<2>{
-	Example: pure dephasing of the $\ket{+}$  state, \bf lab frame.
+	Example: pure dephasing of the $\ket{+}$  state, \textbf{lab frame}.
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\includegraphics[width=\textwidth]{qdeph_bloch}
 	\column{0.6\textwidth}
+	\centering
 	\includegraphics[width=\textwidth]{qdeph_xyz}
+	
+	{\footnotesize (dynamics simulated with QuTiP)}
 	\end{columns}
 }
 \only<3>{
-	Example: pure dephasing of the $\ket{+}$  state, \bf rotating frame.
+	Example: pure dephasing of the $\ket{+}$  state, \textbf{rotating frame}.
 
 	\begin{columns}[c]
 	\column{0.4\textwidth}
 	\includegraphics[width=\textwidth]{qdeph_bloch_rf}
 	\column{0.6\textwidth}
+	\centering
 	\includegraphics[width=\textwidth]{qdeph_xyz_rf}
+	
+	{\footnotesize (dynamics simulated with QuTiP)}
+
 	\end{columns}
 }
 }
@@ -286,9 +292,9 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 \only<1>{
 	$$\hat O_e \otimes \hat  \sigma_z \rightarrow f(t) \cdot \hat \sigma_z,\ f(t)\ \text{is random}$$ 
 	
-	Rotating frame evolution:
+	Rotating frame evolution (\textbf{single run!}):
 	\[
-	\hat \rho_q (t) = \hat U^\dag(t, 0)\ \hat\rho_q(0)\ \hat U(t, 0), \quad \hat U(t, 0) = \hat T \exp \left\{-\frac{i}{\hbar} \int_0^t f(\tau)\hat \sigma_z \diff\tau\right\}.
+	\hat \rho_q (t) = \hat U^\dag(t, 0)\ \hat\rho_q(0)\ \hat U(t, 0), \quad \hat U(t, 0) = \hat T \exp \left\{-\frac{i }{\hbar}  \int_0^t f(\tau) \diff\tau\ \hat \sigma_z\right\}.
 	\]
 	\[
 	\hat \rho_q (t) = \rbrkt{\begin{matrix}
@@ -307,7 +313,7 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	\end{mybox}
 }
 \only<2>{
-	\textbf{Averaging.} For Gaussian instantaneous distribution of $f(t),\ \frac{2}{\hbar}\int_0^t f(\tau) \diff \tau$:
+	\textbf{Averaging.} For Gaussian instantaneous distribution of $f(t)$:
 	\begin{gather*}
 	\langle \rho(t) \rangle = \rho(0)\exp \left\{ -\frac{2}{\hbar^2}\int_0^t\int_0^t \langle f(\tau_1) f(\tau_2) \rangle \diff\tau_1 \diff \tau_2 \right\}.
 	\end{gather*}
@@ -317,12 +323,28 @@ $$\Delta l = \frac{\phi(\omega_r) c}{2 \omega_r \sqrt{\varepsilon_{eff}}}$$
 	\langle \rho(t) \rangle = \rho(0) \exp  \left\{-\frac{2}{\sqrt{2\pi}\hbar^2} \int\limits_{-\infty}^{\infty}  \frac{4 \sin^2(\frac{\omega t}{2})}{\omega^2} S_f(\omega)\diff \omega \right\} \equiv \rho(0)e^{-\alpha (t)}
 	\]
 	\centering
-	$\Rightarrow$ \bf  ensemble averaged behaviour is non-unitary!
+	$\Rightarrow$ \bf  ensemble averaged behaviour of $\rho(t)$ is a decay!
 	\end{mybox}
 }
 }
 
 \subsection{Hahn echo}
+
+\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
+$S_f(\omega) = \delta(\omega)$ ($f(t) = const$ on the timescale of a single run):
+	\vspace{0.2cm}
+	\begin{columns}[c]
+	\column{0.4\textwidth}
+	\includegraphics[width=\textwidth]{cse_bloch_rf}
+	\column{0.6\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{cse_xyz_rf}
+	
+	{\footnotesize (dynamics simulated with QuTiP)}
+
+	\end{columns}
+\end{frame}
+
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 \textbf{Add one instant $\pi$-pulse}. Accumulated phase:
 \begin{equation*}
@@ -332,8 +354,8 @@ After averaging:
 \begin{mybox}
 \[
 \begin{gathered}
-\left<\rho(t)\right> = \rho(0)\exp \Big\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int\limits_{-\infty}^{\infty}  S_f(\omega) W_t (\omega)\diff \omega \Big\},\\
-W_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
+\left<\rho(t)\right> = \rho(0)\exp \Big\{ - \frac{2}{\sqrt{2\pi} \hbar^2} \int\limits_{-\infty}^{\infty}  S_f(\omega) W^H_t (\omega)\diff \omega \Big\},\\
+W^H_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
 \end{gathered}
 \]
 \end{mybox}
@@ -363,32 +385,6 @@ W_t (\omega) = \tan^2(\omega t/4)\frac{4 \sin^2(\omega t/2)}{\omega^2}.
 \end{frame}
 
 \subsection{Who wins?}
-\begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
-$S_f(\omega) = \delta(\omega)$ ($f(t) = const$ in each single run):
-\only<1>{
-
-	\vspace{10cm}
-	\vfill
-}
-\only<2>{
-
-	\vspace{0.2cm}
-	\begin{columns}[c]
-	\column{0.4\textwidth}
-	\includegraphics[width=\textwidth]{cse_bloch_rf}
-	\column{0.6\textwidth}
-	\includegraphics[width=\textwidth]{cse_xyz_rf}
-	
-	
-	\vspace{-0.3cm}
-	\begin{itemize}
-	\centering	
-	\item \bf full efficiency for instant pulses
-	\end{itemize}
-	\end{columns}
-}
-\end{frame}
-
 
 \begin{frame}[t]\frametitle{\secname}\framesubtitle{\subsecname}
 $S_f(\omega) =1/\omega$ (pink noise):
@@ -513,6 +509,7 @@ Equivalent circuit for the transmon-resonator system:
 }
 
 
+\subsection{Strong driving}
 \frame[c]{\frametitle{\secname}\framesubtitle{\subsecname}
 For weak driving the two-level dynamics is preserved ($\ket{\psi(t)}= \sum_k c_k(t) \ket{E_k}$):
 
@@ -556,6 +553,12 @@ Frequencies $f_{0n} = (E_n - E_0)/h$ for $\omega_q > \omega_r$:
 }
 
 \subsection{Dispersive shifts}
+\frame[c]{\frametitle{\secname}\framesubtitle{\subsecname} 
+\centering
+
+\Huge The Grotrian diagram:
+}
+
 \frame{\frametitle{\secname}\framesubtitle{\subsecname} 
 Dispersive shifts originate from the level structure of the whole composite system:
 
@@ -626,6 +629,9 @@ The shifts depend on the detuning  $\Delta_\omega = \omega_r - \omega_{ge}$ and 
 }
 \frame[c]{\frametitle{\secname}\framesubtitle{\subsecname} 
 \begin{center}
+\includegraphics[width=\textwidth]{DSC}
+
+\vspace{0.5cm}
 {\huge Thank you!}
 \end{center}
 }
