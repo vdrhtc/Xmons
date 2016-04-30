@@ -1,0 +1,17 @@
+\BOOKMARK [2][]{Outline0.1}{Coplanar waveguide resonators}{}% 1
+\BOOKMARK [3][]{Outline0.1.1.2}{Quality factors and effective parameters}{Outline0.1}% 2
+\BOOKMARK [3][]{Outline0.1.2.6}{S-parameters}{Outline0.1}% 3
+\BOOKMARK [3][]{Outline0.1.3.8}{Xmon design features}{Outline0.1}% 4
+\BOOKMARK [3][]{Outline0.1.4.9}{Sonnet simulations}{Outline0.1}% 5
+\BOOKMARK [2][]{Outline0.2}{Noise and decoherence versus Hahn echo technique}{}% 6
+\BOOKMARK [3][]{Outline0.2.1.11}{Quantum-mechanically treated pure dephasing \(Ramsey\)}{Outline0.2}% 7
+\BOOKMARK [3][]{Outline0.2.2.14}{Classically treated pure dephasing \(Ramsey\)}{Outline0.2}% 8
+\BOOKMARK [3][]{Outline0.2.3.16}{Hahn echo}{Outline0.2}% 9
+\BOOKMARK [3][]{Outline0.2.4.18}{Noise PSD filtration}{Outline0.2}% 10
+\BOOKMARK [3][]{Outline0.2.5.19}{Who wins?}{Outline0.2}% 11
+\BOOKMARK [2][]{Outline0.3}{Xmon cQED \(QuTiP simulations\)}{}% 12
+\BOOKMARK [3][]{Outline0.3.1.23}{Circuit quantization}{Outline0.3}% 13
+\BOOKMARK [3][]{Outline0.3.2.25}{Cooper pair distribution for an isolated Xmon}{Outline0.3}% 14
+\BOOKMARK [3][]{Outline0.3.3.26}{Strong driving}{Outline0.3}% 15
+\BOOKMARK [3][]{Outline0.3.4.28}{Eigenproblem for a qubit-resonator system}{Outline0.3}% 16
+\BOOKMARK [3][]{Outline0.3.5.30}{Dispersive shifts}{Outline0.3}% 17

@@ -1,0 +1,70 @@
+
+/*
+    Adds a test squid.
+*/
+
+    int structure_padding = 12e3;
+    int pad_side_len = 200e3;
+    int JJ_pads_len = 5.075e3;
+    int JJ_delta_arm_len = 8e3;
+    
+
+void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ) {
+
+    int total_w = 2*structure_padding+pad_side_len;
+    int total_h = 3*structure_padding+2*pad_side_len;
+    point corner = newPoint(center.x()-total_w/2, center.y()-total_h/2);
+    curCell->addBox(corner.x(), corner.y(), total_w, total_h, protect);
+    
+    curCell->addBox(corner.x()+structure_padding, corner.y()+structure_padding, pad_side_len, pad_side_len, M);
+    curCell->addBox(corner.x()+structure_padding, corner.y()+2*structure_padding+pad_side_len, pad_side_len, pad_side_len, M);
+    
+    point cursor;
+    // Top
+    cursor.set(center.x(), center.y()+structure_padding/2);
+    point cursor2 = copyPoint(cursor); 
+    wire(curCell, M, cursor, "d", JJ_pads_len/3, w_q/3);
+    cursor.set(cursor.x()-w_q/3/2+w_q/3/3/2/2, cursor.y()-JJ_pads_len/3);
+    wire(curCell, M, cursor, "d", JJ_pads_len*2/3, w_q/3/3/2);
+    cursor.set(cursor.x()+w_q/3-w_q/3/3/2, cursor.y());
+    wire(curCell, M, cursor, "d", JJ_pads_len*2/3, w_q/3/3/2);
+    cursor.set(cursor.x()+w_q/3/3/2/2, cursor.y()-JJ_pads_len/3*2+JJ_pads_len/3/2);
+    wire(curCell, M, cursor, "l", w_q/3/3, JJ_pads_len/3);
+    cursor.set(cursor.x()-w_q/3, cursor.y());
+    wire(curCell, M, cursor, "r", w_q/3/3, JJ_pads_len/3);
+    
+    wire(curCell, aux, cursor2, "d", JJ_pads_len*6/5, w_q/3);
+    cursor2.set(cursor2.x()-w_q/3/2+w_q/3/3/2, cursor2.y()-JJ_pads_len);
+    wire(curCell, aux, cursor2, "d", JJ_pads_len/2, w_JJ);
+    cursor2.set(cursor2.x()+w_q/3-w_q/3/3, cursor2.y());
+    wire(curCell, aux, cursor2, "d", JJ_pads_len/2, w_JJ);
+    
+    // =====  Bottom
+    cursor.set(cursor.x()+w_q/3/2-w_q/4 , cursor.y()-(g_q-2*JJ_pads_len)+JJ_delta_arm_len-JJ_pads_len/3/2);
+    point cursor2 = copyPoint(cursor);
+    point cursor3 = copyPoint(cursor);
+    cursor.set(cursor.x()-w_q/3/3/2+w_q/3/3/2/2, cursor.y());
+    wire(curCell, M, cursor, "d", JJ_pads_len/3, w_q/3/3/2);
+    cursor.set(cursor.x()+w_q/2+w_q/3/3/2, cursor.y());
+    wire(curCell, M, cursor, "d", JJ_pads_len/3, w_q/3/3/2);
+    
+    cursor2.set(cursor2.x(), cursor2.y()-JJ_pads_len/3);
+    wire(curCell, M, cursor2, "d", JJ_pads_len*2/3, w_q/3/3);
+    cursor.set(cursor2.x()+w_q/2, cursor2.y());
+    wire(curCell, M, cursor, "d", JJ_pads_len*2/3, w_q/3/3);
+    
+    wire(curCell, aux, cursor3, "d", JJ_pads_len/2, w_q/3/3);
+    cursor3.set(cursor3.x()+w_q/2, cursor3.y());
+    wire(curCell, aux, cursor3, "d", JJ_pads_len/2, w_q/3/3);
+    cursor3.set(cursor3.x()-w_q/3/3/2, cursor3.y()-JJ_pads_len/3/2);
+    wire(curCell, aux, cursor3, "l", JJ_pads_len/2, h_JJ);
+    cursor3.set(cursor3.x()-w_q/2+w_q/3/3, cursor3.y());
+    wire(curCell, aux, cursor3, "r", JJ_pads_len/2, h_JJ);
+    
+     // ==== Merge aux structure to M1       
+    layout->booleanTool->boolOnLayer(aux, aux, M1, "A+B", 0, 0, 2);
+    curCell->deselectAll();
+    curCell->selectLayer(aux);
+    curCell->deleteSelect();
+    
+}

@@ -2,27 +2,27 @@
   Feedline with contact pads at the ends. Lengths of the contact pads with ground connectors are included 
     in the corresponding segment lengths.
   _____                                       _____
- | |   ___\                                  /___   | |
-x |  |___ >=====~======<  ___|  | x
- | | ____/                                  \_____| |
+ | |   __ \                                  / __    | |
+x |  |___ >==========~======< ____|  | x
+ | | ____/                                  \_____ | |
 
     Or a flux bias line (see Kelley's thesis)
 __
-|  |________                              _____
-|   _________\                         /___   | |
-x  |     ______>====~====< ___|  | x
-|  |    |______/                         \____ | |
-|_|
+|  |________                                _____
+|   _________\                          / __    | |
+x  |     ______>=====~======< ____|  | x
+|   |    |_____/                          \_____ | |
+|__|
     
 */
 
 #include "wiring.layout"
-
+#include "auxx.layout"
 
     int pad_len  = 200e3;
     int w_pad = 200e3;
-    int g_pad = w_pad;
-    int bottom_g_pad = g_pad/3; 
+    int g_pad = 120e3;
+    int bottom_g_pad = g_pad; 
     int transition_len = 150e3;
     int ground_connector_width = 50e3;   
     int totalPadLen = ground_connector_width+bottom_g_pad+pad_len+transition_len;
@@ -87,7 +87,7 @@ point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, in
 
 void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList segmentLengths, stringList directions, string type) {
     
-    int turnRad = 20*w_feed;
+    int turnRad = 10*w_feed;
     int N_turns = directions.size()-1;
     int i;
     point cursor;

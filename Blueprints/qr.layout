@@ -3,7 +3,7 @@
 */
 
 
-void addQR(cell* curCell, int x1, int y1, int width, int height) {
+void addQR(cell* curCell, int x1, int y1, int width, int height, int layer) {
 
     point p1, p2;
     p1.set(x1, y1); p2.set(x1+width,y1+height);
@@ -42,9 +42,6 @@ void addQR(cell* curCell, int x1, int y1, int width, int height) {
             data += "C_g ~ 2 fF, g ~ 30 MHz"; data+="\n";
     layout->barcodeTool->setQrCode();
     layout->barcodeTool->data = data;
-    layout->drawing->activeLayer=M;
+    layout->drawing->activeLayer=layer;
     layout->barcodeTool->placeBarcode(p1, p2);
-    layout->drawing->activeLayer=protect;
-    curCell->addBox(x1-10e3, y1-10e3, width+20e3, height+20e3, protect);
-    layout->drawing->activeLayer=M;
 }

@@ -23,15 +23,15 @@
         int chip_height = 5e6;
         int chip_width = 10e6;
         int feedlineDepth = chip_height/4;
-        double ɛ = 11.9;
+        double ɛ = 11.45;
         double c = 299792458.0;
 
         doubleList res_freqs;
         
-        int w_res =4e3;
-        int g_res = 2e3;
+        int w_res =7e3;
+        int g_res = 4e3;
         int x = 5e3;
-        int tailLen = 750e3;
+        int tailLen = 1000e3;
         int w_thinGround = 5e3;
         int L_claw = 60e3;
         int w_claw = 20e3;
@@ -82,7 +82,7 @@ int main() {
     addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
    
     // Ground plane
-    curCell->addBox(-chip_width/2, -chip_height/2, chip_width, chip_height, ground);
+    //curCell->addBox(-chip_width/2, -chip_height/2, chip_width, chip_height, ground);
     
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;  
@@ -103,7 +103,7 @@ int main() {
 
         stringList directions; directions.append("d"); directions.append("r"); directions.append("d");
         intList segmentLengths; segmentLengths.append(500e3); segmentLengths.append((-1+k/2)/5*chip_width - cursor2.x()); segmentLengths.append(chip_height/2 - 500e3+cursor2.y());
-        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
+        //addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
         
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u");
@@ -114,17 +114,20 @@ int main() {
         
         stringList directions; directions.append("u"); directions.append("l"); directions.append("u");
         intList segmentLengths; segmentLengths.append(500e3); segmentLengths.append(-(-1+k/2)/5*chip_width + cursor2.x()); segmentLengths.append(chip_height/2 - 500e3-cursor2.y());
-        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
+        //addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
         
         j++;
         k+=2;
     }
     curCell->textToPolygon(100e3);
-    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize);
+
     
     //layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
     //layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
-
+    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
+    
+    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);
+    
     int hd;
     layout->backgroundTool->clearBackground();
     hd = layout->backgroundTool->addBackground("background.png");
@@ -133,5 +136,7 @@ int main() {
 
     //debug.show();
     //debug.clear();
+    
+    
     
 }

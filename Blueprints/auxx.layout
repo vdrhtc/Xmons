@@ -1,4 +1,38 @@
 
+point newPoint(int x, int y) {
+    point p;
+    p.set(x, y);
+    return p;
+}
+
+void clearAllAuxiliaryAux(cell* curCell) {
+
+    layout->drawing->deselectAll();
+    curCell->selectLayer(aux2);
+    curCell->selectLayer(aux3);    
+    curCell->selectLayer(aux4);
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+}
+
+void clearLayer(cell* curCell, int layer) {
+
+    layout->drawing->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+
+}
+
+void rotateLayer(cell* curCell, int layer, point center, double angle) {
+    curCell->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->point(center.x(), center.y());
+    layout->drawing->rotate(angle);
+    curCell->deselectAll();
+    layout->drawing->clearPoints();
+}
+
 
 void rotateSelection(cell* curCell, rect selection, point center, string direction) {
     curCell->deselectAll();
@@ -48,7 +82,13 @@ point rotateVector(point vec, point anchor, string direction) {
         retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y());
         return retPoint; 
     }
+}
 
+point rotateVectorArbAngle(point vec, point anchor, double angle) {
+
+    point retPoint;
+    retPoint.set(anchor.x() + vec.x()*math::cos(angle/180*math::pi)-vec.y()*math::sin(angle/180*math::pi), anchor.y()+vec.x()*math::sin(angle/180*math::pi)+vec.y()*math::cos(angle/180*math::pi));
+    return retPoint;
 }
 
 string roman(int i){

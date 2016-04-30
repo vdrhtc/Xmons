@@ -1,0 +1,42 @@
+/*
+ QR code with the parameters
+*/
+
+
+void addQR(cell* curCell, int x1, int y1, int width, int height, int layer) {
+
+    point p1, p2;
+    p1.set(x1, y1); p2.set(x1+width,y1+height);
+
+    string data ="Test resonators. With and without claws.\nChip size: "+chip_width/1e6;
+    data+= "x"+chip_height/1e6;
+    data+=" mm\n";
+    data+="Substrate ɛ: "+ɛ;
+    data+="\n";
+    data+= "Common geometric parameters (um):\n ";
+        data+= "Resonators:\n  ";
+            data += "w_res: "+w_res/1e3; data+="\n  ";
+            data += "g_res: "+g_res/1e3; data+="\n  ";
+            data += "x: "+x/1e3; data+="\n  ";
+            data += "tailLen: "+tailLen/1e3; data+="\n ";
+    data+= "Expected electric parameters:\n ";
+        data+= "Resonators:\n  ";
+            data+="Q-factors:\n   ";
+                data+="Q_e ~ 10 000\n  ";
+            data+= "Frequencies (GHz):\n   ";
+            int i;
+            for (i=0; i<res_freqs.size(); i++) {
+                data += roman(i+1);
+                data+= ": "+res_freqs.at(i);
+                if(i==res_freqs.size()-1) 
+                    data+= "\n ";
+                else
+                    data+=", ";
+            }
+    data+="\r CC BY, G. Fedorov, 2016";
+
+    layout->barcodeTool->setQrCode();
+    layout->barcodeTool->data = data;
+    layout->drawing->activeLayer=layer;
+    layout->barcodeTool->placeBarcode(p1, p2);
+}

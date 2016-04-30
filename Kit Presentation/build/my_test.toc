@@ -1,0 +1,20 @@
+\beamer@endinputifotherversion {3.32pt}
+\select@language {english}
+\select@language {russian}
+\beamer@sectionintoc {1}{Coplanar waveguide resonators}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Quality factors and effective parameters}{2}{0}{1}
+\beamer@subsectionintoc {1}{2}{S-parameters}{6}{0}{1}
+\beamer@subsectionintoc {1}{3}{Xmon design features}{8}{0}{1}
+\beamer@subsectionintoc {1}{4}{Sonnet simulations}{9}{0}{1}
+\beamer@sectionintoc {2}{Noise and decoherence versus Hahn echo technique}{11}{0}{2}
+\beamer@subsectionintoc {2}{1}{Quantum-mechanically treated pure dephasing (Ramsey)}{11}{0}{2}
+\beamer@subsectionintoc {2}{2}{Classically treated pure dephasing (Ramsey)}{14}{0}{2}
+\beamer@subsectionintoc {2}{3}{Hahn echo}{16}{0}{2}
+\beamer@subsectionintoc {2}{4}{Noise PSD filtration}{18}{0}{2}
+\beamer@subsectionintoc {2}{5}{Who wins?}{19}{0}{2}
+\beamer@sectionintoc {3}{Xmon cQED (QuTiP simulations)}{23}{0}{3}
+\beamer@subsectionintoc {3}{1}{Circuit quantization}{23}{0}{3}
+\beamer@subsectionintoc {3}{2}{Cooper pair distribution for an isolated Xmon}{25}{0}{3}
+\beamer@subsectionintoc {3}{3}{Strong driving}{26}{0}{3}
+\beamer@subsectionintoc {3}{4}{Eigenproblem for a qubit-resonator system}{28}{0}{3}
+\beamer@subsectionintoc {3}{5}{Dispersive shifts}{30}{0}{3}
