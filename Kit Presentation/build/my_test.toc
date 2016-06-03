@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.32pt}
+\beamer@endinputifotherversion {3.33pt}
 \select@language {english}
 \select@language {russian}
 \beamer@sectionintoc {1}{Coplanar waveguide resonators}{2}{0}{1}

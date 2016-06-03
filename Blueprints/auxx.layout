@@ -33,6 +33,18 @@ void rotateLayer(cell* curCell, int layer, point center, double angle) {
     layout->drawing->clearPoints();
 }
 
+void mirrorLayer(cell* curCell, int layer, point p1, point p2) {
+    
+    curCell->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->point(p1.x(), p1.y());
+    layout->drawing->point(p2.x(), p2.y());
+    layout->drawing->mirror();
+    curCell->deselectAll();
+    layout->drawing->clearPoints();
+    
+} 
+
 
 void rotateSelection(cell* curCell, rect selection, point center, string direction) {
     curCell->deselectAll();
@@ -40,10 +52,10 @@ void rotateSelection(cell* curCell, rect selection, point center, string directi
     layout->drawing->point(center.x(), center.y());
     if (direction=="d") {}
     else if (direction=="u") {
-        layout->drawing->rotate(180);  
+        layout->drawing->rotate(180);
         layout->drawing->clearPoints();
         layout->drawing->point(center.x(), center.y());
-        layout->drawing->point(center.x(), center.y()+100e3);     
+        layout->drawing->point(center.x(), center.y()+100e3);
         layout->drawing->mirror();
     }
     else if (direction=="l") layout->drawing->rotate(-90);

@@ -94,14 +94,27 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
     int length = length_from_frequency(frequency, claw)*1e3;
     
     int resTurnRad = 8*w_res;
-    generateStructure(curCell, cursor, w_res, tailLen, length, resTurnRad, M);
-    generateStructure(curCell, cursor, w_res+2*g_res, tailLen+g_res, length+g_res, resTurnRad, protect);
+    generateStructure(curCell, cursor, w_res, tailLen, length, resTurnRad, aux2);
+    generateStructure(curCell, cursor, w_res+2*g_res, tailLen+g_res, length+g_res, resTurnRad, aux3);
     
-    rect selection;
-    selection.set(couplingPoint.x() - 200e3-resTurnRad-w_res-g_res, couplingPoint.y()-tailLen-resTurnRad - w_res - 2*g_res, couplingPoint.x()+200e3 + resTurnRad+w_res+g_res, couplingPoint.y());
+    if (direction=="r") {
+        rotateLayer(curCell, aux2, couplingPoint, 90);
+        rotateLayer(curCell, aux3, couplingPoint, 90);
+    } else if (direction=="l") {
+        rotateLayer(curCell, aux2, couplingPoint, -90);
+        rotateLayer(curCell, aux3, couplingPoint, -90);
+    } else if (direction=="u") {
+        rotateLayer(curCell, aux2, couplingPoint, 180);
+        rotateLayer(curCell, aux3, couplingPoint, 180);
+        mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
+        mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
+    }
     
-    rotateSelection(curCell, selection, couplingPoint, direction);
-
+    layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(M, aux3, protect, "A+B", 0, 0, 0);
+    
+    clearAllAuxiliaryAux(curCell);
+    
     point retPoint;
     retPoint.set(200e3+resTurnRad, -(g_res+w_res/2+resTurnRad+tailLen));
     return rotateVector(retPoint, couplingPoint, direction);

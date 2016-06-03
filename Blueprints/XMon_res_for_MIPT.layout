@@ -19,10 +19,13 @@
         int mask = 4;
         int total = 5;
         int aux = 6;
+        int aux2 = 7;
+        int aux3 = 8;
+        int aux4 = 9;
 
         
         int chip_height = 5e6;
-        int chip_width = 8e6;
+        int chip_width = 9e6;
         int feedlineDepth = chip_height/4;
         double ɛ = 11.45;
         double c = 299792458.0;
@@ -83,7 +86,7 @@ int main() {
     addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
    
     // Ground plane
-    curCell->addBox(-chip_width/2, -(chip_height-1e6)/2, chip_width, chip_height-1e6, ground);
+    curCell->addBox(-chip_width/2, -(chip_height-0.5e6)/2, chip_width, chip_height-0.5e6, ground);
     
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;  
@@ -95,7 +98,7 @@ int main() {
     point cursor3;
     for (i=0; i<5; i+=2){
         cursor.set(resonatorPositionsX+chip_width/5*j, resonatorPositionsY);
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k), tailLen, "d");
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k), tailLen, "d", 1);
         cursor2 = addClaw(curCell, cursor2, "d");
         element* marker;
         cursor3.set(cursor2.x()-400e3, cursor2.y());
@@ -107,7 +110,7 @@ int main() {
         //addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
         
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u");
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u", 1);
         cursor2 = addClaw(curCell, cursor2, "u");
         cursor3.set(cursor2.x()-400e3, cursor2.y());
         marker = curCell->addText(protect, cursor3, roman(k+2));
@@ -135,9 +138,9 @@ int main() {
     
     int hd;
     layout->backgroundTool->clearBackground();
-    hd = layout->backgroundTool->addBackground("background.png");
-    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);
-    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);
+/*    hd = layout->backgroundTool->addBackground("background.png");*/
+/*    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);*/
+/*    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);*/
 
     //debug.show();
     //debug.clear();
