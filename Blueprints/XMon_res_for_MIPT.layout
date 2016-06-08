@@ -11,6 +11,7 @@
 #include "Xmon.layout"
 #include "qr.layout"
 #include "test_JJ.layout"
+#include "alignment_mark.layout"
 
         int M = 0;
         int M1 = 1;
@@ -48,8 +49,8 @@
         int arm_len = 300e3;
 
         int qrSize = 500e3;
-        int qrCodePositionX = chip_width/2*9/10-qrSize;
-        int qrCodePositionY = chip_height/2*7/10-qrSize;
+        int qrCodePositionX = chip_width/2*8/10-qrSize;
+        int qrCodePositionY = chip_height/2*8/10-qrSize;
 
 
 int main() {
@@ -66,31 +67,23 @@ int main() {
     
     intList segmentLengths;
     stringList directions;
-    directions.append("r");    directions.append("d");    
-    directions.append("r");   directions.append("u");
     directions.append("r");
     
-    segmentLengths.append(chip_width/8);     segmentLengths.append(feedlineDepth);
-    segmentLengths.append(6*chip_width/8);    segmentLengths.append(feedlineDepth);
-    segmentLengths.append(chip_width/8);
-   
-    cursor.set(-chip_width/2, chip_height/4.);
-    //addFeedline(curCell, cursor, w_feed, g_feed, 4 , segmentLengths, directions);
-   
-    stringList directions;
-    directions.append("r");    directions.append("d");    
-    directions.append("r");   directions.append("d");
-    directions.append("r");
-  
-    cursor.set(-chip_width/2, chip_height/4.);
+    segmentLengths.append(chip_width);
+    cursor.set(-chip_width/2, 0);
     addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
+   
    
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height-0.5e6)/2, chip_width, chip_height-0.5e6, ground);
     
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;  
-    res_freqs.append(6); res_freqs.append(6.5); res_freqs.append(6.9); res_freqs.append(7); res_freqs.append(7.1); res_freqs.append(8);
+    res_freqs.append(7); res_freqs.append(7.1); res_freqs.append(7.2); res_freqs.append(7.3); res_freqs.append(7.4); res_freqs.append(7.5);
+
+
+    addResonator(curCell, newPoint(-chip_width/2+chip_width/6, -resonatorPositionsY), w_res, g_res, 8, 0.5e6, "u", 0);
+    addResonator(curCell, newPoint(chip_width/2-chip_width/6, resonatorPositionsY), w_res, g_res, 8.25, 1e6, "d", 0);
 
     double j = -0.25;
     int k =0;
@@ -103,22 +96,43 @@ int main() {
         element* marker;
         cursor3.set(cursor2.x()-400e3, cursor2.y());
         marker = curCell->addText(protect, cursor3, roman(k+1));
-        cursor2 = addXmon(curCell, cursor2, "d");
-
-        stringList directions; directions.append("d"); directions.append("r"); directions.append("d");
-        intList segmentLengths; segmentLengths.append(500e3); segmentLengths.append((-1+k/2)/5*chip_width - cursor2.x()); segmentLengths.append(chip_height/2 - 500e3+cursor2.y());
-        //addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
+        cursor2 = addXmon(curCell, cursor2, "d", 200, 100);
+        
+        stringList directions; 
+        if (k != 0) {
+            directions.append("d"); directions.append("r"); directions.append("d");
+        } else {
+            directions.append("d"); directions.append("l"); directions.append("d");
+        }
+        intList segmentLengths; 
+        if (k!=0) {
+            segmentLengths.append(200e3); segmentLengths.append((-1+k/2)/4*chip_width - cursor2.x()); segmentLengths.append(chip_height/2-25e4 - 200e3+cursor2.y()); 
+        } else {
+            segmentLengths.append(200e3); segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x()); segmentLengths.append(chip_height/2-25e4 - 200e3+cursor2.y()); 
+        } 
+        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
         
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u", 1);
         cursor2 = addClaw(curCell, cursor2, "u");
         cursor3.set(cursor2.x()-400e3, cursor2.y());
         marker = curCell->addText(protect, cursor3, roman(k+2));
-        cursor2 = addXmon(curCell, cursor2, "u");
+        cursor2 = addXmon(curCell, cursor2, "u", 200, 100);
         
-        stringList directions; directions.append("u"); directions.append("l"); directions.append("u");
-        intList segmentLengths; segmentLengths.append(500e3); segmentLengths.append(-(-1+k/2)/5*chip_width + cursor2.x()); segmentLengths.append(chip_height/2 - 500e3-cursor2.y());
-        //addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
+        cursor2.set(cursor2.x()-arm_len, cursor2.y()-arm_len/2);
+        stringList directions; 
+        if (k!=4) {
+            directions.append("u"); directions.append("l"); directions.append("u");
+        } else {
+            directions.append("u"); 
+        }
+        intList segmentLengths; 
+        if (k!=4) {
+            segmentLengths.append(200e3); segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x()); segmentLengths.append(chip_height/2 -25e4 - 200e3-cursor2.y());
+        } else {
+            segmentLengths.append(chip_height/2 -25e4 -cursor2.y());
+        }
+        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "md");
         
         j++;
         k+=2;
@@ -128,8 +142,15 @@ int main() {
         
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);
     
-    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 0), 300, 100);
-    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 0), 300, 100);
+    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 200, 100);
+    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 200, 100);
+    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 200, 100);
+    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100);
+    
+    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
+    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, 1.75e6));
+    addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, -1.75e6));
+    addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, 1.75e6));
     
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);

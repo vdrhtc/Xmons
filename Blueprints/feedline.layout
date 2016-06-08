@@ -6,7 +6,7 @@
 x |  |___ >==========~======< ____|  | x
  | | ____/                                  \_____ | |
 
-    Or a flux bias line (see Kelley's thesis)
+    Or a flux bias line (see Kelly's thesis)
 __
 |  |________                                _____
 |   _________\                          / __    | |
@@ -14,6 +14,10 @@ x  |     ______>=====~======< ____|  | x
 |   |    |_____/                          \_____ | |
 |__|
     
+    Or a microwave drive line   _____
+                                           /___  | |
+x-----========~==========< ___|  | x
+                                           \____ | |
 */
 
 #include "wiring.layout"
@@ -28,6 +32,16 @@ x  |     ______>=====~======< ____|  | x
     int totalPadLen = ground_connector_width+bottom_g_pad+pad_len+transition_len;
 
     int fluxBiasLen = 0;
+    int microwaveDriveLen = 0;
+
+point microwaveDrive(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
+    
+    
+    point cursor = wire(curCell, protect, anchor, direction, g_feed, w_feed+2*g_feed);
+    microwaveDriveLen+=g_feed;
+    
+    return cursor;
+}
 
     
 point fluxBias(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
@@ -98,6 +112,9 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     else if (type=="fb") {
         start = fluxBias(curCell, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - fluxBiasLen);
+    } else if (type == "md") {
+        start = microwaveDrive(curCell, start, w_feed, g_feed, directions.at(0));
+        segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
     }
 
     if(N_turns==0) {
