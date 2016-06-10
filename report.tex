@@ -62,11 +62,13 @@
 \maketitle
 \tableofcontents
 
-\chapter{Resonator-feedline coupling}
+\chapter{Theoretical introduction}
 
-\section{Equations for quality factors}
+\section{Superconducting microwave coplanar waveguide resonators}
 
-The total quality factor of a microwave transmission line resonator (TLR) $Q_l$ (loaded quality factor) can be calculated as a sum of two parts -- the internal and external quality factors. The internal quality factor $Q_i$ describes how excitations leave the resonator in the absence of coupling to the transmission line, so damping in this case comes from the internal defects (i.e. two-level systems) in the resonator itself. When, however, the resonator is coupled to the external circuitry with some active resistance, the damping is enhanced and the total Q-factor is reduced according to the following formula:
+\subsection{Equations for quality factors}
+
+The total quality factor of a microwave transmission line resonator (TLR) $Q_l$ (loaded quality factor) can be calculated as a sum of two parts -- the internal and external quality factors. The internal quality factor $Q_i$ describes how excitations leave the resonator in the absence of coupling to any external circuitry, so damping in this case comes from the internal defects (i.e. resonant two-level systems) in the resonator itself. When, however, the resonator is coupled to the external circuitry having some active resistance, the damping is enhanced and the total Q-factor is reduced according to the following expression:
 \begin{equation}
 Q_l^{-1} = Q_i^{-1}+Q_e^{-1},
 \label{eq:qfactor}
@@ -87,16 +89,16 @@ where $Q_e$ is determined by the value of the externally connected resistance an
 \caption{Norton equivalent of (a).}
 \end{subfigure}
 
-\caption{Equivalent circuit for a $\lambda/4$ TLR, capacitively coupled to the transmission line from the system's point of view.}
+\caption{Equivalent circuit for a $\lambda/4$ TLR, capacitively coupled to the transmission line near resonance.}
 \label{fig:resonator_equiv}
 \end{figure}
 
-The common way of connection is the capacitive coupling $C_\kappa$ to the transmission line, as depicted on the equivalent scheme of the circuit in \autoref{fig:resonator_equiv}~(a). To draw the equivalent scheme of the circuit one needs first to determine the type of the resonance for the chosen TLR\cite{pozar2012}. In the studied design the resonators are $\lambda/4$ thus the equivalent for each of them is the parallel RLC resonator, where $C$ and $L$ are equivalent capacitance and inductance and $R=R_{in}$ characterises the internal dissipation. Its $Q_i  = \omega_0	C R_{in}$ (uncoupled case) where $\omega_0 = \sqrt{1/LC}$ can be calculated from the definition when no external impedance is connected.
+A common way of measuring a resonator is to couple it capacitively to an external transmission line. The coupling on the equivalent scheme of the circuit is represented as $C_\kappa$, as depicted in \autoref{fig:resonator_equiv}~(a). An infinite/properly terminated transmission line can be represented as a single resistance of $Z_0$ Ohms, where $Z_0$ is the line's wave impedance, thus two such resistances are added to the both sides of the resonator circuit. The resonators are of $\lambda/4$ type thus the equivalent for each of them is a parallel RLC oscillator (see below), where $C$ and $L$ are, respectively, its equivalent capacitance and inductance and $R=R_{in}$ characterises the internal dissipation. Its $Q_i  = \omega_0 C R_{in}$ where $\omega_0 = \sqrt{1/LC}$ can be calculated from the definition when no external impedance is connected.
  
-The external Q-factor can be derived in a bit more complicated way\cite{Goppl2008}. We can transform the circuit on the \autoref{fig:resonator_equiv}~(a) to explicitly include the external parameters in the internal ones. To do so one needs to convert the series connection of the coupling capacitor and the characteristic impedances into parallel, as done on the \autoref{fig:resonator_equiv}~(b). The $R^*$ and $C^*$ impedances should be chosen in such a way that total impedance of the external circuit was the same as before the transformation. To achieve this $R^*$ and $C^*$ must be calculated as follows:
+The external Q-factor can be derived in a bit more complicated way\cite{Goppl2008}. We can transform the circuit from the \autoref{fig:resonator_equiv}~(a) to explicitly include the external parameters into the internal ones. To do so one needs to convert the series connection of the coupling capacitor and the characteristic impedances into parallel, as done on the \autoref{fig:resonator_equiv}~(b). The $R^*$ and $C^*$ impedances should be chosen in such a way that total impedance of the external circuit is the same as before the transformation:
 \begin{align}
 R^{*} &= \frac{1+\omega^2 C_\kappa^2 (Z_0/2)^2}{\omega^2 C_\kappa^2 (Z_0/2)	}, \\
-C^{*} &= \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2} \approx C_\kappa\ (\text{for our case}). \label{eq:C_ast}
+C^{*} &= \frac{C_\kappa}{1+\omega^2 C_\kappa^2 (Z_0/2)^2} \approx C_\kappa\ (\text{in our case}). \label{eq:C_ast}
 \end{align}
 From this and \autoref{fig:resonator_equiv}~(b) it is simple to write down the expression for the internal, external and loaded quality factors:
 \begin{gather}
@@ -113,8 +115,9 @@ The above expressions readily justify \eqref{eq:qfactor}. The values been used i
 \caption{Q-factors dependence on $C_\kappa$ according to \eqref{eq:Q_l}.}
 \end{figure}
 
-\subsection{About the lumped-element model of a coplanar waveguide resonator}
-Here we will discuss the $\lambda/4$ coplanar waveguide (CPW) resonator which is near resonance is equivalent by impedance to a lumped element parallel resonance circuit, as in \autoref{fig:resonator_equiv}. $L$ and $C$ for the lumped-element models of CPW resonators are bound not only by the resonance frequency condition $\omega_0 = 1/\sqrt{LC}$ but also by the geometry of the waveguide or, in other words, $C^\prime$ and $L^\prime$ -- the transmission line capacitance and inductance per unit length. To show this one would write down the impedance of the CPW resonator near its resonance frequency $\omega_0$ and compare it to the lumped-element one's\cite{pozar2012}. Such comparison leads to the following expressions:
+
+\subsubsection{The lumped-element model of a coplanar waveguide resonator}\label{ssec:LE-model}
+A $\lambda/4$ coplanar waveguide (CPW) resonator near a resonance is equivalent to a lumped-element parallel resonance circuit, as in \autoref{fig:resonator_equiv}. $L$ and $C$ for the lumped-element models of CPW resonators are bound not only by the resonance frequency condition $\omega_0 = 1/\sqrt{LC}$ but also by the geometry of the waveguide or, in other words, $C^\prime$ and $L^\prime$ -- the transmission line capacitance and inductance per unit length. To show this, one would write down the impedance of the CPW resonator near its resonance frequency $\omega_0$ and compare it to the lumped-element one's\cite{pozar2012}. Such comparison leads to the following expressions:
 \[
 R_{in} = \frac{Z_0}{\alpha l}, \quad C = \frac{\pi}{4\omega_0 Z_0},
 \]
@@ -129,11 +132,16 @@ L^\prime = \frac{\mu_0}{4} \frac{K(k_0^\prime)}{K(k_0)},
 \]
 where $K(x)$ is the complete elliptic integral of the first kind, $\varepsilon_{eff} = \frac{1+\varepsilon_{substrate}}{2}$, $k_0 = \frac{W}{W+2G}$ where $W$ is the width of the hotwire and $G$ is the width of the gaps and finally $k_0^\prime = \sqrt{1-k_0^2}$.
 
-\section{S-parameters}
+\subsection{S-parameters for lines with resonators}
 
-\subsection{Introduction}
+Typically, a microwave device under test (DUT) is tested with a vector network analyser, which measures the scattering matrix (S-matrix) of the DUT. So below we will discuss the S-matrix for two different coupling configurations. Generally, a two-port DUT can be drawn like in \autoref{fgeneral2port}. For such system it is possible to calculate different 2 by 2 matrices, which bind together voltages and currents on the ports 1 and 2. S-matrix also has 4 values, named S-parameters.
 
-In the following two subsections we will discuss the scattering matrix for the two different configurations of resonator coupling. Generally, a two-port microwave device under test can be drawn like in \autoref{fgeneral2port}. For such system it is possible to calculate different 2 by 2 matrices, which bind together voltages and currents on the ports 1 and 2.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{tl_scheme_general}
+\caption{A scheme for the two-port network.}
+\label{fgeneral2port}
+\end{figure}
 
 To calculate S-parameters one needs to treat voltages and currents, which can be calculated from Kirchhoff's laws, as a sum of the incident and reflected components (``+'' corresponds to the incident wave and ``$-$'' to the reflected wave):
 \begin{gather*}
@@ -162,21 +170,17 @@ V_2^+
 \end{equation}
 However, it's often more convenient to use indirect methods of calculating S-parameters, for example, to extract them from $ABCD$-matrix.
 
-\begin{figure}
-\centering
-\includegraphics[width=0.5\textwidth]{tl_scheme_general}
-\caption{A scheme for the two-port network.}
-\label{fgeneral2port}
-\end{figure}
+
 
 
 \subsection{Coupled (shunting) design}
-For a coupled design one can treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Except by the definition \eqref{eq:S_def} there are two other ways to calculate the S-matrix. First one is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
+For a coupled design one can treat the resonator as a shunt in the transmission line as in \autoref{fig:shunted_tl}. Except than by the definition \eqref{eq:S_def} there are two other ways to calculate the S-matrix. First one is intuitive but is not valid for every configuration. Transmission and reflection parameters are defined\cite{Kiselev2013} below (the second formula is valid only for the ``shunt'' configuration, no series elements are allowed in the line):
 \begin{gather}    
 \Gamma = \frac{Z_{eff} - Z_{0}}{Z_{eff} + Z_{0}} = S_{11} = S_{22}, \label{eGamma}\\
 T = \frac{2Z_{eff}}{Z_{eff}+Z_0} \overset{!}{=} S_{21} = S_{12}, \label{eT}
 \end{gather}
-where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold due to the symmetry.\begin{figure}[h]
+where $Z_{eff} = Z_0 || Z_{shunt}$, $Z_{shunt} = \frac{1}{i\omega C_\kappa} + 1/i\omega C||R_{in}||i\omega L$ and the equalities between S-parameters hold due to the symmetry.
+\begin{figure}[h]
 \centering
 \includegraphics[width=0.5\textwidth]{tl_scheme}
 \caption{The shunted transmission line. This is \autoref{fig:resonator_equiv}~(a)  from the observer's point of view.}
@@ -185,7 +189,7 @@ where $Z_{eff} = Z_0 || Z_{shunt}$ and the equalities between S-parameters hold 
 \begin{figure}[h]
 \centering
 \includegraphics[width=0.99\textwidth]{S21s}
-\caption{ $S_{21}$ parameters simulated with \eqref{eq:S21} for different coupling strengths. The loaded quality factors are calculated with \eqref{eq:Q_l} and with ``3db''-method. The red dashes show the values of expression $\sqrt{1/L(C+C_k)}$ according to \autoref{fig:resonator_equiv}~(b), the green ones show the theoretically predicted depths.}
+\caption{ $S_{21}$ parameters from \eqref{eq:S21} for different coupling strengths. The loaded quality factors are calculated with \eqref{eq:Q_l} and with the ``3db''-method. The red dashes show the values of expression $\sqrt{1/L(C+C_k)}$ according to \autoref{fig:resonator_equiv}~(b), the green ones show the theoretically predicted depths.}
 \label{fig:S21s}
 \end{figure}
 
@@ -194,7 +198,7 @@ Another way is to calculate $ABCD$ matrix or impedance matrix and convert it to 
 S_{11} = -\frac{Z_0}{1 + 2Z_{shunt}/Z_0} = S_{22}, \\
 S_{21} = \frac{1}{1+Z_0/2Z_{shunt}} = S_{12}. \label{eq:S21}
 \end{gather}
-The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated by \eqref{eq:Q_l} and by ``3db''-method ($Q_L \approx \omega_0/\Delta\omega_{3db}$). It can be seen that with increase of capacitance resonance frequency shifts down, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast} and $Q_l$ decreases.
+The second expression is plotted in \autoref{fig:S21s} along with the loaded quality factors calculated with \eqref{eq:Q_l} and with the ``3db''-method ($Q_L \approx \omega_0/\Delta\omega_{3db}$). It can be seen that with increase of capacitance resonance frequency and $Q_l$ decrease, which is expected according to \autoref{fig:resonator_equiv}~(b) and \eqref{eq:C_ast}.
 
 In \autoref{fig:S21s} the resonance frequencies calculated from the equivalent circuit in \autoref{fig:resonator_equiv}~(b) are shown along with the analytically calculated depths of the peaks:
 \begin{equation}
@@ -218,7 +222,7 @@ For the embedded resonator it's possible to draw a similar equivalent circuit as
 \label{fS21s_series}
 \end{figure}
 
-For this kind of connection of the resonator to the transmission line \eqref{eT} is now not valid (however, \eqref{eGamma} still holds true). To calculate transmission in this case one can find the transmission matrix and then convert it to the S-matrix or use Kirchhoff's laws and \eqref{eq:S_def}. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
+For this kind of connection of the resonator to the transmission line \eqref{eT} is now not valid (however, \eqref{eGamma} still holds). To calculate transmission in this case one may find the transmission matrix and then convert it to the S-matrix or use Kirchhoff's laws and \eqref{eq:S_def}. For studied case one can get the following $ABCD$-matrix\cite{pozar2012}
 \begin{equation}
 \hat T = \rbrkt{\begin{matrix}
 A & B \\
@@ -228,7 +232,7 @@ C & D
 1/Z_{res} &  1 + \frac{1/i\omega C_\kappa}{Z_{res}} 
 \end{matrix}},
 \end{equation}
-where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ is  plotted in \autoref{fS21s_series} and can be calculated as\cite{pozar2012} 
+where $Z_{res} = R_{in}||i\omega L || 1/i\omega C$. The corresponding $S_{21}$ is plotted in \autoref{fS21s_series}, calculated as\cite{pozar2012} 
 \begin{equation}
 S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}.
 \end{equation}
@@ -324,13 +328,13 @@ where $g, e, f, d$ denote the first 4 energy eigenstates of the transmon, $n_{\a
 
 \section{Driving of an isolated transmon (Xmon)}
 
-To simulate the dynamics in the unitary case without taking into account the dissipative processes it is enough to solve Schrödinger equation with the Hamiltonian \eqref{eq:hamiltonian} summed with the driving part \eqref{eq:driving_q}. To consider the isolated qubit only it is sufficient to put $C_g = 0$. The final state after some time of the evolution $t$ will be described with a Dyson series or a $\hat T$-exponent:
+To simulate the dynamics in the unitary case without taking into account the dissipative processes it is enough to solve the Schrödinger equation with the Hamiltonian \eqref{eq:hamiltonian} summed with the driving part \eqref{eq:driving_q}. To consider the isolated qubit only it is sufficient to put $C_g = 0$. The final state after some time of the evolution $t$ will be described with a Dyson series or a $\hat T$-exponent:
 \begin{equation}
 \ket{\psi (t)} = \hat T \exp\left\{-\frac{i}{\hbar} \rbrkt{\mathcal{\hat H}t + \int_0^t \mathcal{\hat H}_q^d(\tau) \diff\tau}\right\} \ket{E_0^q}= \sum_k c_k(t) \ket{E^q_k},
 \end{equation} 
 where $\ket{E_k^q}$ denotes the $k$'s eigenstate of the qubit Hamiltonian. The simulation can also be reduced to a standard linear ODE solution which is also possible within QuTiP framework using the \textit{mesolve} routine.
 
-The result of such simulation can be observed in \autoref{fig:driven_tr}. As one can see when the driving amplitude (in GHz) becomes comparable to the anharmonicity of the transmon significant leakage to higher states occurs.
+The result of such simulation can be observed in \autoref{fig:driven_tr}. As one can see when the driving amplitude (in GHz) becomes comparable to the anharmonicity of the transmon, significant leakage to higher states occurs.
 
 \begin{figure}[h!]
 \centering
@@ -430,12 +434,12 @@ From the fact that $\hat \sigma_z$ is diagonal it can be shown that
 \end{matrix}},
 \end{gathered}
 \] 
-where the integral variables $\tau_1$ and $\tau_2$, coherence $\rho(t)$ and inversion $N(t)$ where introduced. From above it is obvious that
+where the integral variables $\tau_1$ and $\tau_2$, coherence $\rho(t)$ and inversion $N(t)$ were introduced. From above it is obvious that
 \begin{gather}
 N(t) = N(0),\\
 \rho(t) = \rho(0)\exp \left\{ \frac{2i}{\hbar}\int_0^t f(\tau)  \diff \tau \right\}. \label{eq:rho_t}
 \end{gather}
-This equations can be visualized with numerical simulation, taking $f(t)$ be, for instance, normally distributed. Phase will experience random drifts, which lead to random rotations of the Bloch vector on the equator of the sphere, see \autoref{fig:cdeph}~(a), (c).
+This equations can be visualized with numerical simulation, taking $f(t)$ be, for instance, normally distributed. The phase will experience random drifts, which lead to random rotations of the Bloch vector on the equator of the sphere, see \autoref{fig:cdeph}~(a), (c).
 
 However, we can now use the other side of the density matrix, the property for which it is also called statistical operator. Let's run the equation \eqref{eq:rho_t} many times and look at the statistically expected state of the observed system over time. The diagonal part will still stay the same, and for coherence we have (presuming Gaussian instantaneous distribution of $f(t)$ and $x(t) = \frac{2}{\hbar}\int_0^t f(\tau)  \diff \tau$):
 \begin{gather}
@@ -448,7 +452,7 @@ Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1)
 \end{equation}
 It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S_f(\omega) = S_f(0) = const$) or for a sufficiently large time $t$ where 
 $$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
-acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both this cases pure dephasing rate $\Gamma^*_2$ exists in a usual sense and $\Gamma^*_2 \propto S_f(0)$. In case of, for example, 1/f noise the decay curve will have the shape of $e^{-t^2}$ in the vicinity of $t=0$.
+acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both these cases the pure dephasing rate $\Gamma^*_2$ exists in the usual sense and $\Gamma^*_2 \propto S_f(0)$. In case of, for example, the 1/f noise the decay curve will behave as $e^{-t^2}$ in the vicinity of $t=0$.
 
 The averaged evolution for the white noise case can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
 In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise is shown. For the averaged case ((b), (d)) 2500 trajectories where used. One can see that a plateau is present for the yellow graph near $t=0$, in accordance with theoretical predictions.

@@ -1,0 +1,19 @@
+
+/*
+    Adds an alignment mark
+*/
+
+    int mark_size = 90e3;
+    int box_size = 100e3;
+    int w_mark = 10e3;
+
+void addAlignmentMark(cell* curCell, point center) {
+    
+    wire(curCell, M1, center, "d", mark_size/2, w_mark);
+    wire(curCell, M1, center, "u", mark_size/2, w_mark);
+    wire(curCell, M1, center, "r", mark_size/2, w_mark);
+    wire(curCell, M1, center, "l", mark_size/2, w_mark);
+    
+    curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, protect);
+
+}
