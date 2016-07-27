@@ -41,7 +41,7 @@
         int L_claw = 60e3;
         int w_claw = 20e3;
         
-        int w_feed = 16e3;
+        int w_feed = 14e3;
         int g_feed = 8e3;
       
         int w_q = 20e3;
@@ -49,7 +49,7 @@
         int arm_len = 300e3;
 
         int qrSize = 500e3;
-        int qrCodePositionX = chip_width/2*8/10-qrSize;
+        int qrCodePositionX = chip_width/2*9/10-qrSize;
         int qrCodePositionY = chip_height/2*8/10-qrSize;
 
 
@@ -148,7 +148,7 @@ int main() {
     addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100);
     
     addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
-    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, 1.75e6));
+/*    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, 1.75e6));*/
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, -1.75e6));
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, 1.75e6));
     

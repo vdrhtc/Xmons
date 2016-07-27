@@ -5,7 +5,7 @@
 
     int structure_padding = 12e3;
     int pad_side_len = 200e3;
-    int JJ_pads_len = 5.075e3;
+    int test_JJ_pads_len = 4.0e3;
     int JJ_delta_arm_len = 8e3;
     
 
@@ -23,29 +23,29 @@ void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ) {
     // Top
     cursor.set(center.x(), center.y()+structure_padding/2);
     point cursor2 = copyPoint(cursor); 
-    cursor = wire(curCell, M, cursor, "d", JJ_pads_len, w_q/3);
+    cursor = wire(curCell, M, cursor, "d", test_JJ_pads_len, w_q/3);
     
-    wire(curCell, aux, cursor2, "d", JJ_pads_len*6/5, w_q/3);
-    cursor2.set(cursor2.x()-w_q/3/2+w_q/3/3/2, cursor2.y()-JJ_pads_len);
-    wire(curCell, aux, cursor2, "d", JJ_pads_len/2, w_JJ);
+    wire(curCell, aux, cursor2, "d", test_JJ_pads_len*6/5, w_q/3);
+    cursor2.set(cursor2.x()-w_q/3/2+w_q/3/3/2, cursor2.y()-test_JJ_pads_len*6/5);
+    wire(curCell, aux, cursor2, "d", test_JJ_pads_len/2, w_JJ);
     cursor2.set(cursor2.x()+w_q/3-w_q/3/3, cursor2.y());
-    wire(curCell, aux, cursor2, "d", JJ_pads_len/2, w_JJ);
+    wire(curCell, aux, cursor2, "d", test_JJ_pads_len/2, w_JJ);
     
     // =====  Bottom
-    cursor.set(cursor.x(), cursor.y()-(g_q-2*JJ_pads_len)+JJ_delta_arm_len);
+    cursor.set(cursor.x(), cursor.y()-(g_q-2*test_JJ_pads_len)+JJ_delta_arm_len);
     
-    wire(curCell, M, newPoint(cursor.x()-w_q/4, cursor.y()), "d", JJ_pads_len, w_q/9);
-    wire(curCell, M, newPoint(cursor.x()+w_q/4, cursor.y()), "d", JJ_pads_len, w_q/9);
+    wire(curCell, M, newPoint(cursor.x()-w_q/4, cursor.y()), "d", test_JJ_pads_len, w_q/9);
+    wire(curCell, M, newPoint(cursor.x()+w_q/4, cursor.y()), "d", test_JJ_pads_len, w_q/9);
     
-    cursor.set(cursor.x()-w_q/4, cursor.y());
+    cursor.set(cursor.x()-w_q/4, cursor.y()+1.711e3);
     
-    wire(curCell, aux, cursor, "d", JJ_pads_len/2, w_q/3/3);
+    wire(curCell, aux, cursor, "d", test_JJ_pads_len, w_q/3/3);
     cursor.set(cursor.x()+w_q/2, cursor.y());
-    wire(curCell, aux, cursor, "d", JJ_pads_len/2, w_q/3/3);
-    cursor.set(cursor.x()-w_q/3/3/2, cursor.y()-JJ_pads_len/3/2);
-    wire(curCell, aux, cursor, "l", JJ_pads_len/2, h_JJ);
+    wire(curCell, aux, cursor, "d", test_JJ_pads_len, w_q/3/3);
+    cursor.set(cursor.x()-w_q/3/3/2, cursor.y()-test_JJ_pads_len/3/2);
+    wire(curCell, aux, cursor, "l", test_JJ_pads_len/2, h_JJ);
     cursor.set(cursor.x()-w_q/2+w_q/3/3, cursor.y());
-    wire(curCell, aux, cursor, "r", JJ_pads_len/2, h_JJ);
+    wire(curCell, aux, cursor, "r", test_JJ_pads_len/2, h_JJ);
     
      // ==== Merge aux structure to M1       
     layout->booleanTool->boolOnLayer(aux, aux, M1, "A+B", 0, 0, 2);

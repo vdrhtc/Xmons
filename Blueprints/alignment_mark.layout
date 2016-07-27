@@ -5,14 +5,24 @@
 
     int mark_size = 90e3;
     int box_size = 100e3;
-    int w_mark = 10e3;
+    int w_mark = 500;
 
 void addAlignmentMark(cell* curCell, point center) {
+
+    stringList l;
+    l.append("d");l.append("l");l.append("r");l.append("u");
     
-    wire(curCell, M1, center, "d", mark_size/2, w_mark);
-    wire(curCell, M1, center, "u", mark_size/2, w_mark);
-    wire(curCell, M1, center, "r", mark_size/2, w_mark);
-    wire(curCell, M1, center, "l", mark_size/2, w_mark);
+    int i, k;
+    int n_segments = 4;
+    
+    for (i=0; i<4; i++){
+        point cursor = center;
+        for(k=0; k<n_segments;k++) {
+            cursor = wire(curCell, aux, cursor, l.at(i), mark_size/2/n_segments, w_mark*math::pow(2, k));
+        }
+    }
+    layout->booleanTool->boolOnLayer(aux, M1, M1, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
     
     curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, protect);
 
