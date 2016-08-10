@@ -33,7 +33,7 @@ void addQR(cell* curCell, int x1, int y1, int width, int height, int layer) {
                 else
                     data+=", ";
             }
-    data+="\r CC BY, G. Fedorov, 2016";
+    data+="\r---CC BY, G. Fedorov, 2016---";
 
     layout->barcodeTool->setQrCode();
     layout->barcodeTool->data = data;

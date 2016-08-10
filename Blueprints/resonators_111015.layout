@@ -18,6 +18,10 @@
         int mask = 4;
         int total = 5;
         int aux = 6;
+        int aux2 = 7;
+        int aux3 = 8;
+        int aux4 = 9;
+
 
         
         int chip_height = 5e6;
