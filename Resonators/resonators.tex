@@ -124,18 +124,18 @@ Corrected & -0.4\% &  0.8\% & -0.2\% &  0.3\% & -0.4\% & -0.9\%
 
 \subsection{Subsequent cooldowns effect on the frequency}
 
-The first measurement which is displayed on \autoref{fig:nb_general} was done at MISIS at a temperature  of 4K and power too high to tell anything about so-called ``one-photon'' behaviour when the resonator is populated on average with no more than several photons. Therefore a subsequent cooldown was required to measure the interesting qualities at low powers and temperatures. It was conducted two month later at ISSP in Chernogolovka at the temperature of 10 mK and a range of powers. After the second cooldown there was a noticeable and consistent change in resonance frequencies measured at high power, as shown in \autoref{fig:2-cooldown}. Each resonance shifted to the right approximately 1-5 MHz. This change may have been caused by a different temperature and thus different $\varepsilon_{Si}$. \
+The first measurement which is displayed on \autoref{fig:nb_general} was done at MISIS at a temperature  of 4K and power too high to tell anything about so-called ``one-photon'' behaviour when the resonator is populated on average with no more than several photons. Therefore, a subsequent cooldown was required to measure the interesting qualities at low powers and temperatures. It was conducted two month later at ISSP in Chernogolovka at the temperature of 10 mK and a range of powers. After the second cooldown there was a noticeable and consistent change in resonance frequencies measured at high power, as shown in \autoref{fig:2-cooldown}. Each resonance shifted to the right approximately 1-5 MHz. This change may have been caused by a different temperature and, thus, different $\varepsilon_{Si}$. \
 
-Additionally the first resonator has visually degraded in Q-factor since the first experiment. Possible that it was corrupted during the transportation, however a detailed analysis with usage of microscopy may reveal a different origin.
+Additionally the first resonator visually has a degraded Q-factor in comparison with the first experiment. It's possible that it was corrupted during the transportation; however, a detailed analysis with usage of microscopy may reveal a different origin.
 
 \subsection{Fitting results}
 
 In this subsection the results obtained using the \textit{circlefit} fitting method are presented.
-The raw data for the fitting was obtained using the standard qubit measurement architecture. Resonators where at the base plate of a dilution refrigerator at 10 mK, the attenuation was 60 dB to isolate room temperature noise. The signal then was amplified by a 30 dB HEMT and then by a 30 dB room temperature amplifier. Each peak from \autoref{fig:nb_general} was enlarged and scanned with finer resolution and averaged to reduce noise (more averages on low and less on high powers). Then for each power the complex $S_{21}$ data for each scan area around a resonance was recorded. In overall such measurement was found to take 2-3 hours which is a modest time for experiments with cQED.
+The raw data for the fitting was obtained using the standard qubit measurement architecture. Resonators where at the base plate of a dilution refrigerator at 10 mK, the attenuation was 60 dB to isolate room temperature noise. The signal then was amplified by a 30 dB HEMT and then by a 30 dB room temperature amplifier. Each peak from \autoref{fig:nb_general} was enlarged and scanned with finer resolution and averaged to reduce noise (more averages on low and less on high powers). Then for each power the complex $S_{21}$ data for each scan area around a resonance was recorded. In overall, such measurement was found to take 2-3 hours which is a modest time for experiments with cQED.
 
-After all of the data had been obtained, the fitting procedure has been applied for every scan at each power. The full fitting process is described in depth in the original publication\cite{probst2015}. In practice the whole algorithm is encapsulated in several function calls of the library called \textit{resonator tools} that the authors have kindly provided via \href{https://github.com/sebastianprobst/resonatortools}{GitHub}.
+After all of the data had been obtained, the fitting procedure has been applied for every scan at each power. The full fitting process is described in depth in the original publication\cite{probst2015}. In practice, the whole algorithm is encapsulated in several function calls of the library called \textit{resonator tools} that the authors have kindly provided via \href{https://github.com/sebastianprobst/resonatortools}{GitHub}.
 
-It is well-known\cite{wang2009} that for superconducting microwave resonators the internal quality factor experiences an increase in value when probed with higher power. This effect is believed to occur due to the presence of two-level defects or two-level systems (TLS) with a dipole moment in the areas of high electric fields which resonator creates. As long as TLSs have same frequency as the measured resonator and coupled strong enough, they will drain excitations from the resonator. However TLSs can only accommodate only one photon at a time, thus at high probe powers they saturate and do no more participate in resonator relaxation. Therefore the increase of the internal Q-factor is observed when the resonator is driven with strong microwave fields.
+It is well-known\cite{wang2009} that for superconducting microwave resonators the internal quality factor experiences an increase in value when probed with higher power. This effect is believed to occur due to the presence of two-level defects or two-level systems (TLS) with a dipole moment in the areas of high electric fields which resonator creates. As long as TLSs have same frequency as the measured resonator and coupled strong enough, they will drain excitations from the resonator. However, TLSs can only accommodate only one photon at a time; thus, at high probe powers they saturate and do no more participate in resonator relaxation. Therefore, the increase of the internal Q-factor is observed when the resonator is driven with strong microwave fields.
 
 \begin{figure}
 
@@ -151,12 +151,12 @@ The external quality factors are close to the theoretical expectations of approx
 
 \section{Bad Al CPW resonators: Q-factors and frequencies}
 
-The aluminium resonators sample was fabricated in the cleanroom facility at MIPT using photolithography and a lift-off procedure. They were then analysed with an approach similar to the one applied to the Nb sample. The design was identical to the design used for the fabrication of the previous sample. Unfortunately during the photolithography all of the central wires both for the resonators and the feedline experienced 10-20\% broadening and during the lift-off some pieces of the ground plane near devices I and II were torn off. The sample was nevertheless measured and the results studied.
+The aluminium resonators sample was fabricated in the cleanroom facility at MIPT using photolithography and a lift-off procedure. They were then analysed with an approach similar to the one applied to the Nb sample. The design was identical to the design used for the fabrication of the previous sample. Unfortunately during the photolithography all of the central wires both for the resonators and the feedline experienced 10-20\% broadening and during the lift-off some pieces of the ground plane near devices I and II were torn off. The sample was, nevertheless, measured, and the results studied.
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=1\textwidth]{al_bad_general}
-\caption{The frequency scan made at ISSP at 10 mK at high power. Six resonances are clearly visible, however a seventh one at approximately 5 GHz is also apparent. }
+\caption{The frequency scan made at ISSP at 10 mK at high power. Vertical red lines show expected theoretical frequencies. Six resonances are clearly visible; however, a seventh one at approximately 5 GHz is also apparent.}
 \label{fig:al_general}
 \end{figure}
 
@@ -184,7 +184,7 @@ Corrected & -3.05\% & -1.88\% & -1.28\% & -0.06\% &  0.09\% & -1.35 \%
 
 Despite the presence of both positive and negative deviations there is an upward trend of the relative shifts, possibly caused by a systematic error of the photolithograph. The errors thus may be due to the inaccurate fabrication. The correction procedure from the previous section does not cure the values. It's not possible to extract the real $\varepsilon_{Si}$ from the measurement data because the errors are not comparable throughout the resonators.
 
-Also one can see an additional resonance in the vicinity of 5 GHz. It is believed to be spurious. It can't be a multiple mode of some resonator of lower frequency otherwise more modes would be visible on the graph in the area of higher frequencies. It can't be produced by any of the resonators because each of them is too short for that frequency. It is possible that this resonance had a second mode at 10 GHz, which would mean is as an effective $\lambda/2$ waveguide however this was not studied. All in all, there were different defects on the sample metallization so it should have been on of them.
+Also one can see an additional resonance in the vicinity of 5 GHz. It is believed to be spurious. It can't be a multiple mode of some resonator of lower frequency otherwise more modes would be visible on the graph in the area of higher frequencies. It can't be produced by any of the resonators because each of them is too short for that frequency. It is possible that this resonance had a second mode at 10 GHz, which would mean is as an effective $\lambda/2$ waveguide; however, this was not studied. All in all, there were different defects on the sample metallization so it should have been on of them.
 
 \begin{figure}
 \centering
@@ -208,7 +208,7 @@ Same as in the previous section the scan of the interesting properties over powe
 
 Internal quality factors at high power are all significantly lower for this sample, which is likely to be caused by geometrical defects and inhomogeneity of Al film in the area of high currents. However, the single-photon $Q_i$s are approximately two times the corresponding values on Nb. This shows immediately that Al is much cleaner than Nb and thus more suitable for superconducting qubits experiments. 
 
-The external quality factors $Q_e$ are noticeably higher than on the Nb sample which is at the first glance surprising because due to the broadening of the central wires the coupling capacity should have increased and the $Q_e$ dropped. However a narrower gap in the coplanar waveguide leads to better localization of the EM field thus reducing the crosstalk. In this design the latter effect must have overcome the former and increased $Q_e$s. Interestingly devices III and VI now have deviating external quality factors, not IV and VI as for the Nb sample. Reasons still unclear.
+The external quality factors $Q_e$ are noticeably higher than on the Nb sample which is at the first glance surprising because due to the broadening of the central wires the coupling capacity should have increased and the $Q_e$ dropped. However, a narrower gap in the coplanar waveguide leads to better localization of the EM field thus reducing the crosstalk. In this design the latter effect must have overcome the former and increased $Q_e$s. Interestingly devices III and VI now have deviating external quality factors, not IV and VI as for the Nb sample. Reasons still unclear.
 	
 
 \section{Second Al sample}
@@ -235,7 +235,7 @@ Quality factors and frequencies of the lowest six resonances.
 
 \section{NbN 300 nm with changing gap sample}
 
-This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The design was different this time. Just as before six resonators were coupled to the feedline however the coplanar width for each of them increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
+This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The design was different this time. Just as before six resonators were coupled to the feedline; however, the coplanar width for each of them increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
 
 
 \subsection{General review of the resonances}
@@ -289,7 +289,7 @@ General view of the sample response can be seen on \autoref{fig:third_al_general
 
 \subsection{Fitting results}
 
-Frequencies and quality factors were extracted as usual for different powers and are presented in \autoref{fig:q_factors_third_al}. Low-power Q-factors are $\approx$40\% higher than for the previous aluminium samples. High-power Q's however are lower than for the second sample. 
+Frequencies and quality factors were extracted as usual for different powers and are presented in \autoref{fig:q_factors_third_al}. Low-power Q-factors are $\approx$40\% higher than for the previous aluminium samples. High-power Q's, however, are lower than for the second sample. 
 
 \begin{figure}[h]
 \centering
@@ -300,9 +300,9 @@ Frequencies and quality factors were extracted as usual for different powers and
 
 \section{Fourth Al sample}
 
-Fourth aluminium sample was fabricated at MIPT by Ivan Khrapach and firstly measured on August 9, 2016. It is significantly different from the previous samples and consists of a single design presented in MISSING PICTURE FOR THE FIGURE. 
+Fourth aluminium sample was fabricated at MIPT by Ivan Khrapach and firstly measured on August 9, 2016. It is significantly different from the previous samples and consists of a single design presented in MISSING PICTURE FOR THE FIGURE. The fabrication method was also different for this sample, for it was made with two layers of Al, separated by a thin oxide layer.
 
-Measurement of the sample was conducted without magnetic shielding. The temperature of the refrigerator was elevated at a value high above single-photon level (near 200 mK) in the beginning of the power scanning experiment but then dropped abruptly to 20 mK. It's unknown whether the measurement has been finished by that time, and it should be repeated. Yet, the data from this unfortunate run is presented below.
+Measurement of the sample was conducted without magnetic shielding. The temperature of the refrigerator was elevated at a value high above single-photon level (near 200 mK) in the beginning of the power scanning experiment but then dropped abruptly to 20 mK. It's unknown whether the measurement has been finished by that time, and thus it should be repeated. Yet, the data from this unfortunate run is presented below.
 
 
 \subsection{General review of the resonances}
@@ -329,11 +329,11 @@ Measurement of the sample was conducted without magnetic shielding. The temperat
 
 Two resonator samples were studied, fabricated from Al and Nb films. Using the  \textit{circlefit} method the quality factors and frequencies were extracted at various probe powers ranging from single photon occupation regime to high powers.
 
-The Nb sample has shown errors less than 1\% in frequency and more or less consistent quality factors, however for the devices IV and VI $Q_e$ are significantly lower than for the rest. The internal quality factors have demonstrated an expected behaviour when the probe power was changed, ranging from $1.5\cdot10^4$ at single-photon level to maximum of $1.2 \cdot 10^5$ at high powers. The single-photon Q-factors are all similar heralding the uniform distribution of defects on the chip.
+The Nb sample has shown errors less than 1\% in frequency and more or less consistent quality factors; however, for the devices IV and VI $Q_e$ are significantly lower than for the rest. The internal quality factors have demonstrated an expected behaviour when the probe power was changed, ranging from $1.5\cdot10^4$ at single-photon level to maximum of $1.2 \cdot 10^5$ at high powers. The single-photon Q-factors are all similar heralding the uniform distribution of defects on the chip.
 
-The Al sample has shown less than 2\% errors in frequency however if the correction for the wrong $\varepsilon_{Si}$ used in the calculation is applied the errors would rise up to 3\%. The external quality factors are in deviation from the rest of the resonators for the devices III and VI. The internal quality factors are more uniform in values compared to the Nb sample, significantly lower at high powers and significantly higher at single-photon level. All values are in the range between $3\cdot10^4$ and $6 \cdot 10^4$.
+The Al sample has shown less than 2\% errors in frequency; however, if the correction for the wrong $\varepsilon_{Si}$ used in the calculation is applied, the errors would rise up to 3\%. The external quality factors are in deviation from the rest of the resonators for the devices III and VI. The internal quality factors are more uniform in values compared to the Nb sample, significantly lower at high powers and significantly higher at single-photon level. All values are in the range between $3\cdot10^4$ and $6 \cdot 10^4$.
 
-In conclusion, it should be stated that Al technology is more suitable for the cQED experiments due to the apparently lower concentration of defects inside the surface oxide. However the technological issues with fabricating aluminium chips at MIPT still are to be overcome. High hopes are anchored on NbN films which are known to have a large superconducting gap and thus a suppressed quasiparticle concentration and no natural oxide layer in contrast to Nb or Al.
+In conclusion, it should be stated that Al technology is more suitable for the cQED experiments due to the apparently lower concentration of defects inside the surface oxide. However, the technological issues with fabricating aluminium chips at MIPT still are to be overcome. High hopes are anchored on NbN films which are known to have a large superconducting gap, and thus a suppressed quasiparticle concentration and no natural oxide layer in contrast to Nb or Al.
 \end{comment}
 
 
