@@ -27,6 +27,8 @@
         
         int chip_height = 5e6;
         int chip_width = 10e6;
+        int border=50e3;
+        
         int feedlineDepth = chip_height/4;
         double ɛ = 11.45;
         double c = 299792458.0;
@@ -142,19 +144,22 @@ int main() {
         
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);
     
-    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 200, 100);
-    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 200, 100);
-    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 200, 100);
-    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100);
+    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 200, 100, false);
+    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 200, 100, false);
+    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 200, 100,false);
+    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100, false);
     
     addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
-    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, 1.75e6));
+
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, -1.75e6));
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, 1.75e6));
     
-    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
-/*    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);*/
+/*    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);*/
+/*    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
+    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
+    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux);
+    layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0);
+    clearLayer(curCell, aux);
 
     
     int hd;
@@ -162,7 +167,10 @@ int main() {
 /*    hd = layout->backgroundTool->addBackground("background.png");*/
 /*    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);*/
 /*    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);*/
-
+    clearLayer(curCell, mask);
+    clearLayer(curCell, M);
+    clearLayer(curCell, protect);
+    clearLayer(curCell, ground);
     //debug.show();
     //debug.clear();
     
