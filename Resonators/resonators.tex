@@ -235,7 +235,7 @@ Quality factors and frequencies of the lowest six resonances.
 
 \section{NbN 300 nm with changing gap sample}
 
-This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The design was different this time. Just as before six resonators were coupled to the feedline; however, the coplanar width for each of them increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
+This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The design was different this time. Just as before, six resonators were coupled to the feedline; however, the coplanar width for each of them increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
 
 
 \subsection{General review of the resonances}
@@ -243,7 +243,7 @@ This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{nbn300_chng_gap_general}
-\caption{Frequency scan of the resonances on the NbN chip. Only five resonances were observed. Clearly the frequencies are lower than expected from the geometrical length indicating that $\alpha$ is still noticeable even at this film thickness.}
+\caption{Frequency scan of the resonances on the NbN chip. Only five resonances were observed. Clearly, the frequencies are lower than expected from the geometrical length indicating that $\alpha$ is still noticeable, even at this film thickness.}
 \end{figure}
 
 \subsection{Fitting results}
@@ -280,7 +280,7 @@ Difference [GHz]&  -0.2 & -0.09& -0.2 & -0.15& -0.25& -0.36 \\
 Relative & -3.39\%& -1.54\%& -3.19\%& -2.16\%& -3.34\%& -4.38\%
 \end{tabular}
 \egroup
-\caption{Expected vs. measured resonance frequencies. Measured frequencies were extracted without fitting as local minima of $S_{21}$ from \autoref{fig:nb_general}.}
+\caption{Expected vs. measured resonance frequencies. Measured frequencies were extracted without fitting as local minima of $S_{21}$ from \autoref{fig:third_al_general}.}
 \label{tab:freqs_third_al}
 \end{table}
 
@@ -302,25 +302,66 @@ Frequencies and quality factors were extracted as usual for different powers and
 
 Fourth aluminium sample was fabricated at MIPT by I. Khrapach and firstly measured on August 9, 2016. It is significantly different from the previous samples and consists of a single design presented in MISSING PICTURE FOR THE FIGURE. The fabrication method was also different for this sample, for it was made with two layers of Al, separated by a thin oxide layer.
 
-Measurement of the sample was conducted without magnetic shielding. The temperature of the refrigerator was elevated at a value high above single-photon level (near 200 mK) in the beginning of the power scanning experiment but then dropped abruptly to 20 mK. It's unknown whether the measurement has been finished by that time, and thus it should be repeated because the temperature influences the internal Q-factors directly. Yet, the data from this unfortunate run is presented below.
+In this section the data for two subsequent cooldowns is included due to the fact that in the first run not all necessary conditions for the correct determination of the quality factors were satisfied.
 
+The first measurement of this sample was conducted without magnetic shielding. The temperature of the refrigerator was elevated at a value high above single-photon level (near 200 mK) in the beginning of the power scanning experiment but then dropped abruptly to 20 mK. It's unknown whether the measurement has been finished by that time, and thus it should be repeated because the temperature influences the internal Q-factors directly. Yet, the data from this unfortunate run is presented below.
+
+At the same time, we present additionally the results for the repeated and refined measurement of this sample that was done on August 15, 2016, at the base temperature of 20 mK and with magnetic shielding. 
 
 \subsection{General review of the resonances}
+
+No significant difference was observed about the general views for these two runs, as can be seen from \autoref{fig:fourth_al_general} and \autoref{fig:fourth_al_2nd_try_general}.
+
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fourth_al_general}
 \caption{Frequency scan of the fourth Al sample. Five of the six lower-frequency resonances are visible, and both two higher-frequency ones from two test resonators. All resonances are shifted down non-uniformly from their theoretical positions.}
+\label{fig:fourth_al_general}
 \end{figure}
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{fourth_al_2nd_try_general}
+\caption{Same scan from the repeated measurement. All the features reproduce themselves.}
+\label{fig:fourth_al_2nd_try_general}
+\end{figure}
+
+Unfortunately, all resonances have incorrect frequencies which also can be clearly seen from the figures. The shift is different, yet all are negative, for every resonator, and the differences show no systematic dependence on resonances' frequencies. Thus, these errors can't be attributed to the incorrect estimation of the substrate epsilon, as in the case with NbN samples.
+
+\begin{table}[h]
+\centering
+\bgroup
+\def\arraystretch{1.5}%  1 is the default, change whatever you need
+\begin{tabular}{c|*{8}{c}}
+  & I & II & III & IV & V & VI & VII & VIII \\
+\hline
+Expected [GHz]& 7 & 7.1 & 7.2 & 7.3 & 7.4 & 7.5 & 8 & 8.25\\
+Measured [GHz] & 6.87& -- &  7.11&  7.17&  7.2 &  7.29&  7.84&  7.95 \\
+Difference [GHz]& -0.13& -- & -0.09& -0.13& -0.2 & -0.21& -0.16& -0.3 \\
+Relative &-1.86 \%& -- & -1.25\%& -1.78\%& -2.7 \%& -2.8 \%& -2.00  \%& -3.64 \%
+\end{tabular}
+\egroup
+\caption{Expected vs. measured resonance frequencies. Measured frequencies were extracted without fitting as local minima of $S_{21}$ from \autoref{fig:fourth_al_2nd_try_general}.}
+\label{tab:freqs_third_al}
+\end{table}
 
 \subsection{Fitting results}
 
 
 \begin{figure}[h]
 \centering
-\includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_al}
-\caption{Fitting results for the third Al sample. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$.}
+\includegraphics[width=0.8\textwidth]{q-factors-and-freqs_fourth_al}
+\caption{Fitting results for the fourth Al sample. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$.}
 \end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{q-factors-and-freqs_fourth_al_2nd_try}
+\caption{Same plot with the data from the second run. Q-factors and curves in overall became more consistent.}
+\end{figure}
+
 
 
 
