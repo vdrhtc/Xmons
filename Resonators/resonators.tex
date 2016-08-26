@@ -53,6 +53,7 @@
 \title{Characterization of the microwave coplanar waveguide resonators designed for cQED architecture with Xmon qubits}
 \author{G. Fedorov}
 
+
 \numberwithin{equation}{section}
 \setcounter{tocdepth}{3}
 \graphicspath{{Pictures/}}
@@ -64,6 +65,8 @@
 \maketitle
 
 \begin{center}
+Please find the most recent version of this report at \href{https://github.com/vdrhtc/Xmons/blob/master/Resonators/build/resonators.pdf}{GitHub}
+
 \includegraphics[width=.9\textwidth]{design}
 
 \includegraphics[width=.7\textwidth]{design_qr}
@@ -310,7 +313,7 @@ At the same time, we present additionally the results for the repeated and refin
 
 \subsection{General review of the resonances}
 
-No significant difference was observed about the general views for these two runs, as can be seen from \autoref{fig:fourth_al_general} and \autoref{fig:fourth_al_2nd_try_general}.
+No significant difference was observed between the general transmission pictures for these two runs, as can be seen from \autoref{fig:fourth_al_general} and \autoref{fig:fourth_al_2nd_try_general}.
 
 
 \begin{figure}[h]
@@ -328,7 +331,7 @@ No significant difference was observed about the general views for these two run
 \label{fig:fourth_al_2nd_try_general}
 \end{figure}
 
-Unfortunately, all resonances have incorrect frequencies which also can be clearly seen from the figures. The shift is different, yet all are negative, for every resonator, and the differences show no systematic dependence on resonances' frequencies. Thus, these errors can't be attributed to the incorrect estimation of the substrate epsilon, as in the case with NbN samples.
+All resonances have incorrect frequencies which also can be clearly seen from the figures. The shift is different for each of the resonators, and the differences show no systematic dependence on resonances' frequencies. Thus, these errors can't be attributed to the incorrect estimation of the substrate epsilon, as in the case with NbN samples.
 
 \begin{table}[h]
 \centering
@@ -349,21 +352,42 @@ Relative &-1.86 \%& -- & -1.25\%& -1.78\%& -2.7 \%& -2.8 \%& -2.00  \%& -3.64 \%
 
 \subsection{Fitting results}
 
+In \autoref{fig:4_al_q} the fitting results are presented. It can be seen from the magnitude of the differences in the low-quality Q-factors that the first measurement was indeed at elevated temperature (at least while lowest two-three resonators were measured); however, in overall, the results are pretty the same, indicating that the temperature was not too high and the magnetic shield didn't have a lot of influence in the first run.
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
-\includegraphics[width=0.8\textwidth]{q-factors-and-freqs_fourth_al}
-\caption{Fitting results for the fourth Al sample. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$.}
+\includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_al}
+
+\vspace{0.5cm}
+\includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_al_2nd_try}
+
+\caption{\textbf{(Upper)} Fitting results for the fourth Al sample. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$. \textbf{(Lower)} Same plot with the data from the second run. Q-factors and curves in overall became more consistent.}
+\label{fig:4_al_q}
 \end{figure}
 
-\begin{figure}[h]
+
+\section{Fifth Al sample (BMSTU)}
+
+
+\begin{figure}
 \centering
-\includegraphics[width=0.8\textwidth]{q-factors-and-freqs_fourth_al_2nd_try}
-\caption{Same plot with the data from the second run. Q-factors and curves in overall became more consistent.}
+\includegraphics[width=\textwidth]{bauman-ilya}
+\caption{Sample design.}
 \end{figure}
 
 
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{fifth_al_mstu_general}
+\caption{General view of 12 resonators.}
+\end{figure}
 
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{q-factors-and-freqs_al5_mstu}
+\caption{Fitting results.}
+\end{figure}
 
 \begin{comment}
 \section{Summary}
@@ -377,18 +401,6 @@ The Al sample has shown less than 2\% errors in frequency; however, if the corre
 In conclusion, it should be stated that Al technology is more suitable for the cQED experiments due to the apparently lower concentration of defects inside the surface oxide. However, the technological issues with fabricating aluminium chips at MIPT still are to be overcome. High hopes are anchored on NbN films which are known to have a large superconducting gap, and thus a suppressed quasiparticle concentration and no natural oxide layer in contrast to Nb or Al.
 \end{comment}
 
-
-\begin{appendices}
-
-\section{Sample photos}
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{chip_nb}
-\caption{Nb chip inside the PCB of the sample holder.}
-\end{figure}
-
-\end{appendices}
 
 \newpage
 

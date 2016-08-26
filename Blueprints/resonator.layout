@@ -14,7 +14,7 @@
 #include "wiring.layout"
 
     int meanderSegmentLength = 250e3;
-    double clawPhaseShift = 12.2;
+    double clawPhaseShift = 10.83;
     
 int length_from_frequency(double frequency, bool claw) {
     if (claw)
