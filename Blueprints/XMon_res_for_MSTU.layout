@@ -84,8 +84,8 @@ int main() {
     res_freqs.append(7); res_freqs.append(7.1); res_freqs.append(7.2); res_freqs.append(7.3); res_freqs.append(7.4); res_freqs.append(7.5);
 
 
-    addResonator(curCell, newPoint(-chip_width/2+chip_width/6, -resonatorPositionsY), w_res, g_res, 8, 0.5e6, "u", 0);
-    addResonator(curCell, newPoint(chip_width/2-chip_width/6, resonatorPositionsY), w_res, g_res, 8.25, 1e6, "d", 0);
+    addResonator(curCell, newPoint(-chip_width/2+chip_width/6, -resonatorPositionsY+2*x), w_res, g_res, 8, 0.5e6, "u", 0);
+    addResonator(curCell, newPoint(chip_width/2-chip_width/6, resonatorPositionsY-2*x), w_res, g_res, 8.25, 1e6, "d", 0);
 
     double j = -0.25;
     int k =0;
