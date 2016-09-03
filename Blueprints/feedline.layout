@@ -23,7 +23,7 @@ x-----========~==========< ___|  | x
 #include "wiring.layout"
 #include "auxx.layout"
 
-    int pad_len  = 200e3;
+    int pad_len  = 400e3;
     int w_pad = 200e3;
     int g_pad = 120e3;
     int bottom_g_pad = g_pad; 

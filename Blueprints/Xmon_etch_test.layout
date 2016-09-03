@@ -1,0 +1,96 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "wiring.layout"
+#include "auxx.layout"
+#include "layersSetup.layout"
+#include "resonator.layout"
+#include "feedline.layout"
+#include "claw.layout"
+#include "Xmon.layout"
+#include "qr_etch_test.layout"
+#include "test_JJ.layout"
+#include "alignment_mark.layout"
+
+        int M = 0;
+        int M1 = 1;
+        int protect = 2;
+        int ground = 3;
+        int mask = 4;
+        int total = 5;
+        int aux = 6;
+        int aux2 = 7;
+        int aux3 = 8;
+        int aux4 = 9;
+        
+        int chip_height = 5e6;
+        int chip_width = 2e6;
+        int border = 50e3;
+      
+        int w_q = 20e3;
+        int g_q = 20e3;
+        
+        int large_strip_width = 20e3;
+        int small_strip_width = 2e3;
+        
+        int qrSize=500e3;
+
+
+int main() {
+    setupLayers();
+    layout->drawing->selectAll();
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+
+        
+        double i, j;
+    
+    cell *curCell = layout->drawing->currentCell;
+    
+    curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
+    
+    for(i=0;i<=0;i++) {
+        for (j=-1;j<=1;j++){ 
+            addTestStripe(curCell, newPoint(1e6*2*i+0.5e6*j, 1e6), 20e3, 20e3*(j+2)**2,  50e3);
+            
+            addTestStripe(curCell, newPoint(1e6*2*i+0.5e6*j, 0e6), 2e3, 20e3*(j+2), 3e3);
+            
+            addTestSquid(curCell, newPoint(1e6*2*i+0.5e6*j, -1e6), 200, 100, true);
+        }
+        addAlignmentMark(curCell, newPoint(1e6*2*i-0.5e6, -1.75e6));
+        addAlignmentMark(curCell, newPoint(1e6*2*i+0.5e6, 1.75e6));
+        
+        addQR(curCell, 1e6*2*i-250e3, 1.5e6, qrSize, qrSize, protect);
+        
+/*        if (i<2) {*/
+/*            curCell->addBox(1e6*(2*i+1)-50e3, -chip_height/2, 100e3, chip_height, protect);*/
+/*            curCell->addBox(1e6*(2*i+1)-2e3, -chip_height/2, 4e3, chip_height, M);*/
+/*        }*/
+    }
+    
+
+    
+/*    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);*/
+/*    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
+    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
+    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux);
+    layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0);
+    clearLayer(curCell, aux);
+
+    
+    int hd;
+    layout->backgroundTool->clearBackground();
+/*    hd = layout->backgroundTool->addBackground("background.png");*/
+/*    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);*/
+/*    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);*/
+    clearLayer(curCell, mask);
+    clearLayer(curCell, M);
+    clearLayer(curCell, protect);
+    clearLayer(curCell, ground);
+    //debug.show();
+    //debug.clear();
+    
+    
+    
+}

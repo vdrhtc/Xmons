@@ -10,7 +10,7 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
 
         int JJ_delta_arm_len = 8e3;
         int JJ_arm_len = arm_len/2+JJ_delta_arm_len;
-        int ebeam_overlap = 3e3;
+        int ebeam_overlap = 0e3;
         point cursor;
         
     cursor.set(anchorPoint.x(), anchorPoint.y()-g_q);

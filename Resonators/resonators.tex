@@ -55,6 +55,7 @@
 
 
 \numberwithin{equation}{section}
+\numberwithin{figure}{section}
 \setcounter{tocdepth}{3}
 \graphicspath{{Pictures/}}
 
@@ -361,33 +362,43 @@ In \autoref{fig:4_al_q} the fitting results are presented. It can be seen from t
 \vspace{0.5cm}
 \includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_al_2nd_try}
 
-\caption{\textbf{(Upper)} Fitting results for the fourth Al sample. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$. \textbf{(Lower)} Same plot with the data from the second run. Q-factors and curves in overall became more consistent.}
+\caption{\textbf{(Upper)} Fitting results for the fourth Al sample, first run. All resonators demonstrate consistent high-power internal Q-factors around 5-7$\cdot 10^5$ and less consistent low-power Q-factors from 7$\cdot 10^4$ to 2$\cdot 10^5$. \textbf{(Lower)} Same plot with the data from the second run. Q-factors and curves in overall became more consistent.}
 \label{fig:4_al_q}
 \end{figure}
 
-
+\newpage
 \section{Fifth Al sample (BMSTU)}
 
+\subsection{General review of the resonances}
 
-\begin{figure}
+A modified design with 12 resonators was fabricated at BMSTU and measured on August 26, 2016. The chip design is presented in \autoref{fig:bauman-ilya}. It consists of three groups of devices, each consists of resonators with same theoretical external Q-factor. This is determined by the distance between the resonator and the feedline $x$. For the groups from the left to the right $x = 5, 10, 15\ \mu$m, correspondingly.
+
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{bauman-ilya}
-\caption{Sample design.}
+\caption{Sample design. Twelve resonators are divided into three groups with different coupling (can't bee seen due to the resolution).}
+\label{fig:bauman-ilya}
 \end{figure}
 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fifth_al_mstu_general}
-\caption{General view of 12 resonators.}
+\caption{The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible; however, there's a low-Q parasitic one at approximately 7.25 GHz.}
 \end{figure}
 
 
 \begin{figure}
 \centering
 \includegraphics[width=\textwidth]{q-factors-and-freqs_al5_mstu}
-\caption{Fitting results.}
+\caption{Fitting results for the fifth Al sample. Clearly the three groups can be distinguished by the $Q_e$'s they have. Next, the internal low-power Q-factors span from $10^4$ to $10^5$, and all curves seem not to reach saturation at low powers.}
+\label{fig:fit_al_bmstu}
 \end{figure}
+
+\subsection{Fitting results}
+
+The results of the fitting are presented in \autoref{fig:fit_al_bmstu}.
+
 
 \begin{comment}
 \section{Summary}

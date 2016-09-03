@@ -24,7 +24,7 @@ void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ, bool no_pads)
 
         int test_JJ_pads_len = 5.45e3;
         int JJ_delta_arm_len = 8e3;
-        int test_JJ_ebeam_overlap = 3e3;
+        int test_JJ_ebeam_overlap = 0e3;
 
     int total_w = 2*structure_padding+pad_side_len;
     int total_h = 3*structure_padding+2*pad_side_len;
