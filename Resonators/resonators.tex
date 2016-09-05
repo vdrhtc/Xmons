@@ -371,7 +371,7 @@ In \autoref{fig:4_al_q} the fitting results are presented. It can be seen from t
 
 \subsection{General review of the resonances}
 
-A modified design with 12 resonators was fabricated at BMSTU and measured on August 26, 2016. The chip design is presented in \autoref{fig:bauman-ilya}. It consists of three groups of devices, each consists of resonators with same theoretical external Q-factor. This is determined by the distance between the resonator and the feedline $x$. For the groups from the left to the right $x = 5, 10, 15\ \mu$m, correspondingly.
+A modified design with 12 resonators was fabricated at BMSTU and measured on August 26, 2016. The chip design is presented in \autoref{fig:bauman-ilya}. It consists of three groups of devices, each consists of resonators with same theoretical external Q-factor. It is determined by the distance between the resonator and the feedline $x$. For the groups from the left to the right $x = 5, 10, 15\ \mu$m, correspondingly.
 
 \begin{figure}[h]
 \centering
@@ -384,20 +384,40 @@ A modified design with 12 resonators was fabricated at BMSTU and measured on Aug
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{fifth_al_mstu_general}
-\caption{The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible; however, there's a low-Q parasitic one at approximately 7.25 GHz.}
+\caption{The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible; additionally, there's a low-Q parasitic one at approximately 7.25 GHz.}
 \end{figure}
-
 
 \begin{figure}
 \centering
+\vspace*{-1cm}
 \includegraphics[width=\textwidth]{q-factors-and-freqs_al5_mstu}
-\caption{Fitting results for the fifth Al sample. Clearly the three groups can be distinguished by the $Q_e$'s they have. Next, the internal low-power Q-factors span from $10^4$ to $10^5$, and all curves seem not to reach saturation at low powers.}
+\caption{Fitting results for the fifth Al sample. Clearly, the three groups can be distinguished by the $Q_e$'s they have. The internal low-power Q-factors span from $10^4$ to $10^5$, and all curves seem not to reach saturation at low powers. High power Q-factors span from $10^4$ to $7\cdot10^5$.}
 \label{fig:fit_al_bmstu}
 \end{figure}
 
 \subsection{Fitting results}
 
-The results of the fitting are presented in \autoref{fig:fit_al_bmstu}.
+The results of the fitting are presented in \autoref{fig:fit_al_bmstu}. First feature to be noted is that all fitting curves don't reach saturation at low powers in contrast to the previous experiments with the same microwave setup. This means that the low-power Q-factors specified in the boxes under the figures are not actually single-photon and only give an upper bound on the $Q_i$'s. The second feature is that the internal quality factors vary strongly among the devices. Even if resonators II, III and IV are excluded from the sample as clearly failed, still we will have a spread from 26k to 100k for the low-power $Q_i$'s and from 170k to 1kk for the high-power ones.
+
+\section{Nb strongly etched on high-res Si !GET FILM DEPOSITION PARAMETERS}
+
+This sample was fabricated at MISIS where the 110 nm Nb film was deposited by sputtering onto a strongly Ar-cleaned high-resistivity Si substrate and then etched through a photo-mask with SF$_6$. It was then measured on September 3, 2016.
+
+\subsection{General review of the resonances}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{nb_3_highres_general}
+\caption{The frequency scan made at ISSP at 15 mK at high power. Six deep resonances and one shallow (presumably spurious) resonance are visible. Here green dashed lines show frequencies expected from length, red lines mark more accurate expectations considering non-zero coupling capacitances. Still, even with this correction, the frequency errors are significant.}
+\end{figure}
+
+\subsection{Fitting results}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_nb_misis_3_highres}
+\caption{Fitting results for the sample.}
+\end{figure}
 
 
 \begin{comment}
