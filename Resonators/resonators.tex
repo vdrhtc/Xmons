@@ -76,7 +76,7 @@ Please find the most recent version of this report at \href{https://github.com/v
 \tableofcontents
 \newpage
 
-\section{Nb CPW resonators: Q-factors and frequencies}
+\section{Nb CPW resonators (Res Nb MISIS 1)}\label{sec:res_nb_misis_1}
 
 The sample with niobium resonators (design shown under the title) was created in the cleanroom facility of the Laboratory of Superconducting Metamaterials. Using photolithography and then ion etching an approximately 30 nm Nb film on a Si/SiO$_2$ substrate was patterned and after that the chip was cut out with a saw. The sample was characterized using standard microwave methods firstly at MISIS and then at ISSP. Finally, the results were analysed using the fitting technique developed\cite{probst2015} by S. Probst et al.
 
@@ -399,11 +399,13 @@ A modified design with 12 resonators was fabricated at BMSTU and measured on Aug
 
 The results of the fitting are presented in \autoref{fig:fit_al_bmstu}. First feature to be noted is that all fitting curves don't reach saturation at low powers in contrast to the previous experiments with the same microwave setup. This means that the low-power Q-factors specified in the boxes under the figures are not actually single-photon and only give an upper bound on the $Q_i$'s. The second feature is that the internal quality factors vary strongly among the devices. Even if resonators II, III and IV are excluded from the sample as clearly failed, still we will have a spread from 26k to 100k for the low-power $Q_i$'s and from 170k to 1kk for the high-power ones.
 
-\section{Nb strongly etched on high-res Si (Res Nb MISIS 6) !GET FILM DEPOSITION PARAMETERS}
+\section{Studying the influence of oxidized Si vs high-res intrinsic Si substrate and substrate Ar-cleaning}
+
+\subsection{Nb on a strongly cleaned high-res Si (Res Nb MISIS 6) !GET FILM DEPOSITION PARAMETERS}
 
 This sample was fabricated at MISIS where the 110 nm Nb film was deposited by sputtering onto a strongly Ar-cleaned high-resistivity Si substrate and then etched through a photo-mask with SF$_6$. It was then measured on September 3, 2016.
 
-\subsection{General review of the resonances}
+\subsubsection{General review of the resonances}
 
 \begin{figure}[h]
 \centering
@@ -411,12 +413,49 @@ This sample was fabricated at MISIS where the 110 nm Nb film was deposited by sp
 \caption{The frequency scan made at ISSP at 15 mK at high power. Six deep resonances and one shallow (presumably spurious) resonance are visible. Here green dashed lines show frequencies expected from length, red lines mark more accurate expectations considering non-zero coupling capacitances. Still, even with this correction, the frequency errors are significant.}
 \end{figure}
 
-\subsection{Fitting results}
+\subsubsection{Fitting results}
 
 \begin{figure}[h]
 \centering
 \includegraphics[width=\textwidth]{q-factors-and-freqs_fourth_nb_misis_3_highres}
 \caption{Fitting results for the sample.}
+\end{figure}
+
+\subsection{Nb on a strongly cleaned oxidized Si (Res Nb MISIS 7)}
+
+The substrate of this sample was cleaned and the film for this sample was deposited simultaneously with those actions for the previous one, so the only difference between the samples is the substrate material. Res Nb MISIS 7 was measured on September 9, 2016.
+
+It may be interesting to compare the results presented below for this sample with the results for the sample described in \autoref{sec:res_nb_misis_1} because they were fabricated on the similar Si+SiO$_2$ substrates.
+
+\subsubsection{General review of the resonances}
+\subsubsection{Fitting results}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{res_nb_misis_7_general}
+
+\vspace{.5cm}
+\includegraphics[width=\textwidth]{q-factors-and-freqs_res_nb_misis_7}
+\caption{\textbf{(Top)} The frequency scan made at ISSP at 15 mK at high power. Five deep resonances and one shallow  resonance are visible. The frequency errors are noticeable; however, now they are positive, as it was the case for the very first sample in this report.\textbf{(Bottom)} Fitting results for the sample. A very interesting sharp and straight increase of the Q$_i$s can be noticed.}
+\end{figure}
+
+\newpage
+\subsection{Nb on an uncleaned high-res Si (Res Nb MISIS 2)}
+
+The film for this sample was deposited without preliminary Ar-cleaning. The sample was measured on September 9, 2016 on the line IV-4 of the fridge.
+
+\subsubsection{General review of the resonances}
+
+Immediately, from the mean S$_{21}$ level it can be noticed that the attenuation in line IV was approximately 10 dB lower then in line 2, so we see -20 dB instead of -30 dB.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{res_nb_misis_2_general}
+
+\vspace{0.5cm}
+\includegraphics[width=\textwidth]{q-factors-and-freqs_res_nb_misis_2}
+
+\caption{The frequency scan made at ISSP at 15 mK at high power. Six deep resonances are visible. The frequency errors are significant, approximately 5\%, but more or less uniform.}
 \end{figure}
 
 
