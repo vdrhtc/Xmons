@@ -1,12 +1,12 @@
 /*
  Coupled lamda/4 resonator.
  
- Coupling point is in the center of coupling area, offset to the edge of protect layer towards feedline.
+ Coupling point is in the center of coupling area, being offset to the edge of protect layer towards the feedline.
  Schematic:
  
- ===============
-  ________x________
- |                         |
+ ===================== <- feedline
+  ________x________    <- resonator coupling area 
+ |                 |   x - coupling (base) point
 */
 
 
