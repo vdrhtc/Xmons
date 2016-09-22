@@ -47,20 +47,20 @@ void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int
     cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
     
-    int meanderStepLength = 0;
+        debug(length-curLength);
+
+    int meanderStepLength = 2*meanderSegmentLength+2*math::pi*resTurnRad;
+;
     while ((length -curLength)>meanderStepLength) {
-        meanderStepLength = 0;
         cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
-        meanderStepLength += meanderSegmentLength;
         cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
         cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
-        meanderStepLength += 2*resTurnRad*math::pi_2;
         cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength, width);
-        meanderStepLength += meanderSegmentLength;
         cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
         cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
-        meanderStepLength += 2*resTurnRad*math::pi_2;
         curLength+=meanderStepLength;
+        debug(length-curLength);
+
     }
     
     if (length - curLength >= meanderSegmentLength+2*resTurnRad*math::pi_2) {
