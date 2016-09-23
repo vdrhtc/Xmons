@@ -78,7 +78,7 @@ Please find the most recent version of this report at \href{https://github.com/v
 
 \section{Nb CPW resonators (Res Nb MISIS 1)}\label{sec:res_nb_misis_1}
 
-The sample with niobium resonators (design shown under the title) was created in the cleanroom facility of the Laboratory of Superconducting Metamaterials. Using photolithography and then ion etching an approximately 30 nm Nb film on a Si/SiO$_2$ substrate was patterned and after that the chip was cut out with a saw. The sample was characterized using standard microwave methods firstly at MISIS and then at ISSP. Finally, the results were analysed using the fitting technique developed\cite{probst2015} by S. Probst et al.
+The sample with niobium resonators (design shown under the title) was created in the cleanroom facility of the Laboratory of Superconducting Metamaterials. Using photolithography and then ion etching an approximately 100 nm Nb film on a Si+SiO$_2$ substrate was patterned and after that the chip was cut out with a saw. The sample was characterized using standard microwave methods firstly at MISIS and then at ISSP. Finally, the results were analysed using the fitting technique developed\cite{probst2015} by S. Probst et al.
 
 The sample consists of a coplanar waveguide feed and six microwave $\lambda/4$ coplanar waveguide resonators capacitively coupled to it. All of the important geometrical and electrical parameters of the devices may be retrieved from the QR code displayed below the title of this document. The lengths of the resonators were calculated to yield resonance frequencies of 6, 6.2, 6.5, 7, 7.6, 8.6 GHz in correspondence with the numbering of the devices on the chip. The dielectric constant of the substrate $\varepsilon_{Si}$ which determines the electrical length for the $\mu$-wave travelling inside the resonator has been taken to be 11.9 during the calculation. The real value of the permittivity observed in the experiment then will be calculated based on the deviation of the measured resonance frequencies from the theoretical expectations.
 
@@ -91,7 +91,7 @@ A wide frequency scan of the sample using a vector network analyser is presented
 \begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{nb_general}
-\caption{The frequency scan made at MISIS at 4K at high power. Six resonances are clearly visible, however each of them experienced an approximately 0.15 GHz shift up in frequency compared to the theoretical calculation.}
+\caption{The frequency scan made at MISIS at 4K at high power. Six resonances are clearly visible, however each of them experienced an approximately 0.15 GHz shift up in frequency compared to the theoretical calculation (shown by red dashes).}
 \label{fig:nb_general}
 \end{figure}
 
@@ -128,7 +128,7 @@ Corrected & -0.4\% &  0.8\% & -0.2\% &  0.3\% & -0.4\% & -0.9\%
 
 \subsection{Subsequent cooldowns effect on the frequency}
 
-The first measurement which is displayed on \autoref{fig:nb_general} was done at MISIS at a temperature  of 4K and power too high to tell anything about so-called ``one-photon'' behaviour when the resonator is populated on average with no more than several photons. Therefore, a subsequent cooldown was required to measure the interesting qualities at low powers and temperatures. It was conducted two month later at ISSP in Chernogolovka at the temperature of 10 mK and a range of powers. After the second cooldown there was a noticeable and consistent change in resonance frequencies measured at high power, as shown in \autoref{fig:2-cooldown}. Each resonance shifted to the right approximately 1-5 MHz. This change may have been caused by a different temperature and, thus, different $\varepsilon_{Si}$. \
+The first measurement which is displayed on \autoref{fig:nb_general} was done at MISIS at a temperature  of 4K and power too high to tell anything about so-called ``one-photon'' behaviour when the resonator is populated on average with no more than several photons. Therefore, a subsequent cooldown was required to measure the interesting qualities at low powers and temperatures. It was conducted two months later at ISSP in Chernogolovka at the temperature of 10 mK and a range of powers. The sample was attached to the line 2-4 of the fridge with approximately 70 dB of attenuation at the input. After the second cooldown there was a noticeable and consistent change in resonance frequencies measured at high power, as shown in \autoref{fig:2-cooldown}. Each resonance shifted to the right approximately 1-5 MHz. This change may have been caused by a different temperature and, thus, different $\varepsilon_{Si}$. \
 
 Additionally the first resonator visually has a degraded Q-factor in comparison with the first experiment. It's possible that it was corrupted during the transportation; however, a detailed analysis with usage of microscopy may reveal a different origin.
 
@@ -153,9 +153,10 @@ This is exactly what was observed while measuring the resonators at different pr
 
 The external quality factors are close to the theoretical expectations of approximately 7000 except for the devices IV and VI, where these values dropped to around 4000. The reasons for these deviations are unclear, because $Q_e$ is determined only by the geometry of the resonators and the only geometrical difference between the devices is the length of the meandering part. In general, the four main contributions in $Q_e$ for this kind of resonators are the distance $x$ between the hotwires of the feedline and a resonator, the coupling point distance from its open end, the length of the coupling segment parallel to the feedline and the overall area of the resonator's central wire. For the devices IV and VI it is difficult to find an explanation using the stated four parameters. Errors in photolithography are also not probable.
 
-\section{Bad Al CPW resonators: Q-factors and frequencies}
+\section{Bad Al CPW resonators (Res Al MIPT -1)}
 
-The aluminium resonators sample was fabricated in the cleanroom facility at MIPT using photolithography and a lift-off procedure. They were then analysed with an approach similar to the one applied to the Nb sample. The design was identical to the design used for the fabrication of the previous sample. Unfortunately during the photolithography all of the central wires both for the resonators and the feedline experienced 10-20\% broadening and during the lift-off some pieces of the ground plane near devices I and II were torn off. The sample was, nevertheless, measured, and the results studied.
+The aluminium resonators sample was fabricated in the cleanroom facility at MIPT using photolithography and a lift-off procedure on the intrinsic Si substrate. They were then analysed with an approach similar to the one applied to the Nb sample. The design was identical to the design used for the fabrication of the previous sample. Unfortunately during the photolithography all of the central wires both for the resonators and the feedline experienced 10-20\% broadening and during the lift-off some pieces of the ground plane near devices I and II were torn off. The sample was, nevertheless, measured, and the results studied.
+It was, as the previous one, attached to the line 2-4 of the fridge with approximately 70 dB of attenuation at the input.
 
 \begin{figure}[h]
 \centering
@@ -210,16 +211,16 @@ Despite above said this resonance was also recorded and fitted, see \autoref{fig
 
 Same as in the previous section the scan of the interesting properties over power is presented in \autoref{fig:q_factors_al}. Immediately we can see that the characteristics of the resonators are in deviation from their Nb brothers'. 
 
-Internal quality factors at high power are all significantly lower for this sample, which is likely to be caused by geometrical defects and inhomogeneity of Al film in the area of high currents. However, the single-photon $Q_i$s are approximately two times the corresponding values on Nb. This shows immediately that Al is much cleaner than Nb and thus more suitable for superconducting qubits experiments. 
+Internal quality factors at high power are all significantly lower for this sample, which is likely to be caused by geometrical defects and inhomogeneity of Al film in the area of high currents. However, the single-photon $Q_i$s are approximately two times the corresponding values on Nb. This shows immediately that Al on Si is much cleaner than Nb on Si+SiO$_2$, and thus more suitable for superconducting qubits experiments. 
 
 The external quality factors $Q_e$ are noticeably higher than on the Nb sample which is at the first glance surprising because due to the broadening of the central wires the coupling capacity should have increased and the $Q_e$ dropped. However, a narrower gap in the coplanar waveguide leads to better localization of the EM field thus reducing the crosstalk. In this design the latter effect must have overcome the former and increased $Q_e$s. Interestingly devices III and VI now have deviating external quality factors, not IV and VI as for the Nb sample. Reasons still unclear.
 	
 
-\section{Second Al sample}
+\section{Second Al sample (Res Al MIPT 0)}
 
 \subsection{General review of the resonances}
 
-Measured on April 22 2016.
+Measured on April 22, 2016. The process, materials and the design must have been identical to the first Al sample. Measurement setup that was used was also the same.
 
 \begin{figure}[h]
 \centering
@@ -239,7 +240,7 @@ Quality factors and frequencies of the lowest six resonances.
 
 \section{NbN 300 nm with changing gap sample}
 
-This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The design was different this time. Just as before, six resonators were coupled to the feedline; however, the coplanar width for each of them increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
+This sample was created in MISIS and measured on April 29$^\text{th}$, 2016. The design was different this time. Just as before, six resonators were coupled to the feedline; however, the coplanar width for each of them was increased with resonator's index number. This change was made with an intent to check the dependence of $Q_i$ on the electric field strength inside the coplanar gap.
 
 
 \subsection{General review of the resonances}
@@ -255,12 +256,12 @@ This sample was created in MISIS and measured on April 29$^\text{th}$ 2016. The 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=1\textwidth]{q-factors-and-freqs_nbn_chng_wdth}
-\caption{Fitting results. High internal quality factors can be noticed at all power levels. Both the external and internal Q-factors show an inverted dependence on the gap width. They are decreasing while from the theoretical model they should have been increasing.}
+\caption{Fitting results. High internal quality factors can be noticed at all power levels. Both the external and internal Q-factors show an unexpected inverted dependence on the gap width. They are decreasing while from the theoretical model they should have been increasing.}
 \end{figure}
 
 \section{Third Al sample (Res Al MIPT 1)}
 
-Third aluminium sample was also fabricated at MIPT and measured on June 26$^\text{th}$ 2016. It consists of two 4x8mm designs, one standard and one with varied coplanar gap width. Below results for the standard design are presented.
+Third aluminium sample was also fabricated at MIPT and measured on June 26$^\text{th}$, 2016. It consists of two 4x8mm designs, one standard and one with varied coplanar gap width. Below results for the standard design are presented. The sample was attached to the line 2-4 of the fridge with approximately 70 dB of attenuation at the input; however, additional 20 dB of attenuation were introduced by the directional coupler, so a total of 90 dB of attenuation was used at the input.
 
 \subsection{General review of the resonances}
 
@@ -302,7 +303,7 @@ Frequencies and quality factors were extracted as usual for different powers and
 \label{fig:q_factors_third_al}
 \end{figure}
 
-\section{Fourth Al sample (Res Al MIPT 2}
+\section{Fourth Al sample (Res Al MIPT 2)}
 
 Fourth aluminium sample was fabricated at MIPT by I. Khrapach and firstly measured on August 9, 2016. It is significantly different from the previous samples and consists of a single design presented in MISSING PICTURE FOR THE FIGURE. The fabrication method was also different for this sample, for it was made with two layers of Al, separated by a thin oxide layer.
 
@@ -312,6 +313,7 @@ The first measurement of this sample was conducted without magnetic shielding. T
 
 At the same time, we present additionally the results for the repeated and refined measurement of this sample that was done on August 15, 2016, at the base temperature of 20 mK and with magnetic shielding. 
 
+The measurement setup was the same as for the previous sample, 90 dB of attenuation at the line 2-4.
 \subsection{General review of the resonances}
 
 No significant difference was observed between the general transmission pictures for these two runs, as can be seen from \autoref{fig:fourth_al_general} and \autoref{fig:fourth_al_2nd_try_general}.
@@ -339,7 +341,7 @@ All resonances have incorrect frequencies which also can be clearly seen from th
 \bgroup
 \def\arraystretch{1.5}%  1 is the default, change whatever you need
 \begin{tabular}{c|*{8}{c}}
-  & I & II & III & IV & V & VI & VII & VIII \\
+  & I & II & III & IV & V & VI & TI & TII \\
 \hline
 Expected [GHz]& 7 & 7.1 & 7.2 & 7.3 & 7.4 & 7.5 & 8 & 8.25\\
 Measured [GHz] & 6.87& -- &  7.11&  7.17&  7.2 &  7.29&  7.84&  7.95 \\
@@ -367,11 +369,9 @@ In \autoref{fig:4_al_q} the fitting results are presented. It can be seen from t
 \end{figure}
 
 \newpage
-\section{Fifth Al sample (Res Al BMSTU 1)}
+\section{Res Al BMSTU series}
 
-\subsection{General review of the resonances}
-
-A modified design with 12 resonators was fabricated at BMSTU and measured on August 26, 2016. The chip design is presented in \autoref{fig:bauman-ilya}. It consists of three groups of devices, each consists of resonators with same theoretical external Q-factor. It is determined by the distance between the resonator and the feedline $x$. For the groups from the left to the right $x = 5, 10, 15\ \mu$m, correspondingly.
+A modified design with 12 resonators was fabricated at BMSTU four times on one substrate. The chip design is presented in \autoref{fig:bauman-ilya}. It consists of three groups of devices, each consists of resonators with same theoretical external Q-factor. It is determined by the distance between the resonator and the feedline $x$. For the groups from the left to the right $x = 5, 10, 15\ \mu$m, correspondingly.
 
 \begin{figure}[h]
 \centering
@@ -380,11 +380,15 @@ A modified design with 12 resonators was fabricated at BMSTU and measured on Aug
 \label{fig:bauman-ilya}
 \end{figure}
 
+\subsection{Res Al BMSTU 1}
 
-\begin{figure}[h]
+
+\subsubsection{General review of the resonances}
+
+\begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth]{fifth_al_mstu_general}
-\caption{The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible; additionally, there's a low-Q parasitic one at approximately 7.25 GHz.}
+\includegraphics[width=0.9\textwidth]{fifth_al_mstu_general}
+\caption{Measured on August 26, 2016. The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible; additionally, there's a low-Q parasitic one at approximately 7.25 GHz.}
 \end{figure}
 
 \begin{figure}
@@ -395,10 +399,30 @@ A modified design with 12 resonators was fabricated at BMSTU and measured on Aug
 \label{fig:fit_al_bmstu}
 \end{figure}
 
-\subsection{Fitting results}
+\subsubsection{Fitting results}
 
 The results of the fitting are presented in \autoref{fig:fit_al_bmstu}. First feature to be noted is that all fitting curves don't reach saturation at low powers in contrast to the previous experiments with the same microwave setup. This means that the low-power Q-factors specified in the boxes under the figures are not actually single-photon and only give an upper bound on the $Q_i$'s. The second feature is that the internal quality factors vary strongly among the devices. Even if resonators II, III and IV are excluded from the sample as clearly failed, still we will have a spread from 26k to 100k for the low-power $Q_i$'s and from 170k to 1kk for the high-power ones.
 
+\subsection{Res Al BMSTU 2}
+
+\subsubsection{General review of the resonances}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{res_al_bmstu_2_general}
+\caption{Measured on September 22, 2016. The frequency scan made at ISSP at 20 mK at high power. Twelve resonances are clearly visible. Frequencies are compared to the frequencies of the Res Al BMSTU 1 sample and are nearly the same.}
+\end{figure}
+
+\subsubsection{Fitting results}
+
+\begin{figure}
+\centering
+\vspace*{-1cm}
+\includegraphics[width=\textwidth]{q-factors-and-freqs_res_al_bmstu_2}
+\caption{Fitting results for Res Al BMSTU 2. Three groups can be distinguished by the $Q_e$'s they have, but not very clearly. All curves are much more consistent than for the previous sample, showing similar Q$_i$s and behaviour for each device.}
+\label{fig:fit_al_bmstu}
+\end{figure}
+\newpage
 \section{Studying the influence of oxidized Si vs high-res intrinsic Si substrate and substrate Ar-cleaning}
 
 \subsection{Nb on a strongly cleaned high-res Si (Res Nb MISIS 6) !GET FILM DEPOSITION PARAMETERS}
@@ -459,8 +483,15 @@ Immediately, from the mean S$_{21}$ level it can be noticed that the attenuation
 \end{figure}
 
 
-\begin{comment}
 \section{Summary}
+
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{Q_distributions}
+\caption{A box plot over all samples studied in the report. Boxes show where 50\% of the values fall, whiskers show minimal and maximal values except for the possible outliers (crosses).}
+\end{figure}
+
+\begin{comment}
 
 Two resonator samples were studied, fabricated from Al and Nb films. Using the  \textit{circlefit} method the quality factors and frequencies were extracted at various probe powers ranging from single photon occupation regime to high powers.
 
