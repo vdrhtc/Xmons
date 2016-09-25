@@ -96,6 +96,18 @@ point rotateVector(point vec, point anchor, string direction) {
     }
 }
 
+double angleFromDirection(string direction) {
+    
+    if (direction=="d")
+        return 0;
+    else if (direction=="u")
+        return 180;
+    else if (direction=="l")
+        return -90;
+    else if (direction=="r")
+        return 90;
+}
+
 point rotateVectorArbAngle(point vec, point anchor, double angle) {
 
     point retPoint;

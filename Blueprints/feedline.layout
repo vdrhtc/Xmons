@@ -1,6 +1,5 @@
 /*
-  Feedline with contact pads at the ends. Lengths of the contact pads with ground connectors are included 
-    in the corresponding segment lengths.
+  Feedline with contact pads at the ends. Lengths of the contact pads with ground connectors are included in the corresponding segment lengths.
   _____                                       _____
  | |   __ \                                  / __    | |
 x |  |___ >==========~======< ____|  | x
@@ -18,6 +17,15 @@ x  |     ______>=====~======< ____|  | x
                                            /___  | |
 x-----========~==========< ___|  | x
                                            \____ | |
+                                           
+    Or with an IDC
+
+  _____                                       _____
+ | |   __ \                                  / _____|
+x |  |___ >==========~======<  |_____
+ | | ____/                                  \______|
+                                           
+    
 */
 
 #include "wiring.layout"
@@ -33,6 +41,7 @@ x-----========~==========< ___|  | x
 
     int fluxBiasLen = 0;
     int microwaveDriveLen = 0;
+
 
 point microwaveDrive(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
     
@@ -115,6 +124,8 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     } else if (type == "md") {
         start = microwaveDrive(curCell, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
+    } else if (type == "cd") {
+        
     }
 
     if(N_turns==0) {
@@ -142,8 +153,5 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     cursor = rotateVector(vec, cursor, direction);
     
     contactPad(curCell, M, protect, cursor, w_feed, g_feed, opposite(direction));
-    
-    
-    
-    
 }
+

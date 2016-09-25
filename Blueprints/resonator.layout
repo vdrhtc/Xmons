@@ -23,6 +23,17 @@ int length_from_frequency(double frequency, bool claw) {
         return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6;
 }
 
+
+point drawMeanderStep(cell* curCell, int layer, point cursor, int meanderSegmentLength, int resTurnRad, int width) {
+        
+        point cursor2 = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
+        cursor2 = torusTurn(curCell, layer, cursor2, "rd", resTurnRad, width);
+        cursor2 = torusTurn(curCell, layer, cursor2, "dl", resTurnRad, width);
+        cursor2 = wire(curCell, layer, cursor2, "l", meanderSegmentLength, width);
+        cursor2 = torusTurn(curCell, layer, cursor2, "ld", resTurnRad, width);
+        return torusTurn(curCell, layer, cursor2, "dr", resTurnRad, width);
+}
+
 void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int length,  int resTurnRad, int layer) {
     
     int curLength = 0;
@@ -47,20 +58,12 @@ void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int
     cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
     
-        debug(length-curLength);
-
     int meanderStepLength = 2*meanderSegmentLength+2*math::pi*resTurnRad;
-;
-    while ((length -curLength)>meanderStepLength) {
-        cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
-        cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
-        cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
-        cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength, width);
-        cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
-        cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
-        curLength+=meanderStepLength;
-        debug(length-curLength);
 
+    point cursor2;
+    while ((length -curLength)>meanderStepLength) {
+        cursor = drawMeanderStep(curCell, layer, cursor, meanderSegmentLength, resTurnRad, width);
+        curLength+=meanderStepLength;
     }
     
     if (length - curLength >= meanderSegmentLength+2*resTurnRad*math::pi_2) {
@@ -97,21 +100,15 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
     generateStructure(curCell, cursor, w_res, tailLen, length, resTurnRad, aux2);
     generateStructure(curCell, cursor, w_res+2*g_res, tailLen+g_res, length+g_res, resTurnRad, aux3);
     
-    if (direction=="r") {
-        rotateLayer(curCell, aux2, couplingPoint, 90);
-        rotateLayer(curCell, aux3, couplingPoint, 90);
-    } else if (direction=="l") {
-        rotateLayer(curCell, aux2, couplingPoint, -90);
-        rotateLayer(curCell, aux3, couplingPoint, -90);
-    } else if (direction=="u") {
-        rotateLayer(curCell, aux2, couplingPoint, 180);
-        rotateLayer(curCell, aux3, couplingPoint, 180);
+    rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, couplingPoint, angleFromDirection(direction));
+    if (direction=="u") {
         mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
         mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
-    
+        
     layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(M, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(protect, aux3, protect, "A+B", 0, 0, 0);
     
     clearAllAuxiliaryAux(curCell);
     
@@ -120,6 +117,93 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
     return rotateVector(retPoint, couplingPoint, direction);
 }
 
+point generateStructureHalfwaveTransmission(cell* curCell, point start, int width, int length, int resTurnRad, int layer){
+        
+        int curLength = 0;
+        int tails_len = .7e6;
+    
+    
+    point cursor = copyPoint(start);
+    cursor = wire(curCell, layer, cursor, "d", tails_len, width);
+    curLength += tails_len;
+    
+    cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
+    cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength/2, width);
+    cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
+    cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
+    curLength += math::pi_2*3*resTurnRad + meanderSegmentLength/2;
+    
+    int meanderStepLength = 2*meanderSegmentLength+2*math::pi*resTurnRad;
+    int meander_periods = 0;
+    while (curLength + meanderStepLength < (length/2 - meanderSegmentLength-math::pi*resTurnRad)) {
+        meander_periods+=1;
+        cursor = drawMeanderStep(curCell, layer, cursor, meanderSegmentLength, resTurnRad, width);
+        curLength+=meanderStepLength;
+    }
+    
+    cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength/2, width);
+    cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+    curLength += meanderSegmentLength/2 + math::pi_2*resTurnRad;
+
+    cursor = wire(curCell, layer, cursor, "d", length - curLength*2, width);
+    curLength += length-curLength*2;
+
+    cursor = torusTurn(curCell, layer, cursor, "dl", resTurnRad, width);
+    cursor = wire(curCell, layer, cursor, "l", meanderSegmentLength/2, width);
+    cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
+    cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
+    curLength += math::pi_2*3*resTurnRad + meanderSegmentLength/2;
+ 
+    int i;
+    for (i=0; i<meander_periods; i++) {
+        cursor = drawMeanderStep(curCell, layer, cursor, meanderSegmentLength, resTurnRad, width);
+        curLength+=meanderStepLength;
+    }   
+
+    cursor = wire(curCell, layer, cursor, "r", meanderSegmentLength/2, width);
+    cursor = torusTurn(curCell, layer, cursor, "rd", resTurnRad, width);
+    curLength += math::pi_2*resTurnRad + meanderSegmentLength/2;
+    
+    cursor = wire(curCell, layer, cursor, "d", length-curLength, width));
+    return cursor;
+}
+
+point addHalfwaveTransmissionResonator(cell* curCell, point start, int w_res, int g_res, double frequency, string direction) {
+
+        int length = length_from_frequency(frequency, false)*2*1e3;
+        int resTurnRad = 5*w_res;
+        point cursor;
+        
+        int l_tooth = 50e3;
+        int w_tooth = 2.5e3;
+        int w_gap= 7.5e3;
+        int transition_len = 50e3;
+        int n_teeth = 3;
+
+        int idc_len = l_tooth+transition_len;        
+    
+    point resonator_start = rotateVector(newPoint(0, -idc_len), start, direction);
+
+    addIDC(curCell, resonator_start, w_res, g_res, transition_len, w_tooth, w_gap, l_tooth, n_teeth, opposite(direction), true);
+    
+    generateStructureHalfwaveTransmission(curCell, resonator_start, w_res, length, resTurnRad, aux);
+    cursor = generateStructureHalfwaveTransmission(curCell, resonator_start, w_res+2*g_res, length, resTurnRad, aux2);
+    
+    rotateLayer(curCell, aux, resonator_start, angleFromDirection(direction));
+    rotateLayer(curCell, aux2, resonator_start, angleFromDirection(direction));
+    cursor = rotateVector(newPoint(cursor.x()-resonator_start.x(), cursor.y()-resonator_start.y()), resonator_start, direction);
+    
+    layout->booleanTool->boolOnLayer(M, aux, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(protect, aux2, protect, "A+B", 0, 0, 0);
+    
+    clearLayer(curCell, aux);
+    clearAllAuxiliaryAux(curCell);
+    
+    addIDC(curCell, cursor, w_res, g_res, transition_len, w_tooth, w_gap, l_tooth, n_teeth, direction, true);
+    
+    return newPoint(cursor.x()+transition_len+l_tooth, cursor.y()); // now only for horizontal left to right resonators
+    
+}
 
 point addResonatorNoMeander(cell* curCell, point couplingPoint, int w_res, int g_res, double frequency, int tailLen, string direction, bool claw) {
     
@@ -156,21 +240,15 @@ point addResonatorNoMeander(cell* curCell, point couplingPoint, int w_res, int g
         layer = aux3;
     }
     
-    if (direction=="r") {
-        rotateLayer(curCell, aux2, couplingPoint, 90);
-        rotateLayer(curCell, aux3, couplingPoint, 90);
-    } else if (direction=="l") {
-        rotateLayer(curCell, aux2, couplingPoint, -90);
-        rotateLayer(curCell, aux3, couplingPoint, -90);
-    } else if (direction=="u") {
-        rotateLayer(curCell, aux2, couplingPoint, 180);
-        rotateLayer(curCell, aux3, couplingPoint, 180);
+    rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, couplingPoint, angleFromDirection(direction));
+    if (direction=="u") {
         mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
         mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
     
     layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(M, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(protect, aux3, protect, "A+B", 0, 0, 0);
     
     clearAllAuxiliaryAux(curCell);
     

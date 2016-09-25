@@ -1,0 +1,67 @@
+/*
+    Claw coupler for the resonator. Anchor point is in the symmetry plane of the claw, offset to the egde of M layer towards the resonator
+
+*/
+
+
+point addIDC(cell* curCell, point anchorPoint, int w_start, int g_start, int transition_len, int w_tooth, int w_gap,
+                 int l_tooth, int n_teeth, string direction, bool inserted) {
+
+        point cursor = anchorPoint;
+
+        int w_end = n_teeth*w_tooth + (n_teeth-1)*w_gap;
+        int i;
+
+    //=========Metal===========
+    
+    pointArray ps;
+    ps.attach(cursor.x()-w_start/2, cursor.y());
+    ps.attach(cursor.x()-w_end/2, cursor.y()-transition_len);
+    
+    int offset;
+    for (i=0; i<n_teeth-1; i++) {
+        offset = cursor.x()- w_end/2+i*(w_tooth+w_gap);
+        ps.attach(offset, cursor.y()-transition_len-l_tooth);
+        ps.attach(offset+w_tooth, cursor.y()-transition_len-l_tooth);
+        ps.attach(offset+w_tooth, cursor.y()-transition_len);
+        ps.attach(offset+w_tooth+w_gap, cursor.y()-transition_len);
+    }
+    offset = cursor.x()- w_end/2+i*(w_tooth+w_gap);
+    ps.attach(offset, cursor.y()-transition_len-l_tooth);
+    ps.attach(offset+w_tooth, cursor.y()-transition_len-l_tooth);
+    
+    
+    ps.attach(cursor.x()+w_end/2, cursor.y()-transition_len);
+    ps.attach(cursor.x()+w_start/2, cursor.y());
+    
+    curCell->addPolygon(ps, aux);
+    
+    //=========Protect===========
+
+    if (inserted == true)
+        w_end = (n_teeth+1)*w_tooth + (n_teeth)*w_gap;
+    pointArray ps;
+    ps.attach(cursor.x()-w_start/2-g_start, cursor.y());
+    ps.attach(cursor.x()-w_end/2-w_end/2, cursor.y()-transition_len);
+    ps.attach(cursor.x()-w_end/2-w_end/2, cursor.y()-transition_len-l_tooth);
+    ps.attach(cursor.x()+w_end/2 + w_end/2, cursor.y()-transition_len-l_tooth);
+    ps.attach(cursor.x()+w_end/2 + w_end/2, cursor.y()-transition_len);
+    ps.attach(cursor.x()+w_start/2 + g_start, cursor.y());
+    curCell->addPolygon(ps, aux2);
+    
+    //==========Rotation=========
+    
+    rotateLayer(curCell, aux, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
+    
+    //==========Move to M and protect====
+
+    layout->booleanTool->boolOnLayer(M, aux, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(protect, aux2, protect, "A+B", 0, 0, 0);
+    
+    clearLayer(curCell, aux);
+    clearLayer(curCell, aux2);
+    
+    return rotateVector(newPoint(0, -transition_len-l_tooth), anchorPoint, direction);
+    
+}
