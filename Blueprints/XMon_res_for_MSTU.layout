@@ -62,7 +62,8 @@ int main() {
     layout->drawing->deleteSelect();
     layout->drawing->deselectAll();
 
-        
+    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Not for fabrication");
+    
         int i;
     
     cell *curCell = layout->drawing->currentCell;
@@ -145,6 +146,8 @@ int main() {
     }
     curCell->textToPolygon(100e3);
 
+    marker = curCell->addText(protect, newPoint(-chip_width/2+100e3, -chip_height/2+400e3), sample_name);    
+    curCell->textToPolygon(200e3);
         
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);
     

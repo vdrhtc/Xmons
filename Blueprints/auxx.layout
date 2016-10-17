@@ -134,4 +134,6 @@ string roman(int i){
         return "IX";
     else if(i==10) 
         return "X";
+    else if (i<50)
+        return "X"+roman(i-10);
 }
