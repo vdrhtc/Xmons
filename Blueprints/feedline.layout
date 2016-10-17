@@ -43,7 +43,7 @@ x |  |___ >==========~======<  |_____
     int microwaveDriveLen = 0;
 
 
-point microwaveDrive(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
+point microwaveDrive(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
     
     
     point cursor = wire(curCell, protect, anchor, direction, g_feed, w_feed+2*g_feed);
@@ -53,24 +53,26 @@ point microwaveDrive(cell* curCell, point anchor, int w_feed, int g_feed, string
 }
 
     
-point fluxBias(cell* curCell, point anchor, int w_feed, int g_feed, string direction) {
+point fluxBias(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
+    
     point cursor;
     cursor.set(anchor.x(), anchor.y()-1.5*g_feed);
-    wire(curCell, protect, cursor, "r", w_q/2, g_feed);
-    wire(curCell, protect, cursor, "l", w_q/2, g_feed);
+    wire(curCell, aux4, cursor, "r", w_q/2, g_feed);
+    wire(curCell, aux4, cursor, "l", w_q/2, g_feed);
     cursor.set(cursor.x(), cursor.y()-0.5*g_feed);
-    wire(curCell, protect, cursor, "d", w_feed, 2*g_feed+w_feed);
+    wire(curCell, aux4, cursor, "d", w_feed, 2*g_feed+w_feed);
     cursor.set(cursor.x()+w_feed/2, cursor.y()-0.5*w_feed);
-    wire(curCell, M, cursor, "l", w_feed+g_feed, w_feed);
+    wire(curCell, aux3, cursor, "l", w_feed+g_feed, w_feed);
     cursor.set(anchor.x(), anchor.y()-2*g_feed-w_feed);
     fluxBiasLen = 2*g_feed+w_feed;
     
-    rect selection;
-    selection.set(anchor.x()-w_q/2, anchor.y()-2*g_feed, anchor.x()+w_q/2, anchor.y()-g_feed);
-    rotateSelection(curCell, selection, anchor, direction);
-    rect selection;
-    selection.set(anchor.x()-w_q/2, anchor.y()-fluxBiasLen, anchor.x()+w_q/2, anchor.y()-2*g_feed);
-    rotateSelection(curCell, selection, anchor, direction);
+    rotateLayer(curCell, aux3, anchor, angleFromDirection(direction));
+    rotateLayer(curCell, aux4, anchor, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux3, M, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux4, protect, protect, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux3);
+    clearLayer(curCell, aux4);
+    
     point retPoint;
     retPoint.set(0, -fluxBiasLen);
     return rotateVector(retPoint, anchor, direction);
@@ -115,14 +117,14 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     int i;
     point cursor;
     if (type=="cp") {
-        start = contactPad(curCell, M, protect, start, w_feed, g_feed, directions.at(0));
+        start = contactPad(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - totalPadLen);
     }
     else if (type=="fb") {
-        start = fluxBias(curCell, start, w_feed, g_feed, directions.at(0));
+        start = fluxBias(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - fluxBiasLen);
     } else if (type == "md") {
-        start = microwaveDrive(curCell, start, w_feed, g_feed, directions.at(0));
+        start = microwaveDrive(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
     } else if (type == "cd") {
         
@@ -133,25 +135,32 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
         turnRad = 0;
     }
     else {  
-        wire(curCell, M, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed);
-        cursor = wire(curCell, protect, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
-        torusTurn(curCell, M, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
-        cursor = torusTurn(curCell, protect, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);    
+        wire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed);
+        cursor = wire(curCell, aux2, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
+        torusTurn(curCell, aux, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
+        cursor = torusTurn(curCell, aux2, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);    
     }
     for (i=1; i<N_turns; i++) {
-        wire(curCell, M, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed);
-        cursor = wire(curCell, protect, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
-        torusTurn(curCell, M, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
-        cursor = torusTurn(curCell, protect, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed+2*g_feed);
+        wire(curCell, aux, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed);
+        cursor = wire(curCell, aux2, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
+        torusTurn(curCell, aux, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
+        cursor = torusTurn(curCell, aux2, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed+2*g_feed);
     }
-    wire(curCell, M, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed);
-    cursor = wire(curCell, protect, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed+2*g_feed);
+    wire(curCell, aux, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed);
+    cursor = wire(curCell, aux2, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen, w_feed+2*g_feed);
     
     string direction = directions.at(N_turns);
     point vec;
     vec.set(0, -totalPadLen);
     cursor = rotateVector(vec, cursor, direction);
     
-    contactPad(curCell, M, protect, cursor, w_feed, g_feed, opposite(direction));
+    contactPad(curCell, aux, aux2, cursor, w_feed, g_feed, opposite(direction));
+    
+    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, protect, protect, "A+B", 0, 0, 0);
+    
+    clearLayer(curCell, aux);
+    clearAllAuxiliaryAux(curCell);
+    
 }
 
