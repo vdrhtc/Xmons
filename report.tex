@@ -375,22 +375,41 @@ The result of such simulation can be observed in \autoref{fig:driven_tr}. As one
 
 \chapter{Experimental methods}
 
+\section{Experimental setup and equipment}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{setup}
+\caption{}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{BF_for_albmstu1}
+\caption{Example configuration of the 15 mK stage of the BF LD 250 fridge in the RQC lab at ISSP with three samples installed (with false colors added). \textbf{(a)} Front-bottom view of the 25 mK flange. Cyan color highlights the cylindric cryoperm shield inside which the sample holder resides. \textbf{(b)} Back view, violet color shows the circulators with  a thick copper wire wrapped around them for thermalization. \textbf{(c)} Front-top view, where the 2-channel  microwave switch is shown (magenta) and the hybrid coupler (blue, left in true color) used to measure several samples using only one low-noise HEMT amplifier. \textbf{(d)} Side view, the two unshielded sample holders similar to the one concealed under the shield from (a) are shown in yellow.}
+\end{figure}
+
 \section{Two-tone spectroscopy}
+
 This measurement is conducted with an additional high-power microwave tone from the microwave source, which induced the transitions from ground state of the system to higher levels and transition frequencies from there then were probed by the VNA. Practically this is realised by setting the VNA to measure single point at the shifted resonator  frequency $\omega_r + \chi_0$ (see \autoref{fig:diagram}) and then scanning the current in the coil and frequency on the $\mu$-wave source. When the frequency of the latter coincides with some allowed transition frequency of the system at given flux, the system leaves its ground state and the VNA is not probing a correct transition frequency any more. For example, if second tone has induced qubit $ge$ transition, the correct resonator frequency would be $\omega_r + \chi_1$ and the lowest transmission will be observed there (see \autoref{fig:diagram} again). Thus, at $\omega_r + \chi_0$ where the VNA is measuring the transmission would become higher than it was when the second tone missed the $ge$ transition. In reality of course the situation is a bit more complicated as long as constant microwave tone induces Rabi oscillations between levels if it is resonant with the corresponding transition and after all the VNA will be probing transitions from the incoherent mixture of states $\hat \rho = \frac{1}{2} [\ket{0, g}\bra{0,g} + \ket{0, e}\bra{0,e}]$, however the transmission still ends up being higher when the second tone induces transitions from ground state. All said above can be applied also to the transmission phase, however the phase at resonance will become either higher of lower depending on the direction of the resonance shift as long as the phase behaves linearly around the resonance and is more sensitive. This method works well in the dispersive limit when the qubit-resonator detuning $\Delta_\omega = \omega_r - \omega_{ge}$ is comparable to $\omega_r, \omega_{ge}$.
 
 \chapter{Experimental results}
 
+\section{Proof-of-concept design}
 
+\subsection{Geometry and parameters}
 
-\section{Proof-of-concept sample}
-
-The first sample that was measured was a proof-of-concept one, which was aimed at testing general properties of the simplest Xmon-based cQED systems. The easiest way to gain insight about the structure of the sample is to look at \autoref{fig:first_chip_design_full} where some of the main parts of its design are shown. The chip is 8 mm long and 4 mm wide and consists basically of six isolated qubit-resonator systems. 
+The first sample that was measured was created from a proof-of-concept design, which was aimed at testing general properties of the simplest Xmon-based cQED systems. The easiest way to gain insight about the structure of the sample is to look at \autoref{fig:first_chip_design_full} where some of the main parts of its design are shown. The chip is 8 mm long and 4 mm wide and consists basically of six isolated qubit-resonator systems. 
 
 All of the resonators were $\lambda/4$ with frequencies designed to be $6, 6.5, 6.9,7,7.1,8$ GHz for devices I-VI, respectively. Their coplanar parameters are $7\,\mu$m for the central wire width and $4\,\mu$m for the gaps.
 
 The qubits were designed to be identical, with $C_\Sigma \approx 80$ fF and $I_{C, \Sigma} = 60$ nA, giving the $\omega_{01}/2\pi \approx 7$ GHz at their flux sweet-spot ($\Phi_{ext}=0$) and anharmonicity of approximately $-230$ MHz.
 
 Two test structures at the sides of the chip were also included to allow direct DC measurement of the SQUIDs created during the shadow evaporation.
+
+\subsection{Purposes and implementation}
 
 The main targets for the chip were:
 \begin{enumerate}[label=(\alph*), leftmargin=1.5cm]
@@ -421,9 +440,9 @@ The sample was fabricated in the cleanroom facility at MIPT, in a two-step proce
 
 \subsection{Measurement setup}
 
-The sample was measured at ISSP at RQC laboratory. Cryogenic equipment was represented by BlueFors LD250 dilution refrigerator, with base temperature of 16 mK. The microwave equipment included R\&S ZNB 10 kHz-20 GHz vector network analyser,  Agilent E8257D 100 kHz - 40 GHz analog signal generator. The sample was flux biased using Keithley 6221 current source.
+The sample was measured at ISSP in laboratory of RQC. Cryogenic equipment was represented by BlueFors LD250 dilution refrigerator, with base temperature of 16 mK. The microwave equipment included R\&S ZNB 10 kHz-20 GHz vector network analyser,  Agilent E8257D 100 kHz - 40 GHz analog signal generator. The sample was flux biased using Keithley 6221 current source.
 
-Microwave line was thermalized with 60 dB of attenuation, additional 20 dB of attenuation were introduced on a directional coupler which added the second tone from the $\mu$-wave source. After leaving the sample the signal passed through two isolators and a hybrid coupler, which was used before to measure two samples during single cooldown. Finally amplified with 4-8 GHz LNF amplifier at 4 K and a with a room-temperature amplifier.
+Microwave line was thermalized with 60 dB of attenuation, additional 20 dB of attenuation were introduced on a directional coupler which added the second tone from the $\mu$-wave source. After leaving the sample the signal passed through two isolators and a hybrid coupler, which was used before to measure two samples during single cooldown. Finally, the signal was amplified with 4-8 GHz LNF amplifier at 4 K and a with a room-temperature amplifier.
 
 The sample holder that was used was designed for 10x10 mm chips, so the bondwires had a relatively large length of 1 mm which of course deteriorated the overall transmission. Chip lay directly on the copper disk of the bottom part of the sample holder with no hole carved under it. Around the sample holder a superconducting coil was wound which has been supplied using the current source mentioned above.
 
@@ -465,7 +484,7 @@ When the resonator is coupled to a weakly nonlinear quantum system like transmon
 \label{fig:first_resonators_on_flux}
 \end{figure} 
 
-\subsection{Characterization of the full cQED systems}
+\subsection{Characterization of the whole cQED systems}
 
 From six systems on the chip only three were studied in detail partly due to lack of time and partly because the overall picture was more or less clear at that point. Firstly the behaviour of the resonators was investigated when the flux bias was being changed. This measurement revealed obvious periodic frequency oscillations in four devices from six, see \autoref{fig:first_resonators_on_flux}. The other two devices didn't show any noticeable periodic flux dependence because one of the qubits (III) had a broken SQUID and the other (IV) probably was much lower in frequency than its resonator.
 
@@ -547,6 +566,8 @@ If the power of the second tone is increased, the probability of the transitions
 
 Interestingly enough as well as the transition corresponding to the system's resonator some other narrow horizontal transitions are visible. Three of these lines are visible best of all around 6.1 GHz near the qubit line in \autoref{fig:first_II_2tone}~($|S^2_{21}|$) and near 7 GHz in the high-resolution area of \autoref{fig:first_II_2tone_hp}~($|S^2_{21}|$). They correspond to the other resonators which lie higher in frequency. This effect was already observed before but was not thoroughly studied. At this moment it seems that the effect of changed transmission on the probe frequency when the other resonator is resonantly excited with large power (second tone power is 10$^4$-10$^5$ times higher than the probe power) is not due to the coupling of the resonators but due to nonlinear effects or suppressed superconductivity in the Al film itself.
 
+\newpage
+
 \subsubsection{System VI}
 
 \paragraph{Model.} Below all the experimental data will be provided for system VI along with theoretical fits of the spectral lines that were observed using the model \eqref{eq:hamiltonian}. Model parameters were fit based on all data on this system and are same for all figures in this section. Before turning to the comparison of the theoretical predictions and experimental results it would be useful to present the model parameters used for fitting which are summarized in \autoref{tab:first_VI_params}.
@@ -596,6 +617,57 @@ $E_{J, \Sigma}$ & 31.5 GHz
 \caption{Two-tone spectrum of the 6$^\text{th}$ system (z-axis normalized) at -20 dBm on the $\mu$-wave source with fitting lines obtained from the model \eqref{eq:hamiltonian}. As long as the qubit is very close to the resonator in frequency the effective driving power on it is very high, and thus a lot of sideband and multiphoton transitions are visible.}
 \label{fig:first_VI_2tone_fit}
 \end{figure}
+
+\newpage
+
+\section{On-chip control lines testing design}
+
+\subsection{Geometry and parameters}
+
+The second design that was developed was intended to test the properties of the control lines, i.e. flux bias lines and microwave driving lines, implemented on the chip. The design is presented in \autoref{fig:second_design_full} where some of its key features are highlighted. It's 10x5 mm.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.7\textwidth]{chip_design2}
+\caption{\textbf{(a)} Large-scale image of the lines testing design. The chip (8x4 mm) consists of eight $\lambda/4$ CPW resonators coupled capacitively to the feedline, six low-Q$_e$ with Xmon qubits at the open end and two high-Q$_e$ with no qubits. \textbf{(b)} Zoomed area around one of the qubits, showing the microwave antenna configuration. \textbf{(c)} Zoomed area around another qubit, showing the flux bias line. \textbf{(d)} Zoom around one of the qubits' SQUIDs. Pink areas denote the part of the mask which produces the SQUID and should be patterned with higher resolution.}
+\label{fig:second_design_full}
+\end{figure}
+
+Firstly, differently from the previous design, this design has more resonators, additional two (TI, TII, see \autoref{fig:second_design_full}(a)) were inserted at the ends of the main resonator-qubit array (I-VI). These resonators have high Q$_e$ from their geometry to yield accurate results for possible high internal Q-factors.
+
+Secondly, the frequencies of the devices were changed. The qubits still are all calculated to have the same frequency, but it's now 6 GHz, with $C_\Sigma \approx 80$ fF and $I_{C, \Sigma} = 40$ nA. The size of each junction in the qubit's SQUID is 100x200 nm$^2$. The resonators had frequencies of 7, 7.1, 7.2, 7.3, 7.4, 7.5 GHz for the cQED systems I-VI, and the bare resonators TI and TII had 8 and 8.25 GHz, respectively.
+
+Finally, as the main change made to the design, some coplanar control lines were introduced. For the upper qubits they are microwave antennas, i.e. open-ended coplanar line pieces, to induce transitions while for the lower qubits they are flux-bias lines to change the energy level structure of the devices. The lines were separated in such a way to make the design more fault-tolerant.
+
+Four test structures at the sides of the chip were also included to allow direct DC measurement of the SQUIDs created during the shadow evaporation.
+
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\textwidth]{xmon_al_bmstu_1_in_pcb}
+\caption{Bonded Xmon Al BMSTU 1 in the PCB of the sample holder, as seen through the microscope of the bonding machine.}
+\end{figure}
+
+\subsection{Implementation and purposes}
+
+The chip Xmon Al BMSTU 1 was made in a single-step process. It had a mask patterned with e-beam in the cleanroom facility at Bauman Moscow State Technical University (add recipe?), and then Al film was shadow-evaporated on Plassys in the RQC lab in ISSP, 25 and 45 nm thick. The substrate used was made of high-resistivity Si ($> 6$ kOhm/cm).
+
+One significant difference about this sample is that in fact it was fabricated with its twin in the center of a larger substrate (15x15 mm) which was previously patterned on the back side with a circular saw to allow the substrate to be cracked around the chips precisely. However, the process wasn't yet mastered and the twin chip was lost during the separation. But nevertheless, the remaining sample fitted in the PCB cutout really well, and the method will be further improved.
+
+
+Purposes for the design:
+
+test resonator Q without qubits
+
+test lines
+
+test again the qubits' basic parameters
+
+test improvement of the noise
+
+test the half-sawing of the sample with following cracking
+
+
 
 \appendix
 
