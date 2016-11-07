@@ -1,0 +1,41 @@
+
+/*
+    Adds an alignment mark
+*/
+
+    int ebeam_mark_size = 90e3;
+    int box_size = 100e3;
+    int w_mark = 500;
+    int w_mark_photo = 2e3;
+
+void addAlignmentMark(cell* curCell, point center) {
+
+    stringList l;
+    l.append("d");l.append("l");l.append("r");l.append("u");
+    
+    int i, k;
+    int n_segments = 4;
+    
+    for (i=0; i<4; i++){
+        point cursor = center;
+        for(k=0; k<n_segments;k++) {
+            cursor = wire(curCell, aux, cursor, l.at(i), ebeam_mark_size/2/n_segments, w_mark*math::pow(2, k));
+        }
+    }
+    
+    layout->booleanTool->boolOnLayer(aux, M1, M1, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    
+    for (i=0; i<4; i++){
+        point cursor = center;
+        for(k=0; k<n_segments;k++) {
+            cursor = wire(curCell, aux, cursor, l.at(i), ebeam_mark_size/2/n_segments, w_mark_photo*math::pow(2, k));
+        }
+    }
+    
+    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    
+    curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, protect);
+
+}

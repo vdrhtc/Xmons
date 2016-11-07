@@ -1,0 +1,159 @@
+
+point wire(cell* curCell, int layer, point start, string direction, int length, int width) {
+
+    if (direction=="u")  {// up
+        curCell->addBox(start.x()-width/2, start.y(), width, length, layer);
+        start.set(start.x(), start.y()+length);
+        return start;
+    };
+
+    if (direction=="d")  {  // down
+        curCell->addBox(start.x()-width/2, start.y(), width, -length, layer);
+        start.set(start.x(), start.y()-length);
+        return start;
+    }
+
+    if (direction=="r") {  // right
+        curCell->addBox(start.x(), start.y()-width/2, length, width, layer);
+        start.set(start.x()+length, start.y());
+        return start;
+    }
+
+    if (direction=="l")  {  // left
+        curCell->addBox(start.x(), start.y()-width/2, -length, width, layer);
+        start.set(start.x()-length, start.y());
+        return start;
+    }
+}
+
+point torusTurn(cell* curCell, int layer, point start, string direction, int radius, int width) {
+
+    if (direction=="lu")  { // left+up
+        point center;
+        center.set(start.x(), start.y()+radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 180, 270 , layer);
+        start.set(start.x()-radius, start.y()+radius);
+        return start;
+    };
+
+    if (direction=="ld")  {  // left+down
+        point center;
+        center.set(start.x(), start.y()-radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 90, 180 , layer);
+        start.set(start.x()-radius, start.y()-radius);
+        return start;
+    }
+
+    if (direction=="ru") {  // right + up
+        point center;
+        center.set(start.x(), start.y()+radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 270, 360 , layer);
+        start.set(start.x()+radius, start.y()+radius);
+        return start;
+    }
+
+    if (direction=="rd")  {  // right + down
+        point center;
+        center.set(start.x(), start.y()-radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2,  0, 90 , layer);
+        start.set(start.x()+radius, start.y()-radius);
+        return start;
+    }
+    if (direction=="dl") {  // down + left
+        point center;
+        center.set(start.x()-radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 270, 0 , layer);
+        start.set(start.x()-radius, start.y()-radius);
+        return start;
+    }
+
+    if (direction=="dr")  {  // down + right
+        point center;
+        center.set(start.x()+radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 180, 270 , layer);
+        start.set(start.x()+radius, start.y()-radius);
+        return start;
+    }
+    if (direction=="ul") {  // up + right
+        point center;
+        center.set(start.x()-radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 0, 90 , layer);
+        start.set(start.x()-radius, start.y()+radius);
+        return start;
+    }
+
+    if (direction=="ur")  {  // up + right
+        point center;
+        center.set(start.x()+radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 90, 180 , layer);
+        start.set(start.x()+radius, start.y()+radius);
+        return start;
+    }
+}
+
+point torusArbAngleTurn(cell* curCell, int layer, point start, string direction, int radius, int width, double angle) {
+
+    if (direction=="lu")  { // left+up
+        point center;
+        center.set(start.x(), start.y()+radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 180, 180+angle , layer);
+        start.set(start.x()-radius, start.y()+radius);
+        return start;
+    };
+
+    if (direction=="ld")  {  // left+down
+        point center;
+        center.set(start.x(), start.y()-radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 90, 90+angle , layer);
+        start.set(start.x()-radius, start.y()-radius);
+        return start;
+    }
+
+    if (direction=="ru") {  // right + up
+        point center;
+        center.set(start.x(), start.y()+radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 270, 270+angle , layer);
+        start.set(start.x()+radius, start.y()+radius);
+        return start;
+    }
+
+    if (direction=="rd")  {  // right + down
+        point center;
+        center.set(start.x(), start.y()-radius);
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2,  90-angle, 90, layer);
+        start.set(start.x()+radius, start.y()-radius);
+        return start;
+    }
+    if (direction=="dl") {  // down + left
+        point center;
+        center.set(start.x()-radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 270, angle , layer);
+        start.set(start.x()-radius, start.y()-radius);
+        return start;
+    }
+
+    if (direction=="dr")  {  // down + right
+        point center;
+        center.set(start.x()+radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 180, 180+angle , layer);
+        start.set(start.x()+radius, start.y()-radius);
+        return start;
+    }
+    if (direction=="ul") {  // up + right
+        point center;
+        center.set(start.x()-radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 0, angle , layer);
+        start.set(start.x()-radius, start.y()+radius);
+        return start;
+    }
+
+    if (direction=="ur")  {  // up + right
+        point center;
+        center.set(start.x()+radius, start.y());
+        curCell->addPolygonArc(center, radius-width/2, radius+width/2, 90, 90+angle , layer);
+        start.set(start.x()+radius, start.y()+radius);
+        return start;
+    }
+}
+
+

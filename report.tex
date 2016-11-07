@@ -54,7 +54,7 @@
 \numberwithin{equation}{section}
 \setcounter{tocdepth}{3}
 
-\renewcommand*\thesection{\arabic{section}}
+\renewcommand*\thesection{\arabic{chapter}.\arabic{section}}
 \lhead[\rm\thepage]{\fancyplain{}{\nouppercase{\sl{\rightmark}}}}
 \rhead[\fancyplain{}{\nouppercase{\sl{\leftmark}}}]{\rm\thepage}
 \chead{}\lfoot{}\rfoot{}\cfoot{}
@@ -373,27 +373,36 @@ The result of such simulation can be observed in \autoref{fig:driven_tr}. As one
 \label{fig:driven_tr}
 \end{figure}
 
+\subsection{Linewidth dependence on drive power} \label{subsec:linewidth}
+
 \chapter{Experimental methods}
 
 \section{Experimental setup and equipment}
 
-\begin{figure}[h]
-\centering
-\includegraphics[width=\textwidth]{setup}
-\caption{}
-\end{figure}
 
-
-
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[width=\textwidth]{BF_for_albmstu1}
 \caption{Example configuration of the 15 mK stage of the BF LD 250 fridge in the RQC lab at ISSP with three samples installed (with false colors added). \textbf{(a)} Front-bottom view of the 25 mK flange. Cyan color highlights the cylindric cryoperm shield inside which the sample holder resides. \textbf{(b)} Back view, violet color shows the circulators with  a thick copper wire wrapped around them for thermalization. \textbf{(c)} Front-top view, where the 2-channel  microwave switch is shown (magenta) and the hybrid coupler (blue, left in true color) used to measure several samples using only one low-noise HEMT amplifier. \textbf{(d)} Side view, the two unshielded sample holders similar to the one concealed under the shield from (a) are shown in yellow.}
+\label{fig:configuratio_photo}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=.8\textwidth]{setup}
+\caption{Schematic of the example configuration shown in \autoref{fig:configuratio_photo}.}
 \end{figure}
 
 \section{Two-tone spectroscopy}
+\label{sec:2tone}
 
-This measurement is conducted with an additional high-power microwave tone from the microwave source, which induced the transitions from ground state of the system to higher levels and transition frequencies from there then were probed by the VNA. Practically this is realised by setting the VNA to measure single point at the shifted resonator  frequency $\omega_r + \chi_0$ (see \autoref{fig:diagram}) and then scanning the current in the coil and frequency on the $\mu$-wave source. When the frequency of the latter coincides with some allowed transition frequency of the system at given flux, the system leaves its ground state and the VNA is not probing a correct transition frequency any more. For example, if second tone has induced qubit $ge$ transition, the correct resonator frequency would be $\omega_r + \chi_1$ and the lowest transmission will be observed there (see \autoref{fig:diagram} again). Thus, at $\omega_r + \chi_0$ where the VNA is measuring the transmission would become higher than it was when the second tone missed the $ge$ transition. In reality of course the situation is a bit more complicated as long as constant microwave tone induces Rabi oscillations between levels if it is resonant with the corresponding transition and after all the VNA will be probing transitions from the incoherent mixture of states $\hat \rho = \frac{1}{2} [\ket{0, g}\bra{0,g} + \ket{0, e}\bra{0,e}]$, however the transmission still ends up being higher when the second tone induces transitions from ground state. All said above can be applied also to the transmission phase, however the phase at resonance will become either higher of lower depending on the direction of the resonance shift as long as the phase behaves linearly around the resonance and is more sensitive. This method works well in the dispersive limit when the qubit-resonator detuning $\Delta_\omega = \omega_r - \omega_{ge}$ is comparable to $\omega_r, \omega_{ge}$.
+This type of measurement is conducted with an additional microwave tone from the microwave source, which induced the transitions from ground state of the system to higher levels and transition frequencies from there then are being probed by the VNA. Practically this is realized by setting the VNA to measure single point at the shifted resonator  frequency $\omega_r + \chi_0$ (see \autoref{fig:diagram}). This results in a low transmission as photons get absorbed by the system. Then the qubit is biased, and the frequency on the $\mu$-wave source is swept through some values at each given bias. When the frequency of the latter coincides with some allowed transition frequency of the system at given bias, the system leaves its ground state, and the VNA is not probing a correct transition frequency any more. For example, if second tone has induced qubit $ge$ transition, the correct resonator frequency would be $\omega_r + \chi_1$ and the lowest transmission will be observed there (see \autoref{fig:diagram} again). Thus, at $\omega_r + \chi_0$ where the VNA is measuring the transmission would become higher than it was when the second tone missed the $ge$ transition. 
+
+In reality the situation is a bit more complicated as long as constant microwave tone induces Rabi oscillations between levels if it is resonant with the corresponding transition and after all the VNA will be probing transitions from an incoherent mixture of states (i.e. $\hat \rho = \frac{1}{2} [\ket{0, g}\bra{0,g} + \ket{0, e}\bra{0,e}]$) which depends on the drive strength; however, the transmission still ends up being higher when the second tone induces transitions from ground state. All said above can be applied also to the transmission phase, however the phase at resonance will become either higher of lower depending on the direction of the resonance shift as long as the phase behaves linearly around the resonance. It is thus much more sensitive when the width of the resonance peak is larger than the dispersive shift. 
+
+It is possible to easily extract the linewidth of the qubit which was described in Section \ref{subsec:linewidth} if the resonator linewidth is larger than the dispersive shift. This can be done by setting the VNA frequency to the point of smallest transmission and studying the phase data. The phase will be a linear function of the frequency near this point, and the frequency, in its turn, will be a linear function of the population of the excited state. This means that the width at the half maximum of the 2-tone peak will be same as the width of the peak of the population. If, in contrast, the resonator linewidth is smaller than the dispersive shift, it would be necessary to extract the frequency of the resonator for each point and then plot it against the 2$^{\text{nd}}$ tone frequency to preserve the linearity and measure the linewidth correctly.
+
+This method works well in the dispersive limit when the qubit-resonator detuning $\Delta_\omega = \omega_r - \omega_{ge}$ is large compared to the coupling strength $g$.
 
 \chapter{Experimental results}
 
@@ -646,34 +655,145 @@ Four test structures at the sides of the chip were also included to allow direct
 \centering
 \includegraphics[width=0.6\textwidth]{xmon_al_bmstu_1_in_pcb}
 \caption{Bonded Xmon Al BMSTU 1 in the PCB of the sample holder, as seen through the microscope of the bonding machine.}
+\label{fig:first_tight_fit}
 \end{figure}
 
 \subsection{Implementation and purposes}
 
 The chip Xmon Al BMSTU 1 was made in a single-step process. It had a mask patterned with e-beam in the cleanroom facility at Bauman Moscow State Technical University (add recipe?), and then Al film was shadow-evaporated on Plassys in the RQC lab in ISSP, 25 and 45 nm thick. The substrate used was made of high-resistivity Si ($> 6$ kOhm/cm).
 
-One significant difference about this sample is that in fact it was fabricated with its twin in the center of a larger substrate (15x15 mm) which was previously patterned on the back side with a circular saw to allow the substrate to be cracked around the chips precisely. However, the process wasn't yet mastered and the twin chip was lost during the separation. But nevertheless, the remaining sample fitted in the PCB cutout really well, and the method will be further improved.
+One significant difference about this sample is that in fact it was fabricated with its twin in the center of a larger substrate (15x15 mm) which was previously patterned on the back side with a circular saw to allow the substrate to be cracked around the chips precisely. However, the process wasn't yet mastered, and the twin chip was lost during the separation. But nevertheless, the remaining sample fitted in the PCB cutout really well (see \autoref{fig:first_tight_fit}), and the method will be further improved.
 
 
 Purposes for the design:
+\begin{enumerate}[label=(\alph*), leftmargin=1.5cm]
+\itemsep0pt
+\item to test resonator Q without qubits
 
-test resonator Q without qubits
+\item to test lines
 
-test lines
+\item to test again the qubits' basic parameters
 
-test again the qubits' basic parameters
+\item to test improvement of the noise
 
-test improvement of the noise
+\item to test the half-sawing of the sample with following cracking
+\end{enumerate}
 
-test the half-sawing of the sample with following cracking
+\subsection{Measurement setup  STUBBED from first chip, needs review}
+
+The sample was measured at ISSP in laboratory of RQC. Cryogenic equipment was represented by BlueFors LD250 dilution refrigerator, with base temperature of 16 mK. The microwave equipment included R\&S ZNB 10 kHz-20 GHz vector network analyser,  Agilent E8257D 100 kHz - 40 GHz analog signal generator. The sample was flux biased using Keithley 6221 current source.
+
+Microwave line was thermalized with 60 dB of attenuation, additional 20 dB of attenuation were introduced on a directional coupler which added the second tone from the $\mu$-wave source. After leaving the sample the signal passed through two isolators and a hybrid coupler, which was used before to measure two samples during single cooldown. Finally, the signal was amplified with 4-8 GHz LNF amplifier at 4 K and a with a room-temperature amplifier.
+
+The sample holder that was used was designed for 10x10 mm chips, so the bondwires had a relatively large length of 1 mm which of course deteriorated the overall transmission. Chip lay directly on the copper disk of the bottom part of the sample holder with no hole carved under it. Around the sample holder a superconducting coil was wound which has been supplied using the current source mentioned above.
+
+The magnetic shielding of the sample holder was achieved via a cryoperm shield. A superconducting shield was not installed in this run due to the lack of space inside the magnetic shield, which may have influenced the noise background.
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=0.9\textwidth]{xmon_al_bmstu_1_general}
+
+\includegraphics[width=0.9\textwidth]{xmon_al_bmstu_1(2)_general}
+
+\includegraphics[width=0.9\textwidth]{xmon_al_bmstu_1(3)_general}
 
 
+\caption{\textbf{(Top)} General view of the resonances. All six resonances are visible, however shifted down in frequency. This shift more or less consistent throughout the devices, and thus it's most probably caused by effective $\epsilon_{Si}$ different from the one used in the calculation. \textbf{(Middle)} General view of the resonances (2$^\text{nd}$ cooldown). Transmission now lower as a 5 dB attenuator was replaced by a 10 dB one. Seven resonances are visible, as the second resonator presumably coupled to something. The shapes of the other peaks also changed. \textbf{(Bottom)} General view of the resonances (3$^\text{d}$ cooldown).  Transmission is 20 dB higher as the directional coupler was altered. Again, six resonances are visible, though some spurious dip is present between devices III and IV, and the shapes changed again.}
+\label{fig:second_resonators_general}
+\end{figure}
+
+
+\begin{figure}[h!]
+\centering
+
+\includegraphics[width=\textwidth]{q-factors-and-freqs_xmon_al_bmstu_1}
+
+\caption{Various quality factors and frequencies depending on radiation power. Some resonators show interesting dip in internal Q near -25 dBm and significant change in frequency, implying they are coupled to functioning qubits saturation of which causes the effect. Other resonators do not show such features.}
+\label{fig:second_q_factors}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{q-factors-and-freqs_xmon_al_bmstu_1(2)}
+\caption{Same figure for the 2$^\text{nd}$ cooldown. Significant deviations are present in comparison with the first cooldown, both to the greater and to the lower Q-factors on different devices.}
+\label{fig:second_q_factors(2)}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{q-factors-and-freqs_xmon_al_bmstu_1(3)}
+\caption{Same figure for the 3$^\text{d}$ cooldown. The Q-factors degraded completely both for the cQED resonators and the test resonators.}
+\label{fig:second_q_factors(3)}
+\end{figure}
+
+\subsection{Characterization of the resonators}
+
+The resonators on the sample were measured several times (after each new cooldown) as they seemed to degrade. Indeed, looking at the Q-factors over the cooldowns reveals that the resonators got worse and worse, even if nothing at all was done with the chip.
+
+Before the second cooldown the chip was moved out of the PCB to solder additional SMP connectors on it, and then moved back in. No mechanical damage or contamination was inflicted to it. However, we can see dramatic changes in quality factors of the resonators, some got better and some got worse for unknown reasons (see \autoref{fig:second_q_factors(2)}). Devices II and III got so bad it was impossible to fit them as their widths compare to the S$_{12}$ general roughness features (see \autoref{fig:second_resonators_general} (Top) vs (Middle)).
+
+After that before the third cooldown nothing at all was done to the chip. After the cooldown and before the Q-factor measurement there was an accidental excessive current through the surrounding coil. Though, it didn't change the general appearance of the resonances which was again found different at this cooldown (see \autoref{fig:second_resonators_general} (Bottom)). At this run the Q-factors became unacceptably low (see \autoref{fig:second_q_factors(3)}) at all powers. 
+
+
+\subsection{Characterization of the cQED systems}
+
+The two systems were possible to study in this sample, I and VI. Others either did not indicate presence of the functional qubits or experience strong flux hopping while tuned via the superconducting coil and don't have the flux bias lines attached to work around this problem. Fortunately, system I has the qubit with the flux bias line and system VI has the microwave antenna, so both these on-chip devices were successfully tested.
+
+
+
+\subsubsection{System I}
+
+The system one was biased by the superconducting loop right on the chip. This allows to make wide scans without affecting negatively the resonator with the width limited only by the current source. The periodic spectrum of the anticrossings for system I is displayed in \autoref{fig:second_I_anti}. The pattern is shifted noticeably to the left due to some residual field around the sample.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{second-I-anti}
+\caption{Periodic anticrossing picture for the system I (at high power). The current on the current source spans 80 mA and is actually comparable at the endpoints to it's maximum possible output of 105 mA.}
+\label{fig:second_I_anti}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{second-I-spec-lines}
+
+\includegraphics[width=\textwidth]{ge-linewidth}
+\caption{Qubit spectrum at 0 dBm on the output of the 2$^{\text{nd}}$ tone generator (left), dependence of the linewidth on the driving power (right) and high-resolution scan of the two-tone peak at -20 dBm (bottom).}
+\label{fig:second_I_spec_lines}
+\end{figure}
+
+
+The experiment to determine qubit spectrum and the linewidth at the degeneracy point was also done on the system. The resulting graphs are presented in \autoref{fig:second_I_spec_lines}. On the right plot the spectrum of the qubit is visible; it consists of three lines corresponding to the transitions $ge,\ gf/2$ and $gd/3$ and visible due to the high power of the drive. On the left plot the spectral line width is recorded over the incident power of the drive. It's possible to estimate the linewidth of the bare qubit from the phase 2-tone data (see Section \ref{sec:2tone}). The line experiences significant broadening with increased power; though, at the minimal possible power of -20 dBm it's width is very small, less than 1 MHz, which allows to set a lower bound of 1 $\mu$s on the qubit $T_1$ (assuming that there's no pure dephasing due to the flux fluctuations at the sweet spot and to the excessive population of the resonator).
+
+\subsubsection{System VI}
+
+System VI had an on-chip microwave antenna nearby, but had no flux bias line (see \autoref{fig:second_design_full}), and thus had to be biased by the external coil. With the studied sample this method of biasing was very inconvenient, as even small magnetic field from the coil influenced the resonators tremendously, inducing continuous and discontinuous frequency shifts in them, presumably due to flux creep and hopping. Fortunately, is was still possible to tune the qubit of the VI$^{\text{th}}$ system enough to observe it's spectrum and to test the microwave antenna.
+
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{second_VI_anti}
+\caption{Anticrossing of the VI$^{\text{th}}$ cQED system. It can be seen that the picture is not symmetric and   the lines are bent downwards at the ends, as the resonator frequency change was caused not only by the qubit, but also directly by the magnetic field.}
+\label{fig:second_VI_anti}
+\end{figure}
+
+The anticrossing measured for this system is shown in \autoref{fig:second_VI_anti}. It was hard to measure, though, as the flux hopping was interfering with the tuning of the qubit. The resonator frequency change due to the magnetic field has bent the picture, so it would be impossible to fit it within the model described before. Nevertheless, the spectrum of this qubit was gathered with 2-tone spectroscopy using the microwave antenna and with a second tone driving the resonator. The results are presented in \autoref{fig:second_VI_spec_antenna} for the measurement via an antenna and .
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{second_VI_spec_antenna}
+\caption{Two-tone spectroscopy of the VI$^{\text{th}}$ system using the microwave antenna mounted on the chip.}
+\label{fig:second_VI_spec_antenna}
+\end{figure}
+
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{second_VI_spec}
+\caption{Two-tone spectroscopy of the VI$^{\text{th}}$ system using the directional coupler to add the second tone to the probe line. The background was subtracted. It can be seen also where the flux jumped abruptly: it happened near 0.5 mA and resulted in a decrease of the field penetrating the qubit's SQUID.}
+\label{fig:second_VI_spec_antenna}
+\end{figure}
 
 \appendix
 
 \chapter{Pure dephasing or Does the density matrix really exist?}
 
-There are two ways of describing pure dephasing. One is developed from the system-bath approach (Lindbladian master equation) and the other comes from the stochastic Schrödinger equation. However the results of the latter deviate fundamentally from the results of the former for the experiment of spin-echo for a single qubit. Here this problem will be described in detail.
+There are two ways of describing pure dephasing. One is developed from the system-bath approach (Lindbladian master equation) and the other comes from the stochastic Schrödinger equation. However, the results of the latter deviate fundamentally from the results of the former for the experiment of spin-echo for a single qubit. Here this problem will be described in detail.
 
 \section{Quantum derivation of dephasing}
 

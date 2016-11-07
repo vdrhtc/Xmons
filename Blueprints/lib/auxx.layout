@@ -1,0 +1,139 @@
+
+point newPoint(int x, int y) {
+    point p;
+    p.set(x, y);
+    return p;
+}
+
+void clearAllAuxiliaryAux(cell* curCell) {
+
+    layout->drawing->deselectAll();
+    curCell->selectLayer(aux2);
+    curCell->selectLayer(aux3);    
+    curCell->selectLayer(aux4);
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+}
+
+void clearLayer(cell* curCell, int layer) {
+
+    layout->drawing->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+
+}
+
+void rotateLayer(cell* curCell, int layer, point center, double angle) {
+    curCell->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->point(center.x(), center.y());
+    layout->drawing->rotate(angle);
+    curCell->deselectAll();
+    layout->drawing->clearPoints();
+}
+
+void mirrorLayer(cell* curCell, int layer, point p1, point p2) {
+    
+    curCell->deselectAll();
+    curCell->selectLayer(layer);
+    layout->drawing->point(p1.x(), p1.y());
+    layout->drawing->point(p2.x(), p2.y());
+    layout->drawing->mirror();
+    curCell->deselectAll();
+    layout->drawing->clearPoints();
+    
+} 
+
+
+void rotateSelection(cell* curCell, rect selection, point center, string direction) {
+    curCell->deselectAll();
+    curCell->fAllSelect(selection);
+    layout->drawing->point(center.x(), center.y());
+    if (direction=="d") {}
+    else if (direction=="u") {
+        layout->drawing->rotate(180);
+        layout->drawing->clearPoints();
+        layout->drawing->point(center.x(), center.y());
+        layout->drawing->point(center.x(), center.y()+100e3);
+        layout->drawing->mirror();
+    }
+    else if (direction=="l") layout->drawing->rotate(-90);
+    else if (direction=="r") layout->drawing->rotate(90);
+    curCell->deselectAll();
+    layout->drawing->clearPoints();
+}
+
+string opposite(string direction) {
+    if (direction=="d") return "u";
+    else if (direction=="u") return "d";
+    else if (direction=="l") return "r";
+    else if (direction=="r") return "l";
+}
+
+point copyPoint(point p) {
+
+    point cp;
+    cp.set(p.x(), p.y());
+    return cp;
+}
+
+point rotateVector(point vec, point anchor, string direction) {
+
+    point retPoint;
+    if (direction=="d") {
+        retPoint.set(anchor.x() + vec.x(), anchor.y()+vec.y());
+        return retPoint;
+    } else if(direction=="l") {
+        retPoint.set(anchor.x()+ vec.y(), anchor.y()+vec.x());
+        return retPoint; 
+    } else if(direction=="r") {
+        retPoint.set(anchor.x() -vec.y(), anchor.y()-vec.x());
+        return retPoint; 
+    } else  {
+        retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y());
+        return retPoint; 
+    }
+}
+
+double angleFromDirection(string direction) {
+    
+    if (direction=="d")
+        return 0;
+    else if (direction=="u")
+        return 180;
+    else if (direction=="l")
+        return -90;
+    else if (direction=="r")
+        return 90;
+}
+
+point rotateVectorArbAngle(point vec, point anchor, double angle) {
+
+    point retPoint;
+    retPoint.set(anchor.x() + vec.x()*math::cos(angle/180*math::pi)-vec.y()*math::sin(angle/180*math::pi), anchor.y()+vec.x()*math::sin(angle/180*math::pi)+vec.y()*math::cos(angle/180*math::pi));
+    return retPoint;
+}
+
+string roman(int i){
+    int k;
+    string ret="";
+    
+    if (i<4){
+        for(k=0;k<i;k++)
+            ret+="I";
+        return ret;
+    } else if(i==4) 
+        return "IV";
+    else if(i==5) 
+        return "V";
+    else if(i<9) {
+        ret += "V";
+        return ret+roman(i-5);
+    } else if(i==9) 
+        return "IX";
+    else if(i==10) 
+        return "X";
+    else if (i<50)
+        return "X"+roman(i-10);
+}

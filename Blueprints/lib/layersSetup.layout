@@ -1,0 +1,66 @@
+
+void setupLayers() {
+    layers::enableAllLayer();
+    layers::num[0].name="M";
+    layers::num[0].setStyle(9);
+    layers::num[0].setColor(255,143,14);
+    layers::num[0].mapToLayer= 0;
+    layers::num[0].mapToDatatype= -1;
+    layers::num[1].name="Ebeam";
+    layers::num[1].setStyle(5);
+    layers::num[1].setColor(255,14,143);
+    layers::num[1].mapToLayer= 0;
+    layers::num[1].mapToDatatype= -1;
+    layers::num[2].name="protect";
+    layers::num[2].setStyle(26);
+    layers::num[2].setColor(100,100,100);
+    layers::num[2].mapToLayer= 1;
+    layers::num[2].mapToDatatype= -1;
+    layers::num[3].name="ground";
+    layers::num[3].setStyle(1);
+    layers::num[3].setColor(255,143,14);
+    layers::num[3].mapToLayer= 2;
+    layers::num[3].mapToDatatype= -1;
+    layers::num[4].name="mask";
+    layers::num[4].setStyle(9);
+    layers::num[4].setColor(0,0,125);
+    layers::num[4].mapToLayer= 3;
+    layers::num[4].mapToDatatype= -1;
+    layers::num[5].name="total";
+    layers::num[5].setStyle(9);
+    layers::num[5].setColor(0,125,0);
+    layers::num[5].mapToLayer= 4;
+    layers::num[5].mapToDatatype= -1;
+    layers::num[6].name="aux";
+    layers::num[6].setStyle(1);
+    layers::num[6].setColor(0,125,0);
+    layers::num[6].mapToLayer= 4;
+    layers::num[6].mapToDatatype= -1;
+    layers::num[7].name="aux2";
+    layers::num[7].setStyle(1);
+    layers::num[7].setColor(0,0,125);
+    layers::num[7].mapToLayer= 4;
+    layers::num[7].mapToDatatype= -1;
+    layers::num[8].name="aux3";
+    layers::num[8].setStyle(1);
+    layers::num[8].setColor(125,0,0);
+    layers::num[8].mapToLayer= 4;
+    layers::num[8].mapToDatatype= -1;
+    layers::num[9].name="aux4";
+    layers::num[9].setStyle(1);
+    layers::num[9].setColor(125,0,125);
+    layers::num[9].mapToLayer= 4;
+    layers::num[9].mapToDatatype= -1;
+    
+    layers::num[10].name="top";
+    layers::num[10].setStyle(38);
+    layers::num[10].setColor(255,143,14);
+    layers::num[10].mapToLayer= 4;
+    layers::num[10].mapToDatatype= -1;
+    
+    layers::num[11].name="bottom";
+    layers::num[11].setStyle(39);
+    layers::num[11].setColor(255,143,14);
+    layers::num[11].mapToLayer= 4;
+    layers::num[11].mapToDatatype= -1;
+}
