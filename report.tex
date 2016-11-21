@@ -373,7 +373,41 @@ The result of such simulation can be observed in \autoref{fig:driven_tr}. As one
 \label{fig:driven_tr}
 \end{figure}
 
+\subsection{Relaxation dynamics (driven and undriven)}
+
+The relaxation process for the transmon is simulated using a Lindbladian master equation with a following dissipative operator:
+\begin{equation}
+\hat c = \sum_{j\geq 0}^\infty \frac{n_{j\,j+1} }{n_{01}}\ket{j}\bra{j+1}
+\end{equation}
+which is, obviously, from the definition is a lowering operator. It becomes the destruction operator of the standard harmonic oscillator in the limit of very large $E_J/E_C$, so it's a good operator use for  modelling of the relaxation channel. For a deeper review on this see L.S. Bishop's thesis.\cite{Bishop2010}
+
+The dynamics of the dissipative transmon then will be governed by the following equation:
+\begin{equation}
+\frac{\partial}{\partial t} \hat{\rho}_q = \frac{i}{\hbar}[\hat{\rho}_q, \hat{\mathcal{H}}_q+\hat{\mathcal{H}}_q^d(t)] + \gamma \mathcal{D}[\hat c]\hat\rho_q,
+\label{eq:tr_dissip_dyn}
+\end{equation}
+where $ \mathcal{D}[\hat{\mathcal{O}}]\hat\rho_q = \hat{\mathcal{O}} \hat\rho_q \hat{\mathcal{O}}^\dag - \frac{1}{2}\{\hat{\mathcal{O}}^\dag \hat{\mathcal{O}}, \hat\rho_q \}$ and $\gamma$ is the relaxation rate. Dephasing may also be added in a similar way.
+
+Below the dynamics of the undriven relaxation and excitation with strong driving are presented as examples of the solution of \eqref{eq:tr_dissip_dyn}.
+
+\begin{figure}[h]
+\includegraphics[width=.5\textwidth]{tr_decay}\hspace{-7.5cm}\textbf{(a)}\hspace{6.5cm}
+\includegraphics[width=.5\textwidth]{tr_str_dr_decay}\hspace{-7.5cm}\textbf{(b)}\hspace{6.5cm}
+\caption{Behaviour of the equation \eqref{eq:tr_dissip_dyn}, represented as populations of the eigenstates depending on time. \textbf{(a)} Relaxation of the first excited state without any driving. The population reaches $1/e$ in $1/\gamma$ ns, as expected. \textbf{(b)} Excitation of the ground state into the steady state which is an incoherent mixture of the first three states. Driving is resonant with $ge$ transition of the transmon.}
+\end{figure}
+
 \subsection{Linewidth dependence on drive power} \label{subsec:linewidth}
+
+Knowing the way to model the relaxation of the qubit it's possible to compare the relaxation rate with the linewidth of the qubit on the population graph. The way is to simulate the evolution until the steady state is reached for all driving frequencies around the resonance, calculate populations of the excited state for each reached steady state and then measure the width at the half-maximum of the resulting peak. However, for two-level dynamics the linewidth depends on the driving power, roughly as $\sqrt{\gamma^2+f_q^4}$ as the Rabi oscillations are induced between the levels. So for correct determination of the linewidth it's necessary to measure linewidth at low driving amplitudes.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{transmon_transtitions_narroww_gamma0.001}
+
+\includegraphics[width=0.7\textwidth]{linewidth_prop_ss}
+
+\caption{Linewidth analysis in dependence on the driving power. As can be seen, with the increasing drive amplitude the spectral line becomes wider. In contrast, it}
+\end{figure}  
 
 \chapter{Experimental methods}
 
@@ -775,7 +809,7 @@ System VI had an on-chip microwave antenna nearby, but had no flux bias line (se
 \label{fig:second_VI_anti}
 \end{figure}
 
-The anticrossing measured for this system is shown in \autoref{fig:second_VI_anti}. It was hard to measure, though, as the flux hopping was interfering with the tuning of the qubit. The resonator frequency change due to the magnetic field has bent the picture, so it would be impossible to fit it within the model described before. Nevertheless, the spectrum of this qubit was gathered with 2-tone spectroscopy using the microwave antenna and with a second tone driving the resonator. The results are presented in \autoref{fig:second_VI_spec_antenna} for the measurement via an antenna and .
+The anticrossing measured for this system is shown in \autoref{fig:second_VI_anti}. It was hard to measure, though, as the flux hopping was interfering with the tuning of the qubit. The resonator frequency change due to the magnetic field has bent the picture, so it would be impossible to fit it within the model described before. Nevertheless, the spectrum of this qubit was gathered with 2-tone spectroscopy using the microwave antenna and with a second tone driving the resonator. The results are presented in \autoref{fig:second_VI_spec_antenna} for the measurement via an antenna and with an additional tone in the feedline driving the resonators at the qubit's frequency.
 
 \begin{figure}[h]
 \includegraphics[width=\textwidth]{second_VI_spec_antenna}
