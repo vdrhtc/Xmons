@@ -6,7 +6,7 @@
  
  ===================== <- feedline
   ________x________    <- resonator coupling area 
- |                 |   x - coupling (base) point
+ |                         |   x - coupling (base) point
 */
 
 
@@ -14,11 +14,15 @@
 #include "wiring.layout"
 
     int meanderSegmentLength = 250e3;
-    double clawPhaseShift = 12.2;
+
+// Using the fit for ɛ=11.45 and claw length of ~70 um
+double clawPhaseShift(double frequency) {
+    return 0.014+1.436*frequency;
+}
     
 int length_from_frequency(double frequency, bool claw) {
     if (claw)
-        return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6 - 1./180.*clawPhaseShift/frequency/1e9*c/2/math::sqrt(ɛ/2.+1./2.)/2.*1e6;
+        return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6 - 1./180.*clawPhaseShift(frequency)/frequency/1e9*c/2/math::sqrt(ɛ/2.+1./2.)/2.*1e6;
     else
         return (math::sqrt2/2*c/frequency/(math::sqrt(ɛ+1))/1e9/2)*1e6;
 }

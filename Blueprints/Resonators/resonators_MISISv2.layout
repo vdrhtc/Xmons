@@ -132,18 +132,18 @@ int main() {
     // ==== Boolean operations on the layers ====
    
     // Fot the liftoff designs
-/*    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);*/
-/*    */
-/*    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0); */
-/*    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
+/*        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);*/
+/*        */
+/*        layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0); */
+/*        layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
    
     // For the etching designs
-    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
-    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux); //making the border
-    layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0); // same
-    clearLayer(curCell, aux); // same
+        layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
+        curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux); //making the border
+        layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0); // same
+        clearLayer(curCell, aux); // same
 
-    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);
+        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);
     
     // ===================================
     
