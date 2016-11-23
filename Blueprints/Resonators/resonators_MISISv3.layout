@@ -1,0 +1,175 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/resonator.layout"
+#include "../lib/feedline.layout"
+#include "../lib/claw.layout"
+#include "qr_resonators_misis_v3.layout"
+        
+        // Layers, names instead of plain numbers 
+        int M = 0;  // I use this for coplanar central lines
+        int M1 = 1; // This for e-beam parts, not needed here
+        int protect = 2; // This layer contains structures to form coplanar gaps, see below 
+        int ground = 3; // This layer contains a rectangle covering entire chip surface
+        int mask = 4; // Boolean ground-protect (not used for etching designs, used for liftoff designs)
+        int total = 5; // Boolean mask+M+M1 for liftoff or boolean protect-M1 for etching designs 
+        
+        // Four auxiliary layers used in the code of the substructures
+        int aux = 6;
+        int aux2 = 7;
+        int aux3 = 8;
+        int aux4 = 9;
+
+
+        
+        int chip_height = 10e6; //heigh of substrate 
+        int chip_width = 10e6; // width of the substrate  
+        int border = 50e3; // width of the border for sawing, should be equal to half the blade width
+        
+        int feedlineDepth = chip_height/4; // parameter which sets where the main segment of the feedline (where resonators are coupled) passes, relatively to the contact pad
+        int ground_connector_width = 100e3;   
+        double ɛ = 11.45;      // substrate epsilon
+        double c = 299792458.0; // speed of light
+
+        doubleList res_freqs;   // array to put frequencies of the resonators
+        
+        int w_res =7e3;    // resonator coplanar width
+        int g_res = 4e3;   // resonator coplanar gap
+        int x = 30e3;       // resonator distance from the feedline
+        int tailLen = 1000e3;    // resonator tail (not the meandered part, but the straight one) not needed, we will change resonator code
+        int w_thinGround = 8e3; // for the resonator claw, not needed
+        int L_claw = 60e3; // same
+        int w_claw = 20e3; // same
+        
+        int w_feed = 16e3; // feedline coplanar width
+        int g_feed = 8e3;  // feedline coplanar gap
+      
+        int w_q = 20e3;  // for xmons, not needed
+        int g_q = 20e3; // same
+        int arm_len = 300e3;  //same
+
+        // QR code parameters
+        int qrSize = 500e3; 
+        int qrCodePositionX = chip_width/2*9/10-qrSize;
+        int qrCodePositionY = chip_height/2*9/10-qrSize;
+
+void addResonatorArray(cell* curCell, int resonatorStartingPositionX, int resonatorPositionsY, int yOffset, doubleList frequencies, int startFreqId) {
+    
+    // Beginning the cycle, adding iterators
+    double j = -0.25;
+    int k =0;
+    int i;
+    
+    point cursor;
+    point cursor2;
+    point cursor3;
+    for (i=0; i<8; i+=2) {
+    
+        // Setting the cursor to the next resonator's base point
+        cursor.set(resonatorStartingPositionX+chip_width/6*j, resonatorPositionsY+yOffset-x);
+        // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i+startFreqId), tailLen, "d", 0);
+        // Making the point where to place a Roman number for the resonator
+        cursor3.set(cursor2.x()+200e3, cursor2.y()+600e3);
+        // Placing the number
+        curCell->addText(protect, cursor3, roman(i+1+startFreqId));
+
+        // Setting the cursor to the next resonator's base point
+        cursor.set(resonatorStartingPositionX+chip_width/6*(1.*j+0.5), -resonatorPositionsY+yOffset+x);
+        // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i+1+startFreqId), tailLen, "u", 1);
+        // Using cursor2 to add resonator's claw at it's position
+        cursor2 = addClaw(curCell, cursor2, "u");
+        // Making a point where to place a Roman number for the resonator and placing it there
+        cursor3.set(cursor2.x()+200e3, cursor2.y()-500e3);
+        curCell->addText(protect, cursor3, roman(i+2+startFreqId));
+        
+        j++;
+        k+=2;
+    }
+}
+
+
+int main() {
+
+    // Clearing the drawing field
+    setupLayers();
+    layout->drawing->selectAll();
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+
+    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Res Nb MISIS ?");
+    
+        int i; // iterator variable, used later
+    
+    // Getting the cell to draw on
+    cell *curCell = layout->drawing->currentCell;
+    point cursor;
+    
+   
+    intList segmentLengths;
+    stringList directions;
+    directions.append("r");    directions.append("d");    directions.append("l");    directions.append("d");    directions.append("r");
+    
+    segmentLengths.append(chip_width*0.95);segmentLengths.append(chip_width/4);segmentLengths.append(chip_width*0.9);
+    segmentLengths.append(chip_width/4);segmentLengths.append(chip_width*0.95);
+    
+    cursor.set(-chip_width/2, chip_height/4);
+    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
+   
+    // Ground plane
+    curCell->addBox(-chip_width/2, -chip_height/2, chip_width, chip_height, ground);
+    
+    // Specifying the X and Y coordinates of the resonator's base points (see resonator.layout)
+    int resonatorStartingPositionX = -chip_width/4;
+    int resonatorPositionsY = -w_feed/2-g_feed;
+
+    // Setting the needed frequencies
+    for (i=0; i<24; i++) {
+        res_freqs.append(5.5+i/10.);
+    }
+    
+    addResonatorArray(curCell, resonatorStartingPositionX, resonatorPositionsY, chip_height/4, res_freqs, 0);
+    addResonatorArray(curCell, resonatorStartingPositionX, resonatorPositionsY, 0, res_freqs, 8);
+    addResonatorArray(curCell, resonatorStartingPositionX, resonatorPositionsY, -chip_height/4, res_freqs, 16);
+    
+    curCell->textToPolygon(100e3); // Making all texts polygons with hight of 100 um
+
+    curCell->addText(protect, newPoint(-chip_width/2+100e3, -chip_height/2+400e3), sample_name);    
+    curCell->textToPolygon(200e3); // Adding the sample name
+   
+    // ==== Boolean operations on the layers ====
+   
+    // Fot the liftoff designs
+/*        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);*/
+/*        */
+/*        layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0); */
+/*        layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
+   
+    // For the etching designs
+        layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
+        curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux); //making the border
+        layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0); // same
+        clearLayer(curCell, aux); // same
+
+        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);
+    
+    // ===================================
+    
+    int hd;
+    layout->backgroundTool->clearBackground(); // to remove background picture, not present here.
+/*    hd = layout->backgroundTool->addBackground("background.png");*/
+/*    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);*/
+/*    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);*/
+    clearLayer(curCell, mask);
+    clearLayer(curCell, M);
+    clearLayer(curCell, protect);
+    clearLayer(curCell, ground);
+    //debug.show();
+    //debug.clear();
+    
+}
