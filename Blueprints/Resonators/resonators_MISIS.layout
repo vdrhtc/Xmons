@@ -2,13 +2,12 @@
 #name=XMon resonators
 #help=Creates XMon resonator design
 
-#include "wiring.layout"
-#include "auxx.layout"
-#include "layersSetup.layout"
-#include "resonator.layout"
-#include "feedline.layout"
-#include "claw.layout"
-#include "Xmon.layout"
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/resonator.layout"
+#include "../lib/feedline.layout"
+#include "../lib/claw.layout"
 #include "qr_resonators.layout"
         
         // Layers, names instead of plain numbers 
