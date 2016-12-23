@@ -5,11 +5,12 @@
 #include "../lib/wiring.layout"
 #include "../lib/auxx.layout"
 #include "../lib/layersSetup.layout"
-#include "../lib/resonator_spruce.layout"
+#include "../lib/resonator_multimode_reflection.layout"
 #include "../lib/feedline.layout"
 #include "../lib/claw.layout"
 #include "../lib/Xmon.layout"
 #include "../lib/test_JJ.layout"
+#include "../lib/idc.layout"
 #include "../lib/alignment_mark.layout"
 #include "qr_bmstu.layout"
 
@@ -72,39 +73,20 @@ int main() {
     
     intList segmentLengths;
     stringList directions;
-    directions.append("r");
+    directions.append("l");
     
-    segmentLengths.append(chip_width);
-    cursor.set(-chip_width/2, 0);
-    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
+    segmentLengths.append(1000e3);
+    cursor.set(-chip_width/2+1000e3, 0);
+    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "md");
+    cursor.set(cursor.x()+50e3, cursor.y());
+    addIDC(curCell, cursor, w_res, g_res, 50e3, 5e3, w_feed+5e3, 100e3, 2, "l", 0);
+
+    addResonator(curCell, cursor, w_res, g_res, 7, 4, tailLen, "d", 0);
+   
    
    
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
-    
-    element* marker;
-
-    int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;
-    cursor.set(0, resonatorPositionsY);
-    addResonator(curCell, cursor, w_res, g_res, 7, 11, tailLen, "d", 0);
-    int resonatorPositionsY = -chip_height/4+feedlineDepth+w_feed/2+g_feed+x;
-    cursor.set(0, resonatorPositionsY);
-    addResonator(curCell, cursor, w_res, g_res, 8, 11, tailLen, "u", 0);
-    
-    marker = curCell->addText(protect, newPoint(-chip_width/2+100e3, -chip_height/2+400e3), sample_name);    
-    curCell->textToPolygon(200e3);
-
-/*    addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);*/
-    
-/*    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 200, 100, false);*/
-/*    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 200, 100, false);*/
-/*    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 200, 100,false);*/
-/*    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100, false);*/
-    
-/*    addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));*/
-
-/*    addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, -1.75e6));*/
-/*    addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, 1.75e6));*/
     
 /*    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);*/
 /*    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
@@ -126,7 +108,7 @@ int main() {
     clearLayer(curCell, protect);
     clearLayer(curCell, ground);
 /*    debug.show();*/
-/*    debug.clear();*/
+    debug.clear();
     
     
     
