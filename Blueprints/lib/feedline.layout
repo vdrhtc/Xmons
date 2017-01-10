@@ -36,7 +36,7 @@ x |  |___ >==========~======<  |_____
     int g_pad = 120e3;
     int bottom_g_pad = g_pad; 
     int transition_len = 150e3;
-    int ground_connector_width = 50e3;   
+    int ground_connector_width = 50e3;
     int totalPadLen() {
         return ground_connector_width+bottom_g_pad+pad_len+transition_len;
     }

@@ -369,7 +369,7 @@ The result of such simulation can be observed in \autoref{fig:driven_tr}. As one
 \begin{subfigure}[t]{0.45\textwidth}
 \includegraphics[width=\textwidth]{tr_vstr_dr}
 \end{subfigure}
-\caption{Dynamics of the isolated driven transmon qubit with different drive strengths $f_q$ = 0.01-0.5 GHz, where $f_q$ is an effective amplitude of the drive \eqref{eq:driving_q} $f_q (t) = f_q \sin(\omega_{01} t)$. It can be seen that significant distortions and leakage to higher levels occur when amplitude is too large.}
+\caption{Dynamics of the isolated driven transmon qubit with different drive strengths $f_q$ = 0.01-0.5 rad/ns, where $f_q$ is an effective amplitude of the drive \eqref{eq:driving_q} $f_q (t) = f_q \sin(\omega_{01} t)$. It can be seen that significant distortions and leakage to higher levels occur when amplitude is too large.}
 \label{fig:driven_tr}
 \end{figure}
 
@@ -398,16 +398,55 @@ Below the dynamics of the undriven relaxation and excitation with strong driving
 
 \subsection{Linewidth dependence on drive power} \label{subsec:linewidth}
 
-Knowing the way to model the relaxation of the qubit it's possible to compare the relaxation rate with the linewidth of the qubit on the population graph. The way is to simulate the evolution until the steady state is reached for all driving frequencies around the resonance, calculate populations of the excited state for each reached steady state and then measure the width at the half-maximum of the resulting peak. However, for two-level dynamics the linewidth depends on the driving power, roughly as $\sqrt{\gamma^2+f_q^4}$ as the Rabi oscillations are induced between the levels. So for correct determination of the linewidth it's necessary to measure linewidth at low driving amplitudes.
+Knowing the way to model the relaxation of the qubit it's possible to compare the relaxation rate with the linewidth of the qubit on the population graph. The way is to simulate the evolution until the steady state is reached for all driving frequencies around the resonance, calculate populations of the excited state for each reached steady state and then measure the width at the half-maximum of the resulting peak. However, for two-level dynamics the linewidth $\delta \omega$ depends on the driving power as the Rabi oscillations are induced between the levels. So for correct determination of the linewidth it's necessary to measure the linewidth at low driving amplitudes.
 
-\begin{figure}[h]
+Before demonstrating the numerical results for the transmon qubit, a brief analytical solution for the problem in the case of a two-level system will be shown. The master equation for this problem is as follows (within RWA):
+\[
+\frac{\partial}{\partial t} \hat{\rho}_{tls} = \frac{i}{\hbar}[\hat{\rho}_{tls}, \frac{\hbar (\overbrace{\omega_{tls}-\omega_d}^{\Delta\omega})}{2} \hat{\sigma}_z+\frac{\hbar \Omega_R}{2} \hat{\sigma}_x] + \gamma \mathcal{D}[\hat \sigma^-]\hat\rho_{tls}.
+\]
+Knowing that $\text{Tr}[\hat\rho_{tls}]=1$ and that $\hat\rho_{tls}=\hat\rho_{tls}^\dag$ we can write down three ODEs from this master equation:
+\[
+\begin{gathered}
+\frac{d}{d t} {ρ_{11}}{\left (t \right )} = - γ {ρ_{11}}{\left (t \right )} + i \left(\frac{Ω_{R}}{2} {ρ_{12}}{\left (t \right )} - \frac{Ω_{R}}{2} {ρ_{21}}{\left (t \right )}\right), \\
+\frac{d}{d t} {ρ_{12}}{\left (t \right )} = - \frac{γ}{2} {ρ_{12}}{\left (t \right )} + i \left( \frac{Ω_{R}}{2} {ρ_{11}}{\left (t \right )} - \frac{Ω_{R}}{2} \left(1- {ρ_{11}}{\left (t \right )} \right) - \Delta ω {ρ_{12}}{\left (t \right )}\right),\\
+{ρ_{21}}{\left (t \right )} = {ρ_{12}}^\dag{\left (t \right )}.
+\end{gathered}
+\]
+
+It is practical for our case to solve these equations for steady state, when $\frac{\partial}{\partial t} \hat{\rho}_{tls} = 0$. The matrix elements then are
+\[
+ρ_{11} = \frac{Ω_{R}^{2}}{2 Ω_{R}^{2} + γ^{2} + 4 \Delta ω^{2}},\quad
+ρ_{12} = - \frac{Ω_{R} \left(i γ + 2 \Delta ω\right)}{2 Ω_{R}^{2} + γ^{2} + 4 \Delta ω^{2}},\quad
+ρ_{21} = \frac{Ω_{R} \left(i γ - 2 \Delta ω\right)}{2 Ω_{R}^{2} + γ^{2} + 4 \Delta ω^{2}}.
+\]
+
+From here it is easy to find the analytical linewidth at half maximum of the $\rho_{11}(\omega_d)$:
+\[
+\delta\omega = \sqrt{2\Omega_R^2+\gamma^2}.
+\]
+
+When the $\Omega_R \rightarrow 0,\ \delta\omega\rightarrow\gamma$, and thus it is possible to extract $T_1$ in case of absence of pure dephasing or at least to put a lower bound on it if the pure dephasing is present. It is important to notice that in the experiment the measured frequency is expressed in Hz though $\delta\omega$ is in rad/s. Therefore, the experimental linewidth should be, firstly, measured at very low powers and, secondly, multiplied by $2\pi$ to obtain $\gamma$. In the presence of pure dephasing the formula for $\delta\omega$ becomes a bit more complicated, but also can be straightforwardly calculated with use of Computer Algebra Systems:
+\[
+\delta\omega_{\text{with dephasing}} = \sqrt{2Ω_{R}^{2} (1+2 γ_{ϕ}/\gamma) + (\gamma +2\gamma_\phi)^2} \xrightarrow[\Omega_R\rightarrow 0]{} γ + 2γ_{ϕ}.
+\]
+
+
+\begin{figure}[h!]
 \centering
-\includegraphics[width=\textwidth]{transmon_transtitions_narroww_gamma0.001}
+\includegraphics[width=\textwidth]{transmon_transtitions}
+
+\includegraphics[width=\textwidth]{transmon_transtitions_narroww_gamma5e-3}
 
 \includegraphics[width=0.7\textwidth]{linewidth_prop_ss}
 
-\caption{Linewidth analysis in dependence on the driving power. As can be seen, with the increasing drive amplitude the spectral line becomes wider. In contrast, it}
+\caption{Linewidth analysis in dependence on the driving power $f_q$ for $\gamma = 5$ rad/$\mu$s. As can be seen, with the increasing drive amplitude the spectral line becomes wider. In contrast, its width levels off when the amplitude is decreased, and reaches asymptotically the value of $\frac{\gamma}{2\pi}$. The factor $2\pi$ appears as the linewidth found in the experiment usually is in Hz, but the equality that holds is that $\gamma = \delta\omega$, and $\delta\omega = 2\pi\delta\nu$.}
+\label{fig:transmon_lw}
 \end{figure}  
+
+Interestingly enough, if there's no relaxation and $\gamma = 0$, the formula shows divergence of the linewidth. This happens because the solution of the master equation in this case yields $\rho_{11} = 1/2$ in the steady state, independent of the driving detuning and driving strength, and thus the linewidth can't at all be defined.
+
+For the transmon the two-level dynamics between its ground and first excited state is equivalent; however, there's no simple analytical solution for the dynamics. To see the behaviour is same in this case we have to resort to numerical modelling (see \autoref{fig:transmon_lw}).
+As can be seen, the linewidth $\delta\omega$ grows with the increased power, and, in contrast, saturates at low powers, reaching the value of $\gamma$.
 
 \chapter{Experimental methods}
 
@@ -796,7 +835,7 @@ The system one was biased by the superconducting loop right on the chip. This al
 \end{figure}
 
 
-The experiment to determine qubit spectrum and the linewidth at the degeneracy point was also done on the system. The resulting graphs are presented in \autoref{fig:second_I_spec_lines}. On the right plot the spectrum of the qubit is visible; it consists of three lines corresponding to the transitions $ge,\ gf/2$ and $gd/3$ and visible due to the high power of the drive. On the left plot the spectral line width is recorded over the incident power of the drive. It's possible to estimate the linewidth of the bare qubit from the phase 2-tone data (see Section \ref{sec:2tone}). The line experiences significant broadening with increased power; though, at the minimal possible power of -20 dBm it's width is very small, less than 1 MHz, which allows to set a lower bound of 1 $\mu$s on the qubit $T_1$ (assuming that there's no pure dephasing due to the flux fluctuations at the sweet spot and to the excessive population of the resonator).
+The experiment to determine qubit spectrum and the linewidth at the degeneracy point was also done on the system. The resulting graphs are presented in \autoref{fig:second_I_spec_lines}. On the right plot the spectrum of the qubit is visible; it consists of three lines corresponding to the transitions $ge,\ gf/2$ and $gd/3$ and visible due to the high power of the drive. On the left plot the spectral line width is recorded over the incident power of the drive. It's possible to estimate the linewidth of the bare qubit from the phase 2-tone data (see Section \ref{sec:2tone}). The line experiences significant broadening with increased power; though, at the minimal possible power of -20 dBm it's width is very small, around 0.5 MHz, which allows to set a lower bound of 300 ns on the qubit $T_1$ (assuming that there's no pure dephasing due to the flux fluctuations at the sweet spot and to the excessive population of the resonator as $\delta\omega = \frac{1}{T_1}+\frac{2}{T_2}$).
 
 \subsubsection{System VI}
 
@@ -837,7 +876,7 @@ For the derivation of this phase-destroying process in a quantum way the system-
 \]
 where $\hat O_e$ is an arbitrary environment operator. From this interaction term a master equation is then developed:
 \[
-\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \gamma_\phi (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
+\partial_t \hat \rho_s = \frac{i}{\hbar}[\hat \rho_s, \mathcal{\hat H}_s] + \frac{\gamma_\phi}{2} (\hat \sigma_z \hat \rho_s \hat \sigma_z - \hat \rho_s).
 \]
 The dynamics of this equation can be seen in \autoref{fig:qdeph}.  At $t \rightarrow \infty$ the state of the system is a totally mixed state:
 \[
@@ -920,7 +959,7 @@ Presuming also that $f(t)$ is a wide-sense stationary process $\langle f(\tau_1)
 \end{equation}
 It can be shown easily that \eqref{eq:cdeph} is an exponent for either a white noise ($S_f(\omega) = S_f(0) = const$) or for a sufficiently large time $t$ where 
 $$\frac{t}{2}\int\limits_\mathbb{R} \diff(\omega t/2) \frac{\sin^2(\frac{\omega t}{2})}{(\omega t/2)^2} \ \bullet $$
-acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both these cases the pure dephasing rate $\Gamma^*_2$ exists in the usual sense and $\Gamma^*_2 \propto S_f(0)$. In case of, for example, the 1/f noise the decay curve will behave as $e^{-t^2}$ in the vicinity of $t=0$.
+acts as $ \frac{t\pi}{2}\delta(\omega)\ \bullet$. In both these cases the pure dephasing rate $\Gamma^*_2$ exists in the usual sense and $\Gamma^*_2 \propto S_f(0)$. In case of, for example, the 1/f noise, the decay curve will behave as $e^{-t^2}$ in the vicinity of $t=0$.
 
 The averaged evolution for the white noise case can be observed in \autoref{fig:cdeph}~(b), (d). It is very similar to what can be seen in \autoref{fig:qdeph}. 1000 trajectories were used for averaging.
 In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise is shown. For the averaged case ((b), (d)) 2500 trajectories where used. One can see that a plateau is present for the yellow graph near $t=0$, in accordance with theoretical predictions.
@@ -993,9 +1032,9 @@ In \autoref{fig:cdeph_pink} the simulation of the dynamics under the 1/f noise i
 
 \section{Spin-echo experiment}
 
-The spin-echo experiment in the simplest case (Hahn echo) is a modification of a Ramsey pulse sequence with an additional $\pi_y$-pulse right in between the $\frac{\pi}{2}_x$ ones. The idea is that during the second period (after the $\pi_y$-pulse)  slow components of the noise will cancel out the phase difference they've imposed during the first period. This can be understood easily in the limit of constant noise and infinitely fast rotations. There are also more sophisticated echo sequences such as CP, CPMG and UDD\cite{Bylander2011} which use more than one $\pi_y$-pulse during the free evolution, however for our case it is enough to regard the simplest Hahn echo.
+The spin-echo experiment in the simplest case (Hahn echo) is a modification of a Ramsey pulse sequence with an additional $\pi_y$-pulse right in between the $\frac{\pi}{2}_x$ ones. The idea is that during the second period (after the $\pi_y$-pulse)  slow components of the noise will cancel out the phase difference they've imposed during the first period. This can be understood easily in the limit of constant noise and infinitely fast rotations. There are also more sophisticated echo sequences such as CP, CPMG and UDD\cite{Bylander2011} which use more than one $\pi_y$-pulse during the free evolution; however, for our case it is enough to regard the simplest Hahn echo.
 
-Mathematically Hahn echo within the previous formulations acts as follows. Before the  $\pi_y$-pulse at time $t/2$ we have the same dynamics described by the \eqref{eq:rho_t}. Than instantaneously the coherences of the density matrix are complex conjugated as a result of an infinitely fast $\pi_y$-pulse. This can be understood from the result of $\pi_y$-pulse on the Bloch sphere: $\left< \hat \sigma_x \right> = \rho + \rho^* \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_x \right>,\ \left< \hat \sigma_y \right> = i(\rho - \rho^*) \overset{\pi_y}{\rightarrow} -\left< \hat \sigma_y \right>,\ \left< \hat \sigma_z \right> = N  \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_z \right>$. Finally, for the changed initial condition at $t/2$ again evolution \eqref{eq:rho_t} is applied. Therefore, at the end of the period the coherence is defined as
+Mathematically Hahn echo within the previous formulations acts as follows. Before the  $\pi_y$-pulse at time $t/2$ we have the same dynamics described by \eqref{eq:rho_t}. Then, instantaneously, the coherences of the density matrix are complex conjugated as a result of an infinitely fast $\pi_y$-pulse. This can be understood from the result of $\pi_y$-pulse on the Bloch sphere: $\left< \hat \sigma_x \right> = \rho + \rho^* \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_x \right>,\ \left< \hat \sigma_y \right> = i(\rho - \rho^*) \overset{\pi_y}{\rightarrow} -\left< \hat \sigma_y \right>,\ \left< \hat \sigma_z \right> = N  \overset{\pi_y}{\rightarrow}  \left< \hat \sigma_z \right>$. Finally, for the changed initial condition at $t/2$ again evolution \eqref{eq:rho_t} is applied. Therefore, at the end of the period the coherence is defined as
 \begin{equation*}
 \rho(t) = \rho(0)\exp \left\{ - \frac{2i}{\hbar}\int_0^{t/2} f(\tau)  \diff \tau + \frac{2i}{\hbar}\int_{t/2}^{t} f(\tau)  \diff \tau \right\}.
 \end{equation*}
