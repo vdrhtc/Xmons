@@ -130,7 +130,7 @@ R_{in} = \frac{Z_0}{\alpha l}, \quad C = \frac{\pi}{4\omega_0 Z_0},
 \]
 where $l$ is the resonator length, $Z_0 = \sqrt{L^\prime/C^\prime}$ is the wave resistance and $\alpha$ is the decay constant of the line. Then the resonance condition for the wavelength ($\lambda = 4 l$) is used along with the phase velocity expression $v_{ph} = 1/\sqrt{L^\prime C^\prime}$:
 \[
-\omega_0 = \frac{2\pi}{\lambda v_{ph}} =  \frac{\pi}{2 l\, v_{ph}} \Rightarrow  C = \frac{C^\prime l}{2}.
+\omega_0 = \frac{2\pi v_{ph}}{\lambda} =  \frac{\pi \, v_{ph}}{2 l} \Rightarrow  C = \frac{C^\prime l}{2}.
 \]
 For the inductance one can use $L = 1/\omega_0^2 C = 8 l\, L^\prime/\pi^2$. Finally, the expressions for $C^\prime$ and $L^\prime$:
 \[
@@ -711,6 +711,7 @@ The second design that was developed was intended to test the properties of the 
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.7\textwidth]{chip_design2}
+\includegraphics[width=0.7\textwidth]{chip_design2_zoom}
 \caption{\textbf{(a)} Large-scale image of the lines testing design. The chip (8x4 mm) consists of eight $\lambda/4$ CPW resonators coupled capacitively to the feedline, six low-Q$_e$ with Xmon qubits at the open end and two high-Q$_e$ with no qubits. \textbf{(b)} Zoomed area around one of the qubits, showing the microwave antenna configuration. \textbf{(c)} Zoomed area around another qubit, showing the flux bias line. \textbf{(d)} Zoom around one of the qubits' SQUIDs. Pink areas denote the part of the mask which produces the SQUID and should be patterned with higher resolution.}
 \label{fig:second_design_full}
 \end{figure}

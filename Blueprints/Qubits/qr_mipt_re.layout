@@ -1,0 +1,64 @@
+/*
+ QR code with the parameters
+*/
+
+
+void addQR(cell* curCell, int x1, int y1, int width, int height, int layer) {
+
+    point p1, p2;
+    p1.set(x1, y1); p2.set(x1+width,y1+height);
+    
+    string data ="Two-step process.\nChip size: "+chip_width/1e6;
+    data+= "x"+chip_height/1e6;
+    data+=" mm\n";
+    data+="Substrate: c-sapphire,  ɛ: "+ɛ;
+    data+="\nMaterial: epitaxial Re + Plassys Al";
+    data+="\n";
+    data+= "Common geometric parameters (um):\n ";
+        data+= "Resonators:\n  ";
+            data += "w_res: "+w_res/1e3; data+="\n  ";
+            data += "g_res: "+g_res/1e3; data+="\n  ";
+            data += "x: "+x/1e3; data+="\n  ";
+            data += "tailLen: "+tailLen/1e3; data+=" (500 for TI)\n ";
+        data+= "Xmons:\n  ";
+            data += "w_q: "+w_q/1e3; data+="\n  ";
+            data += "g_q: "+g_q/1e3;data+="\n  ";
+            data += "armlen: "+arm_len/1e3;data+="\n";
+    data+= "Expected electric parameters:\n ";
+        data+= "Resonators:\n  ";
+            data+="Q-factors:\n   ";
+                data+="Q_e ~ 6 000\n  ";
+            data+= "Frequencies (GHz):\n   ";
+            int i;
+            for (i=0; i<res_freqs.size(); i++) {
+                data += roman(i+1);
+                data+= ": "+res_freqs.at(i);
+                if(i==res_freqs.size()-1) 
+                    data+= "\n ";
+                else
+                    data+=", ";
+            }
+        data+="Test resonators:\n  ";
+            data+="Q-factors:\n   ";
+                data+="Q_e ~ 100 000\n  ";
+            data+= "Frequencies (GHz):\n   ";
+            int i;
+            for (i=0; i<test_res_freqs.size(); i++) {
+                data += "T"+roman(i+1);
+                data+= ": "+test_res_freqs.at(i);
+                if(i==test_res_freqs.size()-1) 
+                    data+= "\n ";
+                else
+                    data+=", ";
+            }
+        data+= "Xmons:\n  ";
+            data += "C ~ 77 fF, E_C ~ 250 MHz"; data+="\n  ";
+            data += "C_g ~ 2 fF, g ~ 30 MHz"; data+="\n  ";
+            data += "I_c ~ 40 nA\n";
+    data+="\n\r---CC BY, G. Fedorov, 2016---";
+    
+    layout->barcodeTool->setQrCode();
+    layout->barcodeTool->data = data;
+    layout->drawing->activeLayer=layer;
+    layout->barcodeTool->placeBarcode(p1, p2);
+}

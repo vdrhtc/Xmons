@@ -3,10 +3,89 @@
     Adds an alignment mark
 */
 
-    int ebeam_mark_size = 90e3;
+    int mark_size = 90e3;
     int box_size = 100e3;
+    int box_size_local = 12e3;
     int w_mark = 500;
     int w_mark_photo = 2e3;
+    int stangen_period = 5e3;
+    int stangen_width = 2e3;
+    int stangen_resolution = 1e3;
+    
+    
+void addLocalAlignmentMarkBMSTU(cell* curCell, point center) {
+    stringList l;
+    l.append("d");l.append("l");l.append("r");l.append("u");
+    intList lens;
+    lens.append(2e3); lens.append(3e3);
+    intList widths;
+    widths.append(.1e3); widths.append(1e3);
+    
+    int i, k;
+    int n_segments = 2;
+    
+    for (i=0; i<4; i++){
+        point cursor = center;
+        for(k=0; k<n_segments;k++) {
+            cursor = wire(curCell, aux, cursor, l.at(i), lens.at(k), widths.at(k));
+        }
+    }
+    
+    point cursor = newPoint(center.x()-3e3, center.y()-3.5e3);
+    wire(curCell, M1, cursor, "r", 6e3, 500);
+    
+    point cursor = newPoint(center.x()+3.5e3, center.y()+3e3);
+    wire(curCell, M1, cursor, "d", 6e3, 500);
+    
+    point cursor = newPoint(center.x()-box_size_local/2.5, center.y()+box_size_local/4);
+    for (i=-3; i<=3; i++){
+        point cursor2 = newPoint(cursor.x(), cursor.y()+i*stangen_period/10);
+        wire(curCell, aux, cursor2, "r", mark_size/100*math::pow(2.71,-math::pow(i/3,2)), stangen_width/10);
+        point cursor2 = newPoint(cursor.x(), cursor.y()+i*stangen_period/10-i*stangen_resolution/10);
+        wire(curCell, aux2, cursor2, "l", mark_size/100*math::pow(2.71,-math::pow(i/3,2)), stangen_width/10);
+    }
+    
+    point cursor = newPoint(center.x()-box_size_local/4, center.y()+box_size_local/2.5);
+    for (i=-3; i<=3; i++){
+        point cursor2 = newPoint(cursor.x()+i*stangen_period/10, cursor.y());
+        wire(curCell, aux, cursor2, "u", mark_size/100*math::pow(2.71,-math::pow(i/3,2)), stangen_width/10);
+        point cursor2 = newPoint(cursor.x()+i*stangen_period/10-i*stangen_resolution/10, cursor.y());
+        wire(curCell, aux2, cursor2, "d", mark_size/100*math::pow(2.71,-math::pow(i/3,2)), stangen_width/10);
+    }
+    
+    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    layout->booleanTool->boolOnLayer(aux2, M1, M1, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux2);
+    
+    curCell->addBox(center.x()-box_size_local/2, center.y()-box_size_local/2, box_size_local, box_size_local, protect);
+}
+    
+void addGlobalAlignmentMarkBMSTU(cell* curCell, point center) {
+    stringList l;
+    l.append("d");l.append("l");l.append("r");l.append("u");
+    intList lens;
+    lens.append(10e3); lens.append(15e3);
+    intList widths;
+    widths.append(.5e3); widths.append(5e3);
+    
+    int i, k;
+    int n_segments = 2;
+    
+    for (i=0; i<4; i++){
+        point cursor = center;
+        for(k=0; k<n_segments;k++) {
+            cursor = wire(curCell, aux, cursor, l.at(i), lens.at(k), widths.at(k));
+        }
+    }
+    
+    curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, aux2);
+    layout->booleanTool->boolOnLayer(aux2, aux, aux3, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, total, total, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    clearLayer(curCell, aux2);
+    clearLayer(curCell, aux3);
+}
 
 void addAlignmentMark(cell* curCell, point center) {
 
@@ -16,25 +95,46 @@ void addAlignmentMark(cell* curCell, point center) {
     int i, k;
     int n_segments = 4;
     
-    for (i=0; i<4; i++){
+    for (i=0; i<2; i++){
         point cursor = center;
         for(k=0; k<n_segments;k++) {
-            cursor = wire(curCell, aux, cursor, l.at(i), ebeam_mark_size/2/n_segments, w_mark*math::pow(2, k));
+            cursor = wire(curCell, aux, cursor, l.at(i), mark_size/2/n_segments, w_mark*math::pow(2, k));
         }
     }
     
     layout->booleanTool->boolOnLayer(aux, M1, M1, "A+B", 0, 0, 0);
     clearLayer(curCell, aux);
     
-    for (i=0; i<4; i++){
+    for (i=0; i<2; i++){
         point cursor = center;
         for(k=0; k<n_segments;k++) {
-            cursor = wire(curCell, aux, cursor, l.at(i), ebeam_mark_size/2/n_segments, w_mark_photo*math::pow(2, k));
+            cursor = wire(curCell, aux, cursor, l.at(i), mark_size/2/n_segments, w_mark_photo*(k+1));
         }
     }
     
     layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
     clearLayer(curCell, aux);
+    
+    point cursor = newPoint(center.x(), center.y()+box_size/4);
+    for (i=-3; i<=3; i++){
+        point cursor2 = newPoint(cursor.x(), cursor.y()+i*stangen_period);
+        wire(curCell, aux, cursor2, "r", mark_size/10*math::pow(2.71,-math::pow(i/3,2)), stangen_width);
+        point cursor2 = newPoint(cursor.x(), cursor.y()+i*stangen_period-i*stangen_resolution);
+        wire(curCell, aux2, cursor2, "l", mark_size/10*math::pow(2.71,-math::pow(i/3,2)), stangen_width);
+    }
+    
+    point cursor = newPoint(center.x()+box_size/4, center.y());
+    for (i=-3; i<=3; i++){
+        point cursor2 = newPoint(cursor.x()+i*stangen_period, cursor.y());
+        wire(curCell, aux, cursor2, "u", mark_size/10*math::pow(2.71,-math::pow(i/3,2)), stangen_width);
+        point cursor2 = newPoint(cursor.x()+i*stangen_period-i*stangen_resolution, cursor.y());
+        wire(curCell, aux2, cursor2, "d", mark_size/10*math::pow(2.71,-math::pow(i/3,2)), stangen_width);
+    }
+    
+    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    layout->booleanTool->boolOnLayer(aux2, M1, M1, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux2);
     
     curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, protect);
 

@@ -1,0 +1,33 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/alignment_mark.layout"
+
+        int M = 0;
+        int M1 = 1;
+        int protect = 2;
+        int ground = 3;
+        int mask = 4;
+        int total = 5;
+        int aux = 6;
+        int aux2 = 7;
+        int aux3 = 8;
+        int aux4 = 9;
+        
+        int chip_height = 30e6;
+        int chip_width = 30e6;
+        
+
+int main() {
+            
+        double i, j;
+    
+    cell *curCell = layout->drawing->currentCell;
+    addGlobalAlignmentMarkBMSTU(curCell, newPoint(-chip_width/2+2e6, -chip_height/2+2e6));
+    addGlobalAlignmentMarkBMSTU(curCell, newPoint(-chip_width/2+2e6, chip_height/2-2e6));
+    addGlobalAlignmentMarkBMSTU(curCell, newPoint(chip_width/2-2e6, chip_height/2-2e6));
+}
