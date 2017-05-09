@@ -36,16 +36,17 @@
 
         doubleList res_freqs;   // array to put frequencies of the resonators
         
-        int w_res =7e3;    // resonator coplanar width
-        int g_res = 4e3;   // resonator coplanar gap
-        int x = 30e3;       // resonator distance from the feedline
+        int w_res =15e3;    // resonator coplanar width
+        int g_res = 8.5e3;   // resonator coplanar gap
+        int x = 25e3;       // resonator distance from the feedline
         int tailLen = 1000e3;    // resonator tail (not the meandered part, but the straight one) not needed, we will change resonator code
         int w_thinGround = 8e3; // for the resonator claw, not needed
         int L_claw = 60e3; // same
         int w_claw = 20e3; // same
+        int meanderSegmentLength = 400e3;
         
-        int w_feed = 16e3; // feedline coplanar width
-        int g_feed = 8e3;  // feedline coplanar gap
+        int w_feed = 30e3; // feedline coplanar width
+        int g_feed = 17e3;  // feedline coplanar gap
         int pad_len  = 400e3;
         int ground_connector_width = 100e3;   
         
@@ -67,7 +68,7 @@ int main() {
     layout->drawing->deleteSelect();
     layout->drawing->deselectAll();
 
-    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Res Nb MISIS ?");
+    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Tunable sonators 1");
     
         int i; // iterator variable, used later
     
@@ -93,7 +94,7 @@ int main() {
 
     // Setting the needed frequencies
     for (i=0; i<6; i++) {
-        res_freqs.append(7+i/10.);
+        res_freqs.append(9+i/10.);
     }
     
     // Beginning the cycle, adding iterators
@@ -107,45 +108,44 @@ int main() {
         // Setting the cursor to the next resonator's base point
         cursor.set(resonatorStartingPositionX+chip_width/5*j, resonatorPositionsY-x);
         // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i), tailLen, "d", 0);
+        cursor2 = addResonatorCexp(curCell, cursor, w_res, g_res, res_freqs.at(i), "d", 0);
         // Making a point where to place a Roman number for the resonator
-        cursor3.set(cursor2.x()-400e3, cursor2.y());
+        cursor3.set(cursor2.x()+300e3, cursor2.y()-800e3);
         // Placing the number
         curCell->addText(protect, cursor3, roman(i+1));
 
         // Setting the cursor to the next resonator's base point
         cursor.set(resonatorStartingPositionX+chip_width/5*(1.*j+0.5), -resonatorPositionsY+x);
         // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i+1), tailLen, "u", 1);
-        // Using cursor2 to add resonator's claw at it's position
-        cursor2 = addClaw(curCell, cursor2, "u");
+        cursor2 = addResonatorCexp(curCell, cursor, w_res, g_res, res_freqs.at(i+1), "u", 0);
         // Making a point where to place a Roman number for the resonator and placing it there
-        cursor3.set(cursor2.x()-400e3, cursor2.y());
+        cursor3.set(cursor2.x()+300e3, cursor2.y()+800e3+150e3);
         curCell->addText(protect, cursor3, roman(i+2));
         
         j++;
         k+=2;
     }
-    curCell->textToPolygon(100e3); // Making all texts polygons with hight of 100 um
+    curCell->textToPolygon(150e3); // Making all texts polygons with hight of 100 um
 
-    curCell->addText(protect, newPoint(-chip_width/2+100e3, -chip_height/2+400e3), sample_name);    
+    curCell->addText(protect, newPoint(-chip_width/2+200e3, chip_height/2-200e3), sample_name);
+    curCell->addText(protect, newPoint(-chip_width/2+200e3, chip_height/2-400e3), "f, GHz: "+res_freqs.at(0));    
     curCell->textToPolygon(200e3); // Adding the sample name
    
     // ==== Boolean operations on the layers ====
    
     // Fot the liftoff designs
 /*        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);*/
-/*        */
-/*        layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0); */
-/*        layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);*/
+        
+        layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0); 
+        layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
    
     // For the etching designs
-        layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
-        curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux); //making the border
-        layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0); // same
-        clearLayer(curCell, aux); // same
+/*        layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);*/
+/*        curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux); //making the border*/
+/*        layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0); // same*/
+/*        clearLayer(curCell, aux); // same*/
 
-        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);
+/*        addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, total);*/
     
     // ===================================
     
@@ -158,7 +158,7 @@ int main() {
     clearLayer(curCell, M);
     clearLayer(curCell, protect);
     clearLayer(curCell, ground);
-    //debug.show();
-    //debug.clear();
+/*    debug.show();*/
+/*    debug.clear();*/
     
 }

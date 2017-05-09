@@ -5,6 +5,7 @@
 
         int structure_padding = 12e3;
         int pad_side_len = 200e3;
+        int ebeam_overlap = 2e3;
     
 void addTestStripe(cell* curCell, point center, int w_stripe, int stripe_len, int overlap) {
         
@@ -20,54 +21,62 @@ void addTestStripe(cell* curCell, point center, int w_stripe, int stripe_len, in
     wire(curCell, M1, cursor, "u", stripe_len+2*overlap, w_stripe);
 }
 
-void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ, bool no_pads) {
+void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ, string direction="d", bool no_pads) {
 
         int test_JJ_pads_len = 5.45e3;
         int JJ_delta_arm_len = 8e3;
-        int test_JJ_ebeam_overlap = 2e3;
 
     int total_w = 2*structure_padding+pad_side_len;
     int total_h = 3*structure_padding+2*pad_side_len;
     point corner = newPoint(center.x()-total_w/2, center.y()-total_h/2);
-    curCell->addBox(corner.x(), corner.y(), total_w, total_h, protect);
+    curCell->addBox(corner.x(), corner.y(), total_w, total_h, aux4);
     
     if(!no_pads) {
-        curCell->addBox(corner.x()+structure_padding, corner.y()+structure_padding, pad_side_len, pad_side_len, M);
-        curCell->addBox(corner.x()+structure_padding, corner.y()+2*structure_padding+pad_side_len, pad_side_len, pad_side_len, M);
+        curCell->addBox(corner.x()+structure_padding, corner.y()+structure_padding, pad_side_len, pad_side_len, aux3);
+        curCell->addBox(corner.x()+structure_padding, corner.y()+2*structure_padding+pad_side_len, pad_side_len, pad_side_len, aux3);
     }
     point cursor;
     // Top
     cursor.set(center.x(), center.y()+structure_padding/2);
-    point cursor2; cursor2.set(cursor.x(), cursor.y()+test_JJ_ebeam_overlap);
+    point cursor2; cursor2.set(cursor.x(), cursor.y()+ebeam_overlap);
 
     
-    point cursor3 = wire(curCell, aux, cursor2, "d", (test_JJ_pads_len+test_JJ_ebeam_overlap)/3*2, 6e3);
-    wire(curCell, aux, cursor3, "d", (test_JJ_pads_len+test_JJ_ebeam_overlap)/3, 5e3); 
-    wire(curCell, aux2, cursor3, "d", (test_JJ_pads_len+test_JJ_ebeam_overlap)/3, 4e3);
+    point cursor3 = wire(curCell, aux, cursor2, "d", (test_JJ_pads_len+ebeam_overlap)/3*2, 6e3);
+    wire(curCell, aux, cursor3, "d", (test_JJ_pads_len+ebeam_overlap)/3+1, 5e3); 
+    wire(curCell, aux2, cursor3, "d", (test_JJ_pads_len+ebeam_overlap)/3+1, 4e3);
     
-    cursor2.set(cursor2.x()-2.5e3+w_JJ/2, cursor2.y()-test_JJ_pads_len-test_JJ_ebeam_overlap);
+    cursor2.set(cursor2.x()-2.5e3+w_JJ/2, cursor2.y()-test_JJ_pads_len-ebeam_overlap);
     wire(curCell, aux, cursor2, "d", 1e3, w_JJ);
     cursor2.set(cursor2.x()+2*2.5e3-w_JJ, cursor2.y());
     wire(curCell, aux, cursor2, "d", 1e3, w_JJ);
     
     
     // =====  Bottom
-    cursor.set(cursor.x()-4e3, cursor.y()-g_q+JJ_delta_arm_len-test_JJ_ebeam_overlap);
+    cursor.set(cursor.x()-4e3, cursor.y()-g_q+JJ_delta_arm_len-ebeam_overlap);
     
-    wire(curCell, aux, cursor, "u", test_JJ_pads_len+test_JJ_ebeam_overlap, 2e3);
-    wire(curCell, aux2, newPoint(cursor.x()-0.25e3, cursor.y()+(test_JJ_pads_len+test_JJ_ebeam_overlap)/2), "u", (test_JJ_pads_len+test_JJ_ebeam_overlap)/2, 1.5e3);
+    wire(curCell, aux, cursor, "u", test_JJ_pads_len+ebeam_overlap, 2e3);
+    wire(curCell, aux2, newPoint(cursor.x()-0.25e3, cursor.y()+(test_JJ_pads_len+ebeam_overlap)/2), "u", (test_JJ_pads_len+ebeam_overlap)/2, 1.5e3);
     cursor.set(cursor.x()+2*4e3, cursor.y());
-    wire(curCell, aux, cursor, "u", test_JJ_pads_len+test_JJ_ebeam_overlap, 2e3);
-    wire(curCell, aux2, newPoint(cursor.x()+0.25e3, cursor.y()+(test_JJ_pads_len+test_JJ_ebeam_overlap)/2), "u", (test_JJ_pads_len+test_JJ_ebeam_overlap)/2, 1.5e3);
-    cursor.set(cursor.x()-1e3, cursor.y()+test_JJ_ebeam_overlap+test_JJ_pads_len-h_JJ/2);
+    wire(curCell, aux, cursor, "u", test_JJ_pads_len+ebeam_overlap, 2e3);
+    wire(curCell, aux2, newPoint(cursor.x()+0.25e3, cursor.y()+(test_JJ_pads_len+ebeam_overlap)/2), "u", (test_JJ_pads_len+ebeam_overlap)/2, 1.5e3);
+    cursor.set(cursor.x()-1e3, cursor.y()+ebeam_overlap+test_JJ_pads_len-h_JJ/2);
     wire(curCell, aux, cursor, "l", 1e3, h_JJ);
     cursor.set(cursor.x()-6e3, cursor.y());
     wire(curCell, aux, cursor, "r", 1e3, h_JJ);
     
-     // ==== Merge aux structure to M1
+    rotateLayer(curCell, aux, center, angleFromDirection(direction));
+    rotateLayer(curCell, aux2, center, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, center, angleFromDirection(direction));
+    rotateLayer(curCell, aux4, center, angleFromDirection(direction));
     
+    
+     // ==== Merge aux structure to protect, M and M1
+    
+    
+    layout->booleanTool->boolOnLayer(aux3, aux3, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux4, aux4, protect, "A+B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(aux, aux2, M1, "A-B", 0, 0, 2);
     clearLayer(curCell, aux);
-    clearLayer(curCell, aux2);
+    clearAllAuxiliaryAux(curCell);
     
 }

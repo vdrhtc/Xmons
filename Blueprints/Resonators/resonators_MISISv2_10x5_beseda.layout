@@ -93,7 +93,7 @@ int main() {
 
     // Setting the needed frequencies
     for (i=0; i<6; i++) {
-        res_freqs.append(7+i/10.);
+        res_freqs.append(9+i/10.);
     }
     
     // Beginning the cycle, adding iterators
@@ -107,7 +107,7 @@ int main() {
         // Setting the cursor to the next resonator's base point
         cursor.set(resonatorStartingPositionX+chip_width/5*j, resonatorPositionsY-x);
         // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i), tailLen, "d", 0);
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i), tailLen, "d", 0, 0);
         // Making a point where to place a Roman number for the resonator
         cursor3.set(cursor2.x()-400e3, cursor2.y());
         // Placing the number
@@ -116,7 +116,7 @@ int main() {
         // Setting the cursor to the next resonator's base point
         cursor.set(resonatorStartingPositionX+chip_width/5*(1.*j+0.5), -resonatorPositionsY+x);
         // Adding resonator. This function returns the coordinate of the resonator's open end, saving it to cursor2
-        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i+1), tailLen, "u", 1);
+        cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(i+1), tailLen, "u", 0);
         // Using cursor2 to add resonator's claw at it's position
         cursor2 = addClaw(curCell, cursor2, "u");
         // Making a point where to place a Roman number for the resonator and placing it there

@@ -1,0 +1,40 @@
+/*
+ QR code with the parameters
+*/
+
+
+void addQR(cell* curCell, int x1, int y1, int width, int height, int layer) {
+
+    point p1, p2;
+    p1.set(x1, y1); p2.set(x1+width,y1+height);
+
+    string data = "Multimode multiplexing chip.";
+    data+="\nChip size (mm): ";data+=chip_height/1e6+"x"; data+=chip_width/1e6;
+    data+="\nGeometrical parameters (um):";
+    data+="\n Resonator:";
+    data+="\n  w_res: "+w_res/1e3;
+    data+="\n  g_res: "+g_res/1e3;
+    data+="\n  x: "+x/1e3;
+    data+="\n Qubits:";
+    data+="\n  w_q: "+w_q/1e3;
+    data+="\n  q_length: "+q_length/1e3;
+    data+="\n  JJ (nm): "; data+="w="+w_JJ; data+=", h="+h_JJ;
+    
+    data+="Electrical parameters:";
+    data+="\n Resonator:";
+    data+="\n  Used modes: 9 and 15";
+    data+="\n  Frequency (15): "+frequency; data+=" GHz";
+    data+="\n Qubits (Fastcap):";
+    data+="\n  C_q: 70 fF, E_c ~ 300 MHz";    
+    data+="\n  C_qr: 20 fF";
+    data+="\n  C_qq: 5.41 fF";
+    data+="\n  I_c ~ 100 nA, E_J ~ 50 GHz";
+    data+="\n  ω_01 ~ 10 GHz";
+        
+    data+="\n---CC BY, G. Fedorov, 2017---";
+
+    layout->barcodeTool->setQrCode();
+    layout->barcodeTool->data = data;
+    layout->drawing->activeLayer=layer;
+    layout->barcodeTool->placeBarcode(p1, p2);
+}

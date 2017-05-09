@@ -1,0 +1,28 @@
+\chapter{Experimental methods}
+
+\section{Experimental setup and equipment}
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=\textwidth]{BF_for_albmstu1}
+\caption{Example configuration of the 15 mK stage of the BF LD 250 fridge in the RQC lab at ISSP with three samples installed (with false colors added). \textbf{(a)} Front-bottom view of the 25 mK flange. Cyan color highlights the cylindric cryoperm shield inside which the sample holder resides. \textbf{(b)} Back view, violet color shows the circulators with  a thick copper wire wrapped around them for thermalization. \textbf{(c)} Front-top view, where the 2-channel  microwave switch is shown (magenta) and the hybrid coupler (blue, left in true color) used to measure several samples using only one low-noise HEMT amplifier. \textbf{(d)} Side view, the two unshielded sample holders similar to the one concealed under the shield from (a) are shown in yellow.}
+\label{fig:configuratio_photo}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[width=.8\textwidth]{setup}
+\caption{Schematic of the example configuration shown in \autoref{fig:configuratio_photo}.}
+\end{figure}
+
+\section{Two-tone spectroscopy}
+\label{sec:2tone}
+
+This type of measurement is conducted with an additional microwave tone from the microwave source, which induced the transitions from ground state of the system to higher levels and transition frequencies from there then are being probed by the VNA. Practically this is realized by setting the VNA to measure single point at the shifted resonator  frequency $\omega_r + \chi_0$ (see \autoref{fig:diagram}). This results in a low transmission as photons get absorbed by the system. Then the qubit is biased, and the frequency on the $\mu$-wave source is swept through some values at each given bias. When the frequency of the latter coincides with some allowed transition frequency of the system at given bias, the system leaves its ground state, and the VNA is not probing a correct transition frequency any more. For example, if second tone has induced qubit $ge$ transition, the correct resonator frequency would be $\omega_r + \chi_1$ and the lowest transmission will be observed there (see \autoref{fig:diagram} again). Thus, at $\omega_r + \chi_0$ where the VNA is measuring the transmission would become higher than it was when the second tone missed the $ge$ transition. 
+
+In reality the situation is a bit more complicated as long as constant microwave tone induces Rabi oscillations between levels if it is resonant with the corresponding transition and after all the VNA will be probing transitions from an incoherent mixture of states (i.e. $\hat \rho = \frac{1}{2} [\ket{0, g}\bra{0,g} + \ket{0, e}\bra{0,e}]$) which depends on the drive strength; however, the transmission still ends up being higher when the second tone induces transitions from ground state. All said above can be applied also to the transmission phase, however the phase at resonance will become either higher of lower depending on the direction of the resonance shift as long as the phase behaves linearly around the resonance. It is thus much more sensitive when the width of the resonance peak is larger than the dispersive shift. 
+
+It is possible to easily extract the linewidth of the qubit which was described in Section \ref{subsec:linewidth} if the resonator linewidth is larger than the dispersive shift. This can be done by setting the VNA frequency to the point of smallest transmission and studying the phase data. The phase will be a linear function of the frequency near this point, and the frequency, in its turn, will be a linear function of the population of the excited state. This means that the width at the half maximum of the 2-tone peak will be same as the width of the peak of the population. If, in contrast, the resonator linewidth is smaller than the dispersive shift, it would be necessary to extract the frequency of the resonator for each point and then plot it against the 2$^{\text{nd}}$ tone frequency to preserve the linearity and measure the linewidth correctly.
+
+This method works well in the dispersive limit when the qubit-resonator detuning $\Delta_\omega = \omega_r - \omega_{ge}$ is large compared to the coupling strength $g$.

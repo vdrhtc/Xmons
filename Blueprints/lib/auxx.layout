@@ -82,16 +82,16 @@ point rotateVector(point vec, point anchor, string direction) {
 
     point retPoint;
     if (direction=="d") {
-        retPoint.set(anchor.x() + vec.x(), anchor.y()+vec.y());
+        retPoint.set(anchor.x() + vec.x(), anchor.y()+vec.y());  //look here
         return retPoint;
     } else if(direction=="l") {
-        retPoint.set(anchor.x()+ vec.y(), anchor.y()+vec.x());
+        retPoint.set(anchor.x()+ vec.y(), anchor.y()-vec.x());
         return retPoint; 
     } else if(direction=="r") {
-        retPoint.set(anchor.x() -vec.y(), anchor.y()-vec.x());
+        retPoint.set(anchor.x() -vec.y(), anchor.y()+vec.x());
         return retPoint; 
     } else  {
-        retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y());
+        retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y()); //mirrored...
         return retPoint; 
     }
 }

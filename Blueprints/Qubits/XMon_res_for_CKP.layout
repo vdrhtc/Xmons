@@ -50,7 +50,7 @@
         int w_q = 20e3;
         int g_q = 20e3;
         int arm_len = 300e3;
-        int ebeam_overlap = 0e3;
+        int ebeam_overlap = 3e3;
 
         int qrSize = 500e3;
         int qrCodePositionX = chip_width/2*11/10;
@@ -162,8 +162,8 @@ int main() {
     
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(M1, M1, total, "A+B", 0, 0, 0);
-    clearLayer(curCell, M1);
+/*    layout->booleanTool->boolOnLayer(M1, M1, total, "A+B", 0, 0, 0);*/
+/*    clearLayer(curCell, M1);*/
     
 /*    layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);*/
 /*    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux);*/

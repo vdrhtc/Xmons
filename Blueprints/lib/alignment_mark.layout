@@ -32,10 +32,10 @@ void addLocalAlignmentMarkBMSTU(cell* curCell, point center) {
     }
     
     point cursor = newPoint(center.x()-3e3, center.y()-3.5e3);
-    wire(curCell, M1, cursor, "r", 6e3, 500);
+    wire(curCell, aux2, cursor, "r", 6e3, 500);
     
     point cursor = newPoint(center.x()+3.5e3, center.y()+3e3);
-    wire(curCell, M1, cursor, "d", 6e3, 500);
+    wire(curCell, aux2, cursor, "d", 6e3, 500);
     
     point cursor = newPoint(center.x()-box_size_local/2.5, center.y()+box_size_local/4);
     for (i=-3; i<=3; i++){
@@ -53,9 +53,10 @@ void addLocalAlignmentMarkBMSTU(cell* curCell, point center) {
         wire(curCell, aux2, cursor2, "d", mark_size/100*math::pow(2.71,-math::pow(i/3,2)), stangen_width/10);
     }
     
-    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux, aux, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2,  aux2, M1, "A+B", 0, 0, 0);
+    
     clearLayer(curCell, aux);
-    layout->booleanTool->boolOnLayer(aux2, M1, M1, "A+B", 0, 0, 0);
     clearLayer(curCell, aux2);
     
     curCell->addBox(center.x()-box_size_local/2, center.y()-box_size_local/2, box_size_local, box_size_local, protect);

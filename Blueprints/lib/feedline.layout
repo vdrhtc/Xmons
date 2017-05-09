@@ -5,7 +5,7 @@
 x |  |___ >==========~======< ____|  | x
  | | ____/                                  \_____ | |
 
-    Or a flux bias line (see Kelly's thesis)
+    Or a flux bias line (see Kelley's thesis)
 __
 |  |________                                _____
 |   _________\                          / __    | |
@@ -41,6 +41,7 @@ x |  |___ >==========~======<  |_____
         return ground_connector_width+bottom_g_pad+pad_len+transition_len;
     }
     int fluxBiasLen = 0;
+    int fluxBiasInductorLen = 20e3;
     int microwaveDriveLen = 0;
 
 
@@ -58,8 +59,8 @@ point fluxBias(cell* curCell, int M, int protect, point anchor, int w_feed, int 
     
     point cursor;
     cursor.set(anchor.x(), anchor.y()-1.5*g_feed);
-    wire(curCell, aux4, cursor, "r", w_q/2, g_feed);
-    wire(curCell, aux4, cursor, "l", w_q/2, g_feed);
+    wire(curCell, aux4, cursor, "r", fluxBiasInductorLen/2, g_feed);
+    wire(curCell, aux4, cursor, "l", fluxBiasInductorLen/2, g_feed);
     cursor.set(cursor.x(), cursor.y()-0.5*g_feed);
     wire(curCell, aux4, cursor, "d", w_feed, 2*g_feed+w_feed);
     cursor.set(cursor.x()+w_feed/2, cursor.y()-0.5*w_feed);
