@@ -1,0 +1,176 @@
+\chapter{Efficient strategy for simulating dynamics of multilevel quantum systems}
+
+Quantum systems with large dimensions are known to be hard to solve numerically when their unitary dynamics is considered, and even harder when the dynamics is dissipative. The problem is to find ${\ket{\psi}}$(t) from the Schrödinger equation
+\begin{equation*}
+i\hbar \partial_t {\ket{\psi}} = [\hat{\mathcal{H}} + f(t)\hat{\mathcal{H}}']\ket{\psi}
+\end{equation*}
+in the unitary case, or to find $\hat \rho(t)$ from the master equation
+\[
+ \partial_t{\hat \rho} = \frac{i}{\hbar} [\hat\rho, \hat{\mathcal{H}}] - \sum_k \mathcal{D}[\hat{\mathcal{O}}_k]\hat \rho
+\]
+in the dissipative case. Both formulations are hard as long as usually the eigenfrequencies of such systems are very high compared to the inverse evolution time that we want the system to go through; this means that long periods of time have to be simulated with very fine resolution. Moreover, the number of operations to proceed through each time step scales quadratically with the system size $N$ for the unitary equation, and as $N^4$ when the density matrix solution has to be sought.   
+
+Here, an approximate semi-analytical method, which allows to significantly speed-up the numerical solution of such problems, is presented and investigated by simulating the Rabi oscillations in a transmon qubit.
+
+\section{Formulation of the method}
+
+The outline of the method we propose to call the \textit{quasi-RWA} is as follows:
+\begin{enumerate}
+\item Solve the eigenproblem for the unperturbed system $\hat{\mathcal{H}} \ket{E_n} = E_n \ket{E_n}$.
+\item Write down the time-dependent Schrödinger equation for the perturbed system $\hat{\mathcal{H}} + f(t)\hat{\mathcal{H}}'$ in the eigenbasis found in step 1; it is possible to do this in the matrix form:
+\begin{equation*}
+i\hbar \partial_t \ket{\psi_E} = 
+\left[\left(
+\begin{matrix}
+E_0 & 0 & 0 & 0 & \cdots\\
+0 &E_1 & 0 & 0 & \cdots\\
+0 & 0 & E_2 & 0 & \cdots\\
+0 & 0 & 0 & E_3 & \cdots\\
+\vdots&\vdots&\vdots&\vdots& \ddots
+\end{matrix}
+\right)
++
+f(t)\hat{S} \hat{\mathcal{H}}' \hat{S}^\dag\right]
+\ket{\psi_E},
+\end{equation*}
+where $\hat S$ is the transformation matrix composed of the eigenvectors, $\ket{\psi_E} = \hat S\ket{\psi}$ .
+
+The dissipative part, when the master equation on the density matrix $\hat \rho$ is considered, will be then transfromed as follows:
+
+\[
+\mathcal{D}[\hat{\mathcal{O}}_k]\hat \rho \rightarrow \mathcal{D}[\hat S\hat{\mathcal{O}}_k\hat{S}^\dag]\hat S \hat \rho\hat{S}^\dag \equiv  \mathcal{D}[\hat S\hat{\mathcal{O}}_k\hat{S}^\dag]\hat{\rho}_E
+\]
+
+\item Move to the interaction picture (rotating frame) with the transformation $\hat{U}(t) = \exp[i \hat{S} \hat{\mathcal{H}} \hat{S}^\dag t/\hbar]$; the problem for the new state vector $\ket{\psi_E'} = \hat{U}(t) \ket{\psi_E}$ will now look as follows:
+
+\begin{equation*}
+i\hbar \dot{\ket{\psi_E'}} = f(t)\hat{U}(t) \hat{S} \hat{\mathcal{H}}' \hat{S}^\dag \hat{U}^\dag(t) \ket{\psi_E'} \equiv \hat{\mathcal{H}}_I \ket{\psi_E'} .
+\end{equation*}
+\item Assume harmonic perturbation $f(t) = f \cos(\omega t+\phi)$; since all practical functions can be expanded in a Fourier series, this does not really impose any constrictions on the method. The Hamiltonian in the interaction picture then will look as follows:
+
+\begin{equation*}
+\hat{\mathcal{H}}_I = \frac{f}{2}(e^{i\omega t +i\phi}+e^{-i\omega t - i\phi})
+\left(
+\begin{matrix}
+\mathcal{H}'_{00}      & \mathcal{H}'_{01}e^{-i\omega_{01} t} & \mathcal{H}'_{02} e^{-i\omega_{02} t}        & \mathcal{H}'_{03}e^{-i\omega_{03}t} & \cdots\\
+\mathcal{H}'_{10}e^{i\omega_{01}t} & \mathcal{H}'_{11}     & \mathcal{H}'_{12}e^{-i\omega_{12}t} & \mathcal{H}'_{13}e^{-i\omega_{13}t}         & \cdots\\
+\mathcal{H}'_{20}e^{i\omega_{02}t}   & \mathcal{H}'_{21}e^{i\omega_{12}t}  & \mathcal{H}'_{22}         & \mathcal{H}'_{23}e^{-i\omega_{23}t} & \cdots\\
+\mathcal{H}'_{30}e^{i\omega_{03}t} & \mathcal{H}'_{31} e^{i\omega_{13}t}    & \mathcal{H}'_{32}e^{i\omega_{23}t} &       \mathcal{H}'_{33}   & \cdots\\
+\vdots&\vdots&\vdots&\vdots& \ddots
+\end{matrix}
+\right),
+\end{equation*}
+where $\omega_{nm} = (E_m-E_n)/\hbar,\ \mathcal{H}'_{nm} = \bra{n}\hat{\mathcal{H}}'\ket{m}$.
+
+\item Drop all elements which have large frequencies comparable to $\omega$. Leave only those matrix elements which are supposed to contribute most significantly to the dynamics. Usually, those are the ones with the oscillation frequencies $\pm\omega\pm\omega_{nm}$ closest to zero. However, there is no general rule of how exactly small the frequency of an element should be for it to be included in the dynamics, so an iterative process would help to find the optimal number of states to save.
+
+\item Truncate the problem to the subspace where $\hat{\mathcal H}_I$ still has non-zero elements. 
+
+\item Solve the reduced ODE system numerically.
+\end{enumerate}
+
+The speed-up comes firstly from three contributions:
+\begin{enumerate}
+\item Solution in the eigenspace allows to use sparse ODE solvers which are tremendously faster than dense ones.
+\item The frequency resolution necessary for the solver to evolve the system is reduced as well if there are several quasi-resonant transitions $nm$ with $\omega - \omega_{nm}\ll \omega$.
+\item The size of the problem is reduced to an interesting subspace reducing the number of operations. With sparse solvers, this step does not speed up the solution as one would expect it would do with dense solvers, but it still has some positive effect.
+\end{enumerate}
+
+\section{Transmon example}
+
+\subsection{Unitary case}
+
+We begin immediately from writing down the Hamiltonian for the transmon in the interaction picture:
+\begin{equation*}
+\hat{\mathcal H}_I =
+\frac{f}{2}(e^{i\omega t +i\phi}+e^{-i\omega t - i\phi})
+\left(
+\begin{matrix}
+0          & n_{ge}e^{-i\omega_{ge} t} & 0         & n_{gd}e^{-i\omega_{gd}t} & \cdots\\
+             n_{eg}e^{i\omega_{ge}t} & 0          & n_{ef}e^{-i\omega_{ef}t} & 0         & \cdots\\
+0          & n_{fe}e^{i\omega_{fe}t}  & 0         & n_{fd}e^{-i\omega_{fd}t} & \cdots\\
+               n_{dg}e^{i\omega_{dg}t} & 0          & n_{df}e^{i\omega_{df}t} & 0         & \cdots\\
+\vdots&\vdots&\vdots&\vdots& \ddots
+\end{matrix}
+\right),
+\end{equation*}
+where letters $g,e,f,d$ denote four lowest energy levels, $n_{\alpha\beta} = \bra{\alpha}\hat n \ket{\beta}$, $\hat n$ is the transmon charge operator. 
+We see that already some matrix elements are equal to zero, but all the remaining ones are still oscillating with some non-zero frequencies $\pm \omega\pm\omega_{\alpha\beta}$, so we cannot simply drop them since then we will not observe any dynamics. As the described strategy proposes, we then retain, firstly, those factors which oscillate at frequencies that are the closest to zero, i.e., only quasi-resonant terms, and, secondly, some factors which oscillate at some low frequencies. Assuming that the transmon is driven at its $ge$ transition frequency, we find that matrix elements between first three levels are sufficient. Similarly, when a two-photon process has to be simulated, three levels are still enough to capture nearly all of the dynamics.
+
+The efficiency of this method for the transmon can be directly estimated: the standard 6 GHz = $\omega_{ge}$ dynamics will require 30 times more points than the 200 MHz = $\alpha$ dynamics (when only the three lowest levels are included, and the drive is resonant with the $ge$ transition). If the Rabi frequency is much smaller than all of the other frequencies $\pm \omega\pm\omega_{\alpha\beta}$, then the dynamics is clearly just two-level and will be simulated even faster; however, usually this is not an interesting case.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=.49\textwidth]{tr_100_semiRWA}\includegraphics[width=0.51\textwidth]{tr_xyz_semiRWA100+20}
+\caption{A comparison of the full solution of the transmon Rabi oscillations at high drive amplitudes (solid lines) with the approximate solution when only the three lowest levels are considered (open circles connected with dashed lines). For $\Omega_R$=20 MHz the error of the approximation $\varepsilon =\mathbb{E}_t(|\mathbf{r}_{full}-\mathbf{r}_{RWA}|)$ is $\approx 2\cdot10^{-3}$ ($\approx 9\cdot 10^{-3}$ for 100 MHz) and mostly comes from the $x$-component. The simulation speed with the truncated problem is increased up to $\approx$30 times, as expected.}
+\label{fig:semi_RWA}
+\end{figure}
+
+The results of the quasi-RWA simulation compared to the standard full solution are presented in \autoref{fig:semi_RWA}. As can be seen, the approximate solution is following the exact data very well; the absolute average errors in the computational basis during the evolution are of order of $10^{-3}$ for $\Omega_R=20$ MHz  ($10^{-2}$ for $\Omega_R=$100 MHz) giving relative errors of less than 5\%. The main contribution in the error at 20 MHz Rabi frequency comes from the $x$-component (other components contribute less than 10\%); though, at 100 MHz, the $x$-error is only twice as large as the other two components. 
+
+The computation speed when only the evolution is performed and no intermediate states are being recorded does indeed show a significant increase approximately equal to $\omega_{ge}/\alpha$ times; when intermediate states are also requested from the solver, the speed-up becomes smaller if the simulation timespan divided by number of those states becomes comparable to the solver time resolution. 
+
+In overall, the method presented above is a robust tool for simulating unitary dynamics of any multilevel system when it is driven near to or exactly on one of its transition frequencies. For the transmon qubits the speed-up achieved when the Rabi frequency is comparable to the detuning of the transitions near the resonance can be more than an order of magnitude while retaining good population and phase accuracy.
+
+
+\subsection{Dissipative case}
+
+\begin{figure}
+\centering
+\includegraphics[width=.55\textwidth]{2levelRWA_me}
+\caption{Per-component differences between the two-level master equation with the full Hamiltonian and with the RWA Hamiltonian. The parameters of the equation \eqref{eq:rwa_me}  are $\omega_{tls} = 2\pi (1 \text{GHz})$, $\Omega_R = 2\pi (10 \text{MHz})$, $\gamma =1\ \mu\text{s}^{-1}$.}
+\label{fig:2levelRWA_me}
+\end{figure}
+
+When the dissipative dynamics is considered, there are some subtle details. To illustrate them, we will firstly turn to a simple two-level system. Below is the corresponding master equation with resonant excitation and the relaxation channel included:
+\begin{equation}
+\frac{\partial}{\partial t} \hat{\rho}_{tls} = \frac{i}{\hbar}[\hat{\rho}_{tls}, \frac{\hbar \omega_{tls}}{2} \hat{\sigma}_z+\hbar \Omega_R\hat{\sigma}_x \cos( \omega_{tls} t)] + \gamma \mathcal{D}[\hat \sigma^-]\hat\rho_{tls}.
+\label{eq:rwa_me}
+\end{equation}
+To perform the RWA it is necessary first to make the following ansatz:
+\[
+\hat{\rho}_{tls} = \hat U(t)^\dag \hat{\rho}'_{tls} \hat U(t),\hat U(t) = \exp(i\omega_{tls}\hat\sigma_z t/2),
+\]
+\[
+\hat{\rho}_{tls} = \left(\begin{matrix}
+\rho_{11}' & \rho_{12}' e^{i\omega_{tls} t} \\
+\rho_{21}' e^{-i\omega_{tls} t} & \rho_{22}'
+\end{matrix}\right).
+\]
+Now let's compare the dissipators for these two density matrices:
+
+\begin{center}
+\begin{tabular}{c | c}
+Original & Transformed\\
+$
+\left(\begin{matrix}
+-\rho_{11} & -\frac{1}{2} \rho_{12}  \\
+-\frac{1}{2} \rho_{21} & 1-\rho_{22}
+\end{matrix}\right)
+$ & $
+\left(\begin{matrix}
+-\rho_{11}' & -\frac{1}{2} \rho_{12}'  e^{i\omega_{tls} t}\\
+-\frac{1}{2} \rho_{21}' e^{-i\omega_{tls} t} & 1-\rho_{22}'
+\end{matrix}\right).
+$ 
+\end{tabular}
+\end{center}
+What we see here is that the dissipator is now explicitly time-dependent. However, a usual practice is to make the RWA only inside the unitary part of the equation \eqref{eq:rwa_me}, and then silently assume that the structure of the dissipative part has not changed at all, i.e., simply replacing $ \rho_{12}'  e^{i\omega t}$ with $ \rho_{12}'$, to solve the equation for $\hat{\rho}_{tls}'(t)$. While making so in the two-level case leads only to a small deviation between the steady state solutions of the unitary-part-only-RWA and the non-RWA models ($\approx 5\cdot 10^{-3}$ along the rotation axis and $\approx 10^{-4}$ along other axes, see \autoref{fig:2levelRWA_me}), for many-level systems, e.g., transmons, this deviation becomes much larger.
+
+\begin{figure}
+\centering
+\includegraphics[height=0.2125\textheight]{Nd_RWA_me_projections} \includegraphics[height=0.2125\textheight]{NlevelRWA_me}
+\caption{Per-component differences between the transmon master equation with the full Hamiltonian and with the 3-level quasi-RWA Hamiltonian. The parameters  are $E_J = 2\pi(22\text{GHz})$, $E_C = 2\pi(215\text{MHz})$, $\Omega_R = 2\pi(10 \text{MHz})$, $\gamma = 1\ \mu\text{s}^{-1}$.}
+\label{fig:NlevelRWA_me}
+\end{figure}
+
+An example result comparing the quasi-RWA solution and the full solution for a transmon qubit is presented in \autoref{fig:NlevelRWA_me}. To visualize the dynamics in the 2-level computational basis the standard two-level operators are used: 
+\[
+\hat \sigma_x = \ket{g}\bra{e}+\ket{e}\bra{g},\ \hat\sigma_y = i\ket{g}\bra{e} - i\ket{e}\bra{g},\ \hat\sigma_z  = \ket{e}\bra{e}-\ket{g}\bra{g}
+\]
+
+As can be seen, even with a moderate driving strength of 10 MHz there is a noticeable difference between the $x$-components of two models which reaches $10^{-1}$ in the steady state. When the driving strength is increased, this deviation also grows proportionally, and additionally $z$-component error becomes larger.
+
+The question is as follows: can the master equation, which itself was derived in the rotating wave approximation, be applied to non-RWA systems without care? This is an interesting question as long as the errors that appear between full and RWA models can be large enough to be experimentally tested using transmon qubits.
+
+
