@@ -175,9 +175,9 @@ S_{21} = \frac{2}{A+B/Z_0 +CZ_0 + D}.
 
 \subsection{Time-resolved response}
 
-As soon as the spectral characteristics of the resonator are established is is possible to calculate it's response when a pulse of finite width is applied to it. The shape that the pulse will have after it has interacted with the resonator is important when pulsed readout is considered in time-resolved qubit measurements. 
+As soon as the spectral characteristics of the resonator are established, it is possible to calculate its response when a pulse of finite width is applied to it. The shape that the pulse will have after the interaction with the resonator is important when pulsed readout is considered in time-resolved qubit measurements. 
 
-In this section we will only discuss the notch-type resonator and only the transmission of the pulses; however, the numerical method that will be used can be straightforwardly extended to other cases. It consists of three steps: calculate the discrete Fourier transform (DFT) for the input pulse, multiply it by the required complex S-parameter for each frequency (negative and positive frequencies should be multiplied in the same way), and finally perform the inverse discrete Fourier transform. 
+In this section we will only discuss the notch-type resonator and only the transmission of the pulses; however, the numerical method that will be used can be straightforwardly applied to other cases. It consists of three steps: calculate the discrete Fourier transform (DFT) for the input pulse, multiply it by the chosen complex S-parameter for each frequency (negative and positive frequencies should be multiplied in the same way), and finally perform the inverse DFT. 
 
 We will use the following expression for the complex $S_{21}$ of an ideal notch-type resonator\cite{probst2015}:
 
@@ -209,10 +209,12 @@ Using DFT this procedure becomes a little bit more tricky as it requires careful
 
 \begin{figure}[h!]
 \includegraphics[width=\textwidth]{ro_pulse_fourier}
-\caption{Separate DFTs for two different pulse parts. Same two resonator frequency cases as in \autoref{fig:ro_pulse_diff} are displayed in blue and orange, respectively. Notice that the ``ring-down'' parts are close to resonator frequency in contrast to the ``ring-up'' and steady state parts which are closer to the pulse carrier frequency.}
+\caption{Separate DFTs for two different pulse parts. Same cases with two different resonance frequencies (same as in \autoref{fig:ro_pulse_diff}) are displayed in blue and orange, respectively. Notice that the ``ring-down'' parts are close to the corresponding resonance frequencies in contrast to the ``ring-up'' and steady state parts which are closer to the pulse carrier frequency.}
 \end{figure}
 
-In \autoref{fig:ro_pulse_diff} two output pulses obtained from the same input rectangular pulse are presented for two different cases of resonance frequency above and below the pulse carrier frequency. It can be seen that during the first 100 ns the two output pulses are nearly identical in their amplitude and phase. Then, gradually, the phase difference between the pulses begins to accumulate until it reaches saturation in the steady state. Then the ``ring-down'' part begins and the phase difference changes the sign abruptly and then continues to accumulate. This behaviour is due to the fact that, firstly, the resonator has to accumulate the amplitude at least comparable to the amplitude of the incident wave to influence it in any way, i.e., to shift its phase. This is why the first part is called ``ring-up''. Then it reaches the steady state where the phase difference is constant and equals the value one would observe on a vector network analyser. Finally, the phase difference between the ``ring-down'' parts of the two pulses is caused simply by the difference between the resonator frequencies (after the end of the pulse the resonator experiences free oscillations).
+In \autoref{fig:ro_pulse_diff}, two output pulses obtained from the same input rectangular pulse are presented for two different cases of resonance frequency above and below the pulse carrier frequency. It can be seen that during the first 100 ns the two output pulses are nearly identical in their amplitude and phase. Then, gradually, the phase difference between the pulses begins to accumulate until it reaches saturation in the steady state. Then the ``ring-down'' part begins: the phase difference changes the sign abruptly and then continues to accumulate. 
+
+This behaviour is due to the fact that, firstly, the resonator has to accumulate the amplitude at least comparable to the amplitude of the incident wave to influence it in any way, i.e., to shift its phase. This is why the first part is called ``ring-up''. Then, secondly, it reaches the steady state where the phase difference is constant and equals to the value one would measure with a vector network analyzer. Finally, the phase difference between the ``ring-down'' parts of the two pulses is caused simply by the difference between the resonator frequencies (after the end of the pulse the resonator experiences free damped oscillations).
 
 
 
@@ -233,14 +235,13 @@ A transmon is a Cooper pair box where the Josephson junction (JJ) capacitance is
 \label{fig:cpb-transmon-floating_transmon}
 \end{figure}
 
-Two versions of the transmon qubits exist (see \autoref{fig:cpb-transmon-floating_transmon}~(b),(c)). The first has a single superconducting island which has some large (compared to the JJ) capacitance to the ground, and the second has two islands forming a capacitor. These two versions are exactly the same conserning the energy structure given that their electrical parameters are the same; however, the second type does not require the ground plane, and thus can be used in 3D waveguides or waveguide resonators\cite{paik2011}. In the original transmon paper\cite{Koch2007} the second form was presented, and the first form was not mentioned. This led to the wide spread of the two-island transmons both in 3D and planar architectures which had many different shapes of the capacitors. For planar cQED this was an unncesessary complication as the calculation of the coupling for such qubits is much more complicated (see Appendix B of the Koch's paper). The transmons of the first type (embedded in the ground plane) became popular after the work\cite{barends2013} by the group of J. Martinis where they have demonstrated a coherent transmon with a single superconducting island.
+Two versions of the transmon qubits exist (see \autoref{fig:cpb-transmon-floating_transmon}~(b),(c)). The first has a single superconducting island which has some large (compared to the JJ) capacitance to the ground, and the second has two islands forming a capacitor. These two versions are exactly the same conserning the energy structure given that their electrical parameters are the same; however, the second type does not require the ground plane, and thus can be used in 3D waveguides or waveguide resonators\cite{paik2011}. In the original transmon paper\cite{Koch2007} the second form was presented, and the first form was not mentioned. This led to the wide spread of the two-island transmons both in 3D and planar architectures which had many different shapes of the capacitors. For planar cQED this was an unncesessary complication as the calculation of the coupling for such qubits is much more difficult (see Appendix B of the Koch's paper). The transmons of the first type (embedded in the ground plane) became popular after the work\cite{barends2013} by the group of J. Martinis where they have demonstrated a coherent transmon with a single superconducting island.
 
 Below we discuss the quantum mechanics of a transmon of the first type, as long as this is the type that was investigated in the experimental part. But, until we turn to coupling calculation the results for the two-island qubits are exactly the same. First of all, the Hamiltonian of the system depicted in \autoref{fig:cpb-transmon-floating_transmon}~(b) is written down:
 \begin{equation}
 \hat H_{tr} = 4E_C \hat n^2 - E_J\cos \hat \varphi,
 \label{eq:tr_ham}
 \end{equation}
-
 where $E_C = e^2/2C_\Sigma$, $C_\Sigma = C_J+C_{sh}$, $E_J = I_c \hbar/2e$ is the standard Josephson energy, $\hat n$ is the number operator of excess cooper pairs on the island and $\hat \varphi$ is the phase difference operator across the junction (equal to the phase operator $\hat \phi$ of the single island of to the phase difference operator between two islands\cite{Devoret1995}). The phase-dependent part of this Hamiltonian can be transformed into charge representation. From the Euler's formula $\cos \hat \varphi = (e^{i\hat\varphi} + e^{-i\hat\varphi})/2$, the fact that $n$ and $\varphi$ are conjugate variables, i.e., $\braket{\varphi}{n} = \psi_n(\varphi) = e^{i n \varphi}$, the series expansion of the exponent and decomposition of the unity operator $\mathbbm{\hat 1} = \int \diff \varphi \ket{\varphi}\bra{\varphi}$, we obtain
 \[
 \begin{aligned}
@@ -320,9 +321,9 @@ $fd$, $e E_4/3$ & $\omega_{ge}-2 E_C$\\
 
 \subsection{Hamiltonian of the transmon-resonator system}
 
-In this section one of the most important concepts in the area of superconducting quantum devices will be reviewed. It is the so-called \textit{circuit QED} or \textit{cQED}, i.e., circuit quantum electrodynamics of cavity quantum electrodynamics in electrical circuts\cite{Blais2004}. The idea of cQED is to couple a superconducting qubit to an electric oscillator (which is usually a mode of a microwave transmission line resonator) to obtain many useful effects such as non-demolition readout\cite{Blais2004}, Purcell decay protection\cite{Koch2007}, coupling of distant qubits\cite{Majer2007}, single photon emission\cite{bozyigit2011}, etc.
+In this section one of the most important concepts in the area of superconducting quantum devices will be reviewed. It is the so-called \textit{circuit QED} or \textit{cQED}, i.e., circuit quantum electrodynamics or cavity quantum electrodynamics in electrical circuts\cite{Blais2004}. The idea of cQED is to couple a superconducting qubit to an electric oscillator (which is usually a mode of a microwave transmission line resonator) to obtain many useful effects such as non-demolition readout\cite{Blais2004}, Purcell decay protection\cite{Koch2007}, coupling of distant qubits\cite{Majer2007}, single photon emission\cite{bozyigit2011}, etc.
 
-With transmon qubits cQED approach is crucial since it is not possible to directly read out the transmon state neither with charge nor with flux based measurement apparatus since transmon eigenstates are electrically and magnetically neutral (at the sweet spot). However, the \textit{dispersive readout}\cite{Blais2004} of such qubits has now been proven to be very effective. Below we will calculate the spectrum of the transmon-oscillator system and find the transmon state-dependent dispersive shifts.
+With transmon qubits, cQED approach is crucial since it is not possible to directly read out the transmon state neither with charge nor with flux based measurement apparatus since transmon eigenstates are electrically and magnetically neutral (at the sweet spot). However, the \textit{dispersive readout}\cite{Blais2004} of such qubits has now been proven to be very effective. Below we will calculate the spectrum of the transmon-oscillator system and find the transmon state-dependent dispersive shifts.
 
 \begin{figure}
 \centering
@@ -698,4 +699,5 @@ In contrast, when the drive strength is increased beyond the anarmonicity of the
 \centering
 \includegraphics[width=\textwidth]{transmon_transtitions}
 \caption{Different single- and multi-photon transitions in a transmon predicted by the full numerical model with relaxation. The parameters are the same as in the previous simulations.}
+\label{fig:transmon_transitions}
 \end{figure}
