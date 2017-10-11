@@ -23,8 +23,6 @@
         int aux2 = 7;
         int aux3 = 8;
         int aux4 = 9;
-
-
         
         int chip_height = 9e6; //heigh of substrate 
         int chip_width = 9e6; // width of the substrate  

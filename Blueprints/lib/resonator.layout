@@ -90,7 +90,6 @@ void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int
         cursor = wire(curCell, layer, cursor, "r", length - curLength, width);
         curLength+=length - curLength;
     }
-    
 }
 
 
@@ -106,13 +105,14 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
     
     rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
     rotateLayer(curCell, aux3, couplingPoint, angleFromDirection(direction));
+    
     if (direction=="u") {
         mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
         mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
         
-    layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(protect, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
     
     clearAllAuxiliaryAux(curCell);
     
@@ -197,8 +197,8 @@ point addHalfwaveTransmissionResonator(cell* curCell, point start, int w_res, in
     rotateLayer(curCell, aux2, resonator_start, angleFromDirection(direction));
     cursor = rotateVector(newPoint(cursor.x()-resonator_start.x(), cursor.y()-resonator_start.y()), resonator_start, direction);
     
-    layout->booleanTool->boolOnLayer(M, aux, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(protect, aux2, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux, aux, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, protect, "A+B", 0, 0, 0);
     
     clearLayer(curCell, aux);
     clearAllAuxiliaryAux(curCell);
@@ -283,8 +283,8 @@ point addResonatorCexp(cell* curCell, point couplingPoint, int w_res, int g_res,
         mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
         
-    layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(protect, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
     
     clearAllAuxiliaryAux(curCell);
     
@@ -335,8 +335,8 @@ point addResonatorNoMeander(cell* curCell, point couplingPoint, int w_res, int g
         mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
     
-    layout->booleanTool->boolOnLayer(M, aux2, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(protect, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
     
     clearAllAuxiliaryAux(curCell);
     

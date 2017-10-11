@@ -502,12 +502,12 @@ i\hbar \dot c_f =   f(t) (n_{fe} c_e e^{i\omega_{ef}t}+ n_{fd} c_d e^{-i\omega_{
 \label{eq:c_gef_ode_rf}
 \end{equation}
 
-Finally, assuming harmonic perturbation at $ge$ transition frequency, $f(t) = \hbar f \cos(\omega_{ge} t + \phi ) = \frac{\hbar f}{2}(e^{i\omega_{ge} t+i\phi} + e^{-i\omega_{ge} t-i\phi})$, and dropping all oscillating terms (\textit{rotating wave approximation, RWA}), we obtain the standard two-level dynamics for Rabi oscillations around the axis $-\phi$ degrees away from the $x$-axis of the Bloch sphere with angular frequency of $\Omega_R = f n_{ge}$:
+Finally, assuming harmonic perturbation at $ge$ transition frequency, $f(t) = \hbar f \cos(\omega_{ge} t + \phi ) = \frac{\hbar f}{2}(e^{i\omega_{ge} t+i\phi} + e^{-i\omega_{ge} t-i\phi})$, and dropping all oscillating terms (\textit{rotating wave approximation, RWA}), we obtain the standard two-level dynamics for Rabi oscillations around the axis $\phi$ degrees away from the $x$-axis of the Bloch sphere with angular frequency of $\Omega_R = f n_{ge}$:
 \begin{equation}
 \begin{cases}
 i\hbar \dot c_g =  \frac{\hbar fe^{i\phi}}{2} n_{ge} c_e,\\
 i\hbar \dot c_e =   \frac{\hbar fe^{-i\phi}}{2} n_{eg} c_g.
-\end{cases} \Leftrightarrow\  i\partial_t \ket{\psi (t)} = \frac{\Omega_R}{2}[\cos(\phi)\hat \sigma_x - \sin(\phi)\hat \sigma_y]\ket{\psi(t)}.
+\end{cases} \Leftrightarrow\  i\partial_t \ket{\psi (t)} = \frac{\Omega_R}{2}[\cos(\phi)\hat \sigma_x + \sin(\phi)\hat \sigma_y]\ket{\psi(t)}.
 \label{eq:rwa_ode}
 \end{equation}
 
@@ -534,7 +534,7 @@ P(\ket{+})(t) &= |\braket{+}{\psi(t)}|^2 = \frac{1}{2}.
 \end{aligned}
 \label{eq:x_rotation}
 \end{equation}
-Clearly, this is by definition the rotation around the $x$-axis. The $y$ rotation may be derived in a similar way if the phase is chosen to be $-\pi/2$. 
+Clearly, this is by definition the rotation around the $x$-axis. The $y$ rotation may be derived in a similar way if the phase is chosen to be $\pi/2$. 
 
 In general, using these formulas, we can define $(\theta)^{x(y)}$-pulse as windowed sine wave with window of correct amplitude, duration and phase, so that the qubit is rotated $\theta$ radians around the corresponding axis (see \autoref{fig:bloch_rot}). For example, for a fixed-length pulse of $t_g$, the $(-\frac{\pi}{2})^{y}$-pulse amplitude $f_q$ should be $- \pi/2 t_g n_{ge}$ and pulse phase $\phi$ equal to $-\pi/2$. Conversely, for a fixed $\Omega_R$ (drive amplitude $f_q$) to perform the same rotation the pulse time $t_g$ should be chosen as $\pi/2\Omega_R$ for the excitation signal with the phase increased by $\pi$ (as $t_g\geq 0$).
 

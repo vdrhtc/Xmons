@@ -158,8 +158,8 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
     
     contactPad(curCell, aux, aux2, cursor, w_feed, g_feed, opposite(direction));
     
-    layout->booleanTool->boolOnLayer(aux, M, M, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(aux2, protect, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux, aux, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, protect, "A+B", 0, 0, 0);
     
     clearLayer(curCell, aux);
     clearAllAuxiliaryAux(curCell);

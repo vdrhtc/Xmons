@@ -52,7 +52,7 @@ void setupLayers() {
     layers::num[9].mapToLayer= 4;
     layers::num[9].mapToDatatype= -1;
     
-    layers::num[10].name="top";
+    layers::num[10].name="bandage";
     layers::num[10].setStyle(38);
     layers::num[10].setColor(255,143,14);
     layers::num[10].mapToLayer= 4;

@@ -1,4 +1,4 @@
-\chapter{Efficient strategy for simulating dynamics of multilevel quantum systems}
+\chapter{Efficient strategy to simulate dynamics of multilevel quantum systems}
 
 Quantum systems with large dimensions are known to be hard to solve numerically when their unitary dynamics is considered, and even harder when the dynamics is dissipative. The problem is to find ${\ket{\psi}}$(t) from the Schrödinger equation
 \begin{equation*}
@@ -88,8 +88,8 @@ We begin immediately from writing down the Hamiltonian for the transmon in the i
 \begin{matrix}
 0          & n_{ge}e^{-i\omega_{ge} t} & 0         & n_{gd}e^{-i\omega_{gd}t} & \cdots\\
              n_{eg}e^{i\omega_{ge}t} & 0          & n_{ef}e^{-i\omega_{ef}t} & 0         & \cdots\\
-0          & n_{fe}e^{i\omega_{fe}t}  & 0         & n_{fd}e^{-i\omega_{fd}t} & \cdots\\
-               n_{dg}e^{i\omega_{dg}t} & 0          & n_{df}e^{i\omega_{df}t} & 0         & \cdots\\
+0          & n_{fe}e^{i\omega_{ef}t}  & 0         & n_{fd}e^{-i\omega_{fd}t} & \cdots\\
+n_{dg}e^{i\omega_{gd}t} & 0          & n_{df}e^{i\omega_{fd}t} & 0         & \cdots\\
 \vdots&\vdots&\vdots&\vdots& \ddots
 \end{matrix}
 \right),
