@@ -14,20 +14,31 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
         point cursor;
         
     cursor.set(anchorPoint.x(), anchorPoint.y()-g_q);
-    wire(curCell, protect, anchorPoint, "d", arm_len+2*g_q, w_q+2*g_q);
-    wire(curCell, M, cursor, "d", arm_len/2+JJ_arm_len, w_q);
+    wire(curCell, aux3, anchorPoint, "d", arm_len+2*g_q, w_q+2*g_q);
+    wire(curCell, aux2, cursor, "d", arm_len/2+JJ_arm_len, w_q);
 
     cursor.set(cursor.x()-arm_len/2-g_q, cursor.y()-arm_len/2);
-    wire(curCell, protect, cursor, "r", arm_len+2*g_q, w_q+2*g_q);
+    wire(curCell, aux3, cursor, "r", arm_len+2*g_q, w_q+2*g_q);
     cursor.set(cursor.x()+g_q, cursor.y());
-    wire(curCell, M, cursor, "r", arm_len, w_q);
+    wire(curCell, aux2, cursor, "r", arm_len, w_q);
+    
+    rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
+    
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
+    
+    clearAllAuxiliaryAux(curCell);
+    
+    
+  
  //============ JJ pads ===========
    // =====  Top 
     cursor.set(cursor.x()+arm_len/2, cursor.y()-JJ_arm_len); // cursor to lower edge of the xmon JJ arm
     point cursor2; cursor2.set(cursor.x(), cursor.y()+ebeam_overlap); // cursor 2 to the <ebeam_overlap> nm above the cursor 
 
     point cursorBandage = newPoint(cursor2.x(), cursor2.y()+1.25e3); // ------\/
-    wire(curCell, bandage, cursorBandage, "d", ebeam_overlap, 7.5e3); // bandage pad
+    wire(curCell, aux4, cursorBandage, "d", ebeam_overlap, 7.5e3); // bandage pad
     
     point cursor3 = wire(curCell, aux, cursor2, "d", (JJ_pads_len+ebeam_overlap)/2, 5e3); // the big pad 
     wire(curCell, aux, cursor3, "d", (JJ_pads_len+ebeam_overlap)/2+1, 4e3);   // ----\/
@@ -38,12 +49,13 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     cursor2.set(cursor2.x()+4e3-h_JJ*math::sqrt(1-asymmetry)/2 - h_JJ*math::sqrt(1+asymmetry)/2, cursor2.y());
     wire(curCell, aux, cursor2, "d", 1e3, h_JJ*math::sqrt(1+asymmetry));
     
-    
+
+
     // =====  Bottom
     cursor.set(cursor.x()-4e3, cursor.y()-g_q+JJ_delta_arm_len-ebeam_overlap);
     
     point cursorBandage = newPoint(cursor.x()+4e3, cursor.y()); // ------\/
-    wire(curCell, bandage, cursorBandage, "u", ebeam_overlap-1.25e3, 12e3); // bandage pad
+    wire(curCell, aux4, cursorBandage, "u", ebeam_overlap-1.25e3, 12e3); // bandage pad
     
     wire(curCell, aux, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3);
     wire(curCell, aux2, newPoint(cursor.x()-0.25e3, cursor.y()+(JJ_pads_len+ebeam_overlap)/2), "u", (JJ_pads_len+ebeam_overlap)/2, 1.5e3);
@@ -56,23 +68,16 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     wire(curCell, aux, cursor, "r", .9e3, w_JJ*math::sqrt(1-asymmetry));
     
     
-     // ==== Merge aux structure to M1
+     // ==== Merge aux structure to M1 and bandage
     
-    layout->booleanTool->boolOnLayer(aux, aux2, M1, "A-B", 0, 0, 2);
+    layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A-B", 0, 0, 2);
+    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux3, aux3, M1, "A+B", 0, 0, 0);
+    rotateLayer(curCell, aux4, anchorPoint, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux4, aux4, bandage, "A+B", 0, 0, 0);
     clearLayer(curCell, aux);
-    clearLayer(curCell, aux2);
-// ========Rotation =========
-    rect selection;
-    selection.set(anchorPoint.x() - g_q-w_q/2, anchorPoint.y()-2*g_q-arm_len-ebeam_overlap, 
-                 anchorPoint.x()+g_q+w_q/2, anchorPoint.y());
-    
-    rotateSelection(curCell, selection, anchorPoint, direction);
-    
-    rect selection;
-    selection.set(anchorPoint.x() - (arm_len/2+g_q), anchorPoint.y()-arm_len/2-g_q-w_q/2-g_q, 
-                 anchorPoint.x()+(arm_len/2+g_q), anchorPoint.y()-arm_len/2-g_q+w_q/2+g_q);
-    
-    rotateSelection(curCell, selection, anchorPoint, direction);
+    clearAllAuxiliaryAux(curCell);
+   
     point retPoint;
     retPoint.set(0, -arm_len-2*g_q);
     retPoint = rotateVector(retPoint, anchorPoint, direction);
