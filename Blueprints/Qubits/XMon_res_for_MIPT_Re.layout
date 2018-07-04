@@ -23,6 +23,7 @@
         int aux2 = 7;
         int aux3 = 8;
         int aux4 = 9;
+        int bandage = 10;
         int qr = 10;
 
         
@@ -37,16 +38,16 @@
         doubleList res_freqs;        
         doubleList test_res_freqs;
         
-        int w_res =7e3;
-        int g_res = 4e3;
+        int w_res =8e3;
+        int g_res = 3e3;
         int x = 5e3;
         int tailLen = 1000e3;
         int w_thinGround = 5e3;
         int L_claw = 60e3;
         int w_claw = 20e3;
         
-        int w_feed = 16e3;
-        int g_feed = 8e3;
+        int w_feed = 17e3;
+        int g_feed = 7e3;
       
         int w_q = 20e3;
         int g_q = 20e3;

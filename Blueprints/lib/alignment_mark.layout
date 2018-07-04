@@ -80,9 +80,9 @@ void addGlobalAlignmentMarkBMSTU(cell* curCell, point center) {
         }
     }
     
-    curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, aux2);
-    layout->booleanTool->boolOnLayer(aux2, aux, aux3, "A-B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(aux3, total, total, "A+B", 0, 0, 0);
+    curCell->addBox(center.x()-box_size/2, center.y()-box_size/2, box_size, box_size, protect);
+    layout->booleanTool->boolOnLayer(aux, aux, M, "A+B", 0, 0, 0);
+
     clearLayer(curCell, aux);
     clearLayer(curCell, aux2);
     clearLayer(curCell, aux3);
