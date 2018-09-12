@@ -2,29 +2,68 @@
 // Draws a layer of square holes which is within 10 um inside the ground polygon..
 
      int hole_size = 15e3;
-     int hole_period = 25e3;
+     int hole_period = 17e3;
      int border_thickness = 500e3;
+     int structure_borders = 50e3;
 
 void addHoles(cell* curCell) {
 
-    int N_holes_vertical = (chip_height-2*border_thickness)/hole_period+1;
-    int N_holes_horizontal = (chip_width-2*border_thickness)/hole_period+1; 
+    // int N_holes_vertical = (chip_height-2*border_thickness)/hole_period+1;
+    // int N_holes_horizontal = (chip_width-2*border_thickness)/hole_period+1;
+    //
+    // for (int i = -N_holes_vertical/2; i<=N_holes_vertical/2; i++) {
+    //     for (int j = -N_holes_horizontal/2; j<N_holes_horizontal/2+1; j++) {
+    //         point center = newPoint(j * (chip_width-2*border_thickness)/N_holes_horizontal, i * (chip_height-2*border_thickness)/N_holes_vertical);
+    //         curCell->addBox(center.x()-hole_size/2, center.y()-hole_size/2, hole_size, hole_size,aux2);
+    //     }
+    // }
 
-    for (int i = -N_holes_vertical/2; i<=N_holes_vertical/2; i++) {
-        for (int j = -N_holes_horizontal/2; j<N_holes_horizontal/2+1; j++) {
-            point center = newPoint(j * (chip_width-2*border_thickness)/N_holes_horizontal, i * (chip_height-2*border_thickness)/N_holes_vertical);
-            curCell->addBox(center.x()-hole_size/2, center.y()-hole_size/2, hole_size, hole_size,aux2);
-        }
+    curCell->addBox(-chip_width/2+border_thickness,
+                    -chip_height/2+border_thickness,
+                    chip_width-2*border_thickness,
+                    chip_height-2*border_thickness,
+                    aux);
+
+    layout->booleanTool->boolOnLayer(ground, protect, aux2, "A-B", 0, 0, 0); //aux4 is mask
+    curCell->deselectAll();
+    curCell->selectLayer(aux2);
+    layout->drawing->currentCell->sizeAdjustSelect(-structure_borders,1);
+    curCell->deselectAll();
+
+    // layout->drawing->sizeLayer(aux4, -50e3);
+    // layout->drcTool->inside(50e3, aux2, aux4);
+    layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A*B", 0, 0, 0);
+
+    int N_stripes_vertical = (chip_width-2*border_thickness)/hole_period+1;
+    int N_stripes_horizontal = (chip_height-2*border_thickness)/hole_period+1;
+
+    for (int i = -N_stripes_horizontal/2; i<=N_stripes_horizontal/2; i++) {
+      point start = newPoint(-chip_width/2+border_thickness,
+                              i * (chip_width-2*border_thickness)/N_stripes_vertical);
+      wire(curCell, aux4, start, "r",
+            chip_width-2*border_thickness, hole_period-hole_size);
     }
-    
-    layout->booleanTool->boolOnLayer(ground, protect, aux4, "A-B", 0, 0, 0); //aux4 is mask
-    layout->drcTool->inside(50e3, aux2, aux4);
-    layout->booleanTool->boolOnLayer(aux2, error, protect, "A-B", 0, 0, 0);
+
+    for (int i = -N_stripes_vertical/2; i<=N_stripes_vertical/2; i++) {
+      point start = newPoint(i * (chip_width-2*border_thickness)/N_stripes_vertical,
+                              -chip_height/2+border_thickness);
+      wire(curCell, aux4, start, "u", chip_height-2*border_thickness, hole_period-hole_size);
+    }
+
+    // curCell->selectLayer(aux4);
+    layerTranslator t;
+
+    // layout->drawing->invertSelect();
+    // curCell->deselectAll();
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux4, 14, "A*B", 0, 0, 0);
+
 
     string curCellName = curCell->cellName;
     layout->drawing->setCell(curCellName+":DRC-Rule");
-    layout->drawing->deleteCurrentCell();
+    // layout->drawing->deleteCurrentCell();
     layout->drawing->setCell(curCellName);
+    clearLayer(curCell, aux);
     clearAllAuxiliaryAux(curCell);
 
 }

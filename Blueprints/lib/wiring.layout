@@ -1,4 +1,6 @@
 
+
+
 point wire(cell* curCell, int layer, point start, string direction, int length, int width) {
 
     if (direction=="u")  {// up
@@ -155,5 +157,3 @@ point torusArbAngleTurn(cell* curCell, int layer, point start, string direction,
         return start;
     }
 }
-
-

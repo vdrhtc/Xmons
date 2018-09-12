@@ -25,26 +25,26 @@
         int aux3 = 8;
         int aux4 = 9;
         int error = 10;
+        int bandage = 11;
 
-        
         int chip_height = 10e6;
         int chip_width = 5e6;
         int border=50e3;
-        
+
         double ɛ = 11.45;
         double c = 299792458.0;
 
         doubleList relativeQubitPositions;
-        
+
         int w_res =15e3;
         int g_res = 8.5e3;
         int x = 10e3;
         int frequency = 10; //GHz
         int mode_N = 15; // the highest used mode for which the frequency is specified
-                
+
         int w_feed = 30e3;
         int g_feed = 15e3;
-        
+
         int w_q = 45e3;
         int g_q = 20e3;
         int w_JJ = 200;
@@ -64,26 +64,26 @@ int main() {
     layout->drawing->deselectAll();
     layout->drawing->activeLayer=error;
     layout->drcTool->setErrorLayerToActiveLayer();
-    
+
     debug("New run below --------------------------------");
-        
+
     string sample_name = layout->getText("Sample name","Please enter the sample name:", "M-M MPLX 1");
-    
+
         int i;
-    
+
     cell *curCell = layout->drawing->currentCell;
     point cursor;
-    
+
     intList segmentLengths;
     stringList directions;
     directions.append("r");
     directions.append("d");
     directions.append("l");
-    
+
     segmentLengths.append(1000e3);
     segmentLengths.append(chip_height/2);
     segmentLengths.append(1000e3);
-    
+
     cursor.set(-chip_width/2, chip_height/4);
     pad_len = 400e3;
     addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
@@ -93,49 +93,49 @@ int main() {
 
     pointArray qubitPositions = addResonator(curCell, cursor, w_res, g_res, frequency, mode_N, "r", relativeQubitPositions);
 /*    debug(qubitPositions);*/
-    
+
     pad_len  = 250e3;
-      
+
     for (int i=0; i<qubitPositions.size(); i++) {
         point couplingPoint = newPoint(qubitPositions.point(i).x()+w_res/2+g_res-q_offset, qubitPositions.point(i).y());
         point cursor3 = addBoxQubit(curCell, couplingPoint, "r", w_JJ, h_JJ);
-        
+
         point couplingPoint = newPoint(qubitPositions.point(i).x()-w_res/2-g_res+q_offset, qubitPositions.point(i).y());
         point cursor2 = addBoxQubit(curCell, couplingPoint, "l", w_JJ, h_JJ);
-                
-        stringList directions; 
+
+        stringList directions;
         intList segmentLengths;
         if (i==1) {
             directions.append("r"); directions.append("u"); directions.append("l"); directions.append("u");
-            segmentLengths.append(230e3); segmentLengths.append(chip_height/2-cursor2.y()-800e3); 
+            segmentLengths.append(230e3); segmentLengths.append(chip_height/2-cursor2.y()-800e3);
             segmentLengths.append(cursor3.x()+230e3); segmentLengths.append(800e3);
             addFeedline(curCell, cursor3, 7e3, 4e3, segmentLengths, directions, "fb");
         } else {
             directions.append("l"); directions.append("d"); directions.append("l"); directions.append("d");
-            segmentLengths.append(230e3); segmentLengths.append(chip_height/2+cursor3.y()-800e3); 
+            segmentLengths.append(230e3); segmentLengths.append(chip_height/2+cursor3.y()-800e3);
             segmentLengths.append(cursor2.x()-230e3);segmentLengths.append(800e3);
             addFeedline(curCell, cursor2, 7e3, 4e3, segmentLengths, directions, "fb");
         }
     }
-   
-    element marker = curCell->addText(protect, newPoint(-chip_width/2+100e3, chip_height/2-100e3), sample_name);    
+
+    element marker = curCell->addText(protect, newPoint(-chip_width/2+100e3, chip_height/2-100e3), sample_name);
     curCell->textToPolygon(200e3);
-    
+
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
-    
+
     addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, chip_height/2-0.5e6), 200, 100, "l", false);
 /*    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, chip_height/2-2e6), 200, 100, "l", false);*/
     addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -chip_height/2+0.5e6), 200, 100, "l", false);
     addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -chip_height/2+0.5e6), 200, 100, "l", false);
-    
-/*    addHoles(curCell);*/
-    
+
+    addHoles(curCell);
+
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);
-    
+
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 1, 1, 0);
-    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 1, 1, 0);    
-    
+    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 1, 1, 0);
+
 
 /*    layout->booleanTool->boolOnLayer(M1, total, total, "A+B", 0, 0, 0);*/
 /*    clearLayer(curCell, M1);*/
@@ -145,7 +145,7 @@ int main() {
 /*    layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0);*/
 /*    clearLayer(curCell, aux);*/
 
-    
+
     int hd;
     layout->backgroundTool->clearBackground();
 /*    hd = layout->backgroundTool->addBackground("background.png");*/
@@ -157,7 +157,7 @@ int main() {
     clearLayer(curCell, ground);
 /*    debug.show();*/
 /*    debug.clear();*/
-    
-    
-    
+
+
+
 }
