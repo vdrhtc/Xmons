@@ -1,0 +1,32 @@
+
+
+point addBridge(cell* curCell, point anchorPoint, string direction) {
+
+
+    point cursor;
+    point start;
+    start.set(anchorPoint.x(), anchorPoint.y()+85e3/2+10e3);
+
+    cursor = wire(curCell, aux4, start, "d", 30e3, 40e3);
+    cursor.set(cursor.x(), cursor.y()+20e3);
+    cursor = wire(curCell, aux5, cursor, "d", 85e3, 20e3);
+    cursor.set(cursor.x(), cursor.y()+20e3);
+    cursor = wire(curCell, aux4, cursor, "d", 30e3, 40e3);
+
+    point ret_point = newPoint(cursor.x(), cursor.y());
+
+
+    //=========Rotate===========
+    rotateLayer(curCell, aux4, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux5, anchorPoint, angleFromDirection(direction));
+
+
+    layout->booleanTool->boolOnLayer(aux4, aux4, 20, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux5, aux5, 30, "A+B", 0, 0, 0);
+
+    clearLayer(curCell, aux4);
+    clearLayer(curCell, aux5);
+
+    ret_point= rotateVector(newPoint(ret_point.x()-anchorPoint.x(), ret_point.y()-anchorPoint.y()), anchorPoint, direction);
+    return ret_point;
+}

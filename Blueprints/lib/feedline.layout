@@ -12,29 +12,30 @@ __
 x  |     ______>=====~======< ____|  | x
 |   |    |_____/                          \_____ | |
 |__|
-    
+
     Or a microwave drive line   _____
                                            /___  | |
 x-----========~==========< ___|  | x
                                            \____ | |
-                                           
+
     Or with an IDC
 
   _____                                       _____
  | |   __ \                                  / _____|
 x |  |___ >==========~======<  |_____
  | | ____/                                  \______|
-                                           
-    
+
+
 */
 
 #include "wiring.layout"
 #include "auxx.layout"
 
-    int pad_len  = 400e3;
+//    int pad_len  = 400e3;
+    int pad_len  = 300e3;
     int w_pad = 200e3;
     int g_pad = 120e3;
-    int bottom_g_pad = g_pad; 
+    int bottom_g_pad = g_pad;
     int transition_len = 150e3;
     int ground_connector_width = 50e3;
     int totalPadLen() {
@@ -42,21 +43,21 @@ x |  |___ >==========~======<  |_____
     }
     int fluxBiasLen = 0;
     int fluxBiasInductorLen = 20e3;
+//    int fluxBiasInductorLen = 35e3; //MIPT
     int microwaveDriveLen = 0;
 
 
 point microwaveDrive(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
-    
-    
+
+    microwaveDriveLen = g_feed;
     point cursor = wire(curCell, protect, anchor, direction, g_feed, w_feed+2*g_feed);
-    microwaveDriveLen+=g_feed;
-    
+
     return cursor;
 }
 
-    
+
 point fluxBias(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
-    
+
     point cursor;
     cursor.set(anchor.x(), anchor.y()-1.5*g_feed);
     wire(curCell, aux4, cursor, "r", fluxBiasInductorLen/2, g_feed);
@@ -67,25 +68,25 @@ point fluxBias(cell* curCell, int M, int protect, point anchor, int w_feed, int 
     wire(curCell, aux3, cursor, "l", w_feed+g_feed, w_feed);
     cursor.set(anchor.x(), anchor.y()-2*g_feed-w_feed);
     fluxBiasLen = 2*g_feed+w_feed;
-    
+
     rotateLayer(curCell, aux3, anchor, angleFromDirection(direction));
     rotateLayer(curCell, aux4, anchor, angleFromDirection(direction));
     layout->booleanTool->boolOnLayer(aux3, M, M, "A+B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(aux4, protect, protect, "A+B", 0, 0, 0);
     clearLayer(curCell, aux3);
     clearLayer(curCell, aux4);
-    
+
     point retPoint;
     retPoint.set(0, -fluxBiasLen);
     return rotateVector(retPoint, anchor, direction);
 }
 
 point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
-    
+
 
     point cursor;
     cursor.set(anchor.x(), anchor.y() - ground_connector_width);
-    
+
     curCell->addBox(cursor.x()-w_pad/2, cursor.y()-bottom_g_pad, w_pad, -pad_len, M);
     pointArray ps;
     ps.attach(cursor.x()-w_pad/2, cursor.y()-pad_len-bottom_g_pad);
@@ -93,16 +94,16 @@ point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, in
     ps.attach(cursor.x()+w_feed/2, cursor.y()-pad_len-transition_len-bottom_g_pad);
     ps.attach(cursor.x()+w_pad/2, cursor.y()-pad_len-bottom_g_pad);
     curCell->addPolygon(ps, M);
-    
+
     curCell->addBox(cursor.x()-w_pad/2-g_pad, cursor.y(), w_pad+2*g_pad, -pad_len-bottom_g_pad, protect);
     pointArray ps;
     ps.attach(cursor.x()-w_pad/2-g_pad, cursor.y()-pad_len-bottom_g_pad);
     ps.attach(cursor.x()-w_feed/2-g_feed, cursor.y()-pad_len-transition_len-bottom_g_pad);
     ps.attach(cursor.x()+w_feed/2+g_feed, cursor.y()-pad_len-transition_len-bottom_g_pad);
     ps.attach(cursor.x()+w_pad/2+g_pad, cursor.y()-pad_len-bottom_g_pad);
-    
+
     curCell->addPolygon(ps,  protect);
-    
+
     rect selection;
     selection.set(anchor.x()-w_pad/2-g_pad, anchor.y()-totalPadLen(), anchor.x()+w_pad/2+g_pad, anchor.y());
     rotateSelection(curCell, selection, anchor, direction);
@@ -112,8 +113,10 @@ point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, in
 }
 
 
-void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList segmentLengths, stringList directions, string type) {
-    
+void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
+                 intList segmentLengths, stringList directions, string type,
+                 bool bridged = false, int bridge_interval = 100e3) {
+
     int turnRad = 10*w_feed;
     int N_turns = directions.size()-1;
     int i;
@@ -129,40 +132,68 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed, intList seg
         start = microwaveDrive(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
     } else if (type == "cd") {
-        
+
     }
 
     if(N_turns==0) {
         cursor = start;
         turnRad = 0;
     }
-    else {  
-        wire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed);
-        cursor = wire(curCell, aux2, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
-        torusTurn(curCell, aux, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
-        cursor = torusTurn(curCell, aux2, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);    
+    else {
+        if (bridged) {
+          bridgedWire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed, bridge_interval);
+          cursor = wire(curCell, aux2, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
+          torusTurnBridge(curCell, aux, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
+        } else {
+          wire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed);
+          cursor = wire(curCell, aux2, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
+          torusTurn(curCell, aux, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
+        }
+
+        cursor = torusTurn(curCell, aux2, cursor, directions.at(0)+directions.at(1), turnRad, w_feed+2*g_feed);
     }
     for (i=1; i<N_turns; i++) {
+      if (bridged) {
+        bridgedWire(curCell, aux, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed, bridge_interval);
+        cursor = wire(curCell, aux2, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
+        torusTurnBridge(curCell, aux, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
+      } else {
         wire(curCell, aux, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed);
         cursor = wire(curCell, aux2, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
         torusTurn(curCell, aux, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
+      }
+
         cursor = torusTurn(curCell, aux2, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed+2*g_feed);
     }
-    wire(curCell, aux, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen(), w_feed);
-    cursor = wire(curCell, aux2, cursor, directions.at(N_turns), segmentLengths.at(N_turns) - turnRad- totalPadLen(), w_feed+2*g_feed);
-    
+    if (bridged) {
+      bridgedWire(curCell, aux, cursor, directions.at(N_turns),
+                  segmentLengths.at(N_turns) - turnRad- totalPadLen(), w_feed,
+                  bridge_interval);
+      point newCursor = wire(curCell, aux2, cursor, directions.at(N_turns),
+                    segmentLengths.at(N_turns) - turnRad- totalPadLen(),
+                    w_feed+2*g_feed);
+      cursor.set(newCursor.x(), newCursor.y());
+
+    } else {
+      wire(curCell, aux, cursor, directions.at(N_turns),
+           segmentLengths.at(N_turns) - turnRad- totalPadLen(), w_feed);
+      point newCursor = wire(curCell, aux2, cursor, directions.at(N_turns),
+                       segmentLengths.at(N_turns) - turnRad- totalPadLen(),
+                       w_feed+2*g_feed);
+
+      cursor.set(newCursor.x(), newCursor.y());
+    }
     string direction = directions.at(N_turns);
     point vec;
     vec.set(0, -totalPadLen());
     cursor = rotateVector(vec, cursor, direction);
-    
+
     contactPad(curCell, aux, aux2, cursor, w_feed, g_feed, opposite(direction));
-    
+
     layout->booleanTool->boolOnLayer(aux, aux, M, "A+B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(aux2, aux2, protect, "A+B", 0, 0, 0);
-    
+
     clearLayer(curCell, aux);
     clearAllAuxiliaryAux(curCell);
-    
-}
 
+}

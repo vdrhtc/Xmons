@@ -23,6 +23,8 @@
         int aux2 = 7;
         int aux3 = 8;
         int aux4 = 9;
+        int bandage = 11;
+	int aux5 = 12;
         
         int chip_height = 3e6;
         int chip_width = 3e6;

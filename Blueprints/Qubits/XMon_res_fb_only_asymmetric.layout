@@ -15,15 +15,17 @@
 
         int M = 0;
         int M1 = 1;
-        int protect = 2;
-        int ground = 3;
-        int mask = 4;
-        int total = 5;
-        int aux = 6;
-        int aux2 = 7;
-        int aux3 = 8;
-        int aux4 = 9;
-        int bandage = 10;
+	int jj_layer = 2;    
+        int protect = 3;
+        int ground = 4;
+        int mask = 5;
+        int total = 6;
+        int aux = 7;
+        int aux2 = 8;
+        int aux3 = 9;
+        int aux4 = 10;
+        int bandage = 11;
+	int aux5 = 12;
 
         
         int chip_height = 5e6;
@@ -44,6 +46,7 @@
         int w_thinGround = 5e3;
         int L_claw = 60e3;
         int w_claw = 20e3;
+	int claw_gap = 5e3;
         
         int w_feed = 16e3;
         int g_feed = 8e3;
@@ -66,7 +69,7 @@ int main() {
     layout->drawing->deselectAll();
 
         
-    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon BMSTU Al asym");
+    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon NbAl FB ?");
     
         int i;
     
@@ -153,14 +156,14 @@ int main() {
     }
     curCell->textToPolygon(100e3);
 
-    marker = curCell->addText(protect, newPoint(-chip_width/2+200e3, chip_height/2-200e3), sample_name);    
+    marker = curCell->addText(protect, newPoint(-chip_width/2+400e3, chip_height/2-400e3), sample_name);    
     curCell->textToPolygon(150e3);
 
     addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 200, 100, "d", false, 0);
     addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 200, 100, "d", false, 0.2);
     addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 200, 100, "d", false, 0.4);
     addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 200, 100, "d", false, 0.8);
-    
+/*    */
     addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
     addGlobalAlignmentMarkBMSTU(curCell, newPoint(chip_width/2-0.65e6, -1.75e6+0.025e6));
 

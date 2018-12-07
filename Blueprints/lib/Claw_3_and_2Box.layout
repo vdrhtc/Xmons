@@ -1,0 +1,164 @@
+        
+        int chip_height = 5e6;
+        int chip_width = 10e6;
+        int border=50e3;
+        
+        int feedlineDepth = chip_height/4;
+        double ɛ = 11.45;
+        double c = 299792458.0;
+
+        doubleList res_freqs;        
+        doubleList test_res_freqs;
+        
+        int w_res =7e3;
+        int g_res = 4e3;
+        int x = 5e3;
+        int tailLen = 1000e3;
+        int w_thinGround = 5e3;
+        int L_claw = 60e3;
+        int w_claw = 20e3;
+
+int  central_w_claw = 10e3;
+int  right_w_claw = 40e3;
+int  left_w_claw = 40e3;
+        
+        int w_feed = 16e3;
+        int g_feed = 8e3;
+      
+        int w_q = 30e3;
+        int g_q = 20e3;
+        int arm_len = 500e3;
+        int ebeam_overlap = 3e3;
+        doubleList asymmetries;
+
+        int qrSize = 600e3;
+        int qrCodePositionX = chip_width/2*11/10;
+        int qrCodePositionY = chip_height/2*11/10;
+
+int central_L_claw = 400e3;
+int right_L_claw = 100e3;
+int left_L_claw = 200e3;
+
+
+int q_length = 400e3;
+        int JJ_delta_arm_len = 0e3;
+
+pointArray addClaw_3(cell* curCell, point anchorPoint, string direction) {
+	w_q = 30e3;
+
+        
+    point cursor;
+    point start;
+    start.set(anchorPoint.x(), anchorPoint.y());
+	pointArray retPoints;
+    //=========Metal===========
+    
+    cursor = wire(curCell, aux2, start, "d", central_L_claw+w_res, central_w_claw);
+    cursor.set(cursor.x()+central_w_claw/2, cursor.y()+central_L_claw+w_res/2);
+    cursor = wire(curCell, aux2, cursor, "r", w_q+2*g_q+2*w_thinGround+2*claw_gap, w_res);
+
+//cursor.set(anchorPoint.x(), anchorPoint.y()-w_res/2);
+//cursor = wire(curCell, aux2, cursor, "r", w_q+2*g_q-JJ_delta_arm_len+2*w_thinGround+2*w_thinGround, w_res);
+
+    cursor.set(cursor.x()+right_w_claw/2, cursor.y()+w_res/2);
+    wire(curCell, aux2, cursor, "d", right_L_claw+w_res, right_w_claw);
+    point ret_point_1 = newPoint(cursor.x()-right_w_claw/2-w_q-2*g_q-w_thinGround-claw_gap,
+										cursor.y()-w_res-q_length/2-g_q-w_thinGround-claw_gap); 
+
+
+   cursor.set(anchorPoint.x()-central_w_claw/2,anchorPoint.y()-w_res/2);
+
+//cursor.set(anchorPoint.x(),anchorPoint.y()-w_res/2);
+
+    cursor = wire(curCell, aux2, cursor, "l", w_q+2*g_q+2*w_thinGround+2*claw_gap, w_res);
+    cursor.set(cursor.x()-left_w_claw/2, cursor.y()+w_res/2);
+    wire(curCell, aux2, cursor, "d", left_L_claw+w_res, left_w_claw);
+    point ret_point_2 = newPoint(cursor.x()+left_w_claw/2+w_q+2*g_q+claw_gap+w_thinGround, 
+								cursor.y()-w_res-q_length/2-g_q-w_thinGround-claw_gap);
+
+    //=========Protect===========
+   cursor.set(anchorPoint.x(), anchorPoint.y()+claw_gap);
+   cursor = wire(curCell, aux3, cursor, "d", central_L_claw+w_res+2*claw_gap, central_w_claw+2*claw_gap);
+   cursor.set(cursor.x()+central_w_claw/2+claw_gap, cursor.y()+central_L_claw+w_res/2+claw_gap);
+   cursor = wire(curCell, aux3, cursor, "r", w_q+2*g_q+2*w_thinGround, w_res+2*claw_gap);
+
+//cursor.set(anchorPoint.x()-w_thinGround,anchorPoint.y()-w_res/2);
+//cursor = wire(curCell, aux3, cursor, "r", w_q+2*g_q-JJ_delta_arm_len+2*w_thinGround+2*w_thinGround, w_res+2*w_thinGround);
+
+
+    cursor.set(cursor.x()+right_w_claw/2+claw_gap, cursor.y()+w_res/2+claw_gap);
+    wire(curCell, aux3, cursor, "d", right_L_claw+w_res+2*claw_gap, right_w_claw+2*claw_gap);
+
+
+    cursor.set(anchorPoint.x()-central_w_claw/2-claw_gap, anchorPoint.y()-w_res/2);
+    cursor = wire(curCell, aux3, cursor, "l", w_q+2*g_q+2*w_thinGround, w_res+2*claw_gap);
+    cursor.set(cursor.x()-left_w_claw/2-claw_gap, cursor.y()+w_res/2+claw_gap);
+    wire(curCell, aux3, cursor, "d", left_L_claw+w_res+2*claw_gap, left_w_claw+2*claw_gap);
+
+
+    //=========Rotate===========
+    
+    
+    rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
+    
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
+    
+    clearAllAuxiliaryAux(curCell);
+
+     ret_point_1 = rotateVector(newPoint(ret_point_1.x()-anchorPoint.x(), ret_point_1.y()-anchorPoint.y()), anchorPoint, direction);
+     ret_point_2 = rotateVector(newPoint(ret_point_2.x()-anchorPoint.x(), ret_point_2.y()-anchorPoint.y()), anchorPoint, direction);
+
+     retPoints.attachPoint(ret_point_1);	retPoints.attachPoint(ret_point_2);
+
+
+    return retPoints;
+
+
+
+ //   return rotateVector(newPoint(0, -w_res-2*w_thinGround), anchorPoint, direction);
+}
+
+
+
+/*int main() {
+    setupLayers();
+    layout->drawing->selectAll();
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+    cell *curCell = layout->drawing->currentCell;
+      
+       
+    // Ground plane
+    curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
+    
+  
+    string sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon NbAl FB ?");
+    pointArray couplingPoints= addClaw_3(curCell,  newPoint(0, 0), "r");
+    addBoxQubit(curCell, couplingPoints.point(0), "u",  100,  200);
+    addBoxQubit(curCell, couplingPoints.point(1), "d",  100,  200);
+
+
+   layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
+ //  layout->booleanTool->boolOnLayer(M1, total, total, "A+B", 0, 0, 0);
+ //  clearLayer(curCell, M1);
+
+    layout->backgroundTool->clearBackground();
+    clearLayer(curCell, mask);
+    clearLayer(curCell, M);
+    clearLayer(curCell, protect);
+    clearLayer(curCell, ground);
+
+
+}
+    */
+        
+
+
+
+
+
+
+ 

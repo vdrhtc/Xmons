@@ -13,23 +13,23 @@ point addClaw(cell* curCell, point anchorPoint, string direction) {
 
     //=========Metal===========
     
-    cursor = wire(curCell, aux2, start, "r", w_q/2+g_q+2*w_thinGround+w_claw, w_res);
+    cursor = wire(curCell, aux2, start, "r", w_q/2+g_q+claw_gap+w_thinGround+w_claw, w_res);
     cursor.set(cursor.x()-w_claw/2, cursor.y()-w_res/2);
-    wire(curCell, aux2, cursor, "d", L_claw, w_claw);
+    wire(curCell, aux2, cursor, "d", L_claw_right, w_claw);
     
-    cursor = wire(curCell, aux2, start, "l", w_q/2+g_q+2*w_thinGround+w_claw, w_res);
+    cursor = wire(curCell, aux2, start, "l", w_q/2+g_q+claw_gap+w_thinGround+w_claw, w_res);
     cursor.set(cursor.x()+w_claw/2, cursor.y()-w_res/2);
-    wire(curCell, aux2, cursor, "d", L_claw, w_claw);
+    wire(curCell, aux2, cursor, "d", L_claw_left, w_claw);
     
     //=========Protect===========
 
-    cursor = wire(curCell, aux3, start, "r", w_q/2+g_q+2*w_thinGround+w_claw, w_res+2*w_thinGround);
-    cursor.set(cursor.x()-w_claw/2, cursor.y()+w_res/2+w_thinGround);
-    wire(curCell, aux3, cursor, "d", L_claw+2*w_thinGround+w_res, w_claw+2*w_thinGround);
+    cursor = wire(curCell, aux3, start, "r", w_q/2+g_q+w_thinGround+claw_gap+w_claw, w_res+2*claw_gap);
+    cursor.set(cursor.x()-w_claw/2, cursor.y()+w_res/2+claw_gap);
+    wire(curCell, aux3, cursor, "d", L_claw_right+2*claw_gap+w_res, w_claw+2*claw_gap);
     
-    cursor = wire(curCell, aux3, start, "l", w_q/2+g_q+2*w_thinGround+w_claw, w_res+2*w_thinGround);
-    cursor.set(cursor.x()+w_claw/2, cursor.y()+w_res/2+w_thinGround);
-    wire(curCell, aux3, cursor, "d", L_claw+2*w_thinGround+w_res, w_claw+2*w_thinGround);
+    cursor = wire(curCell, aux3, start, "l", w_q/2+g_q+claw_gap+w_thinGround+w_claw, w_res+2*claw_gap);
+    cursor.set(cursor.x()+w_claw/2, cursor.y()+w_res/2+claw_gap);
+    wire(curCell, aux3, cursor, "d", L_claw_left+2*claw_gap+w_res, w_claw+2*claw_gap);
     
     //=========Rotate===========
     
@@ -42,5 +42,5 @@ point addClaw(cell* curCell, point anchorPoint, string direction) {
     
     clearAllAuxiliaryAux(curCell);
 
-    return rotateVector(newPoint(0, -w_res-2*w_thinGround), anchorPoint, direction);
+    return rotateVector(newPoint(0, -w_res-claw_gap-w_thinGround), anchorPoint, direction);
 }

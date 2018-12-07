@@ -12,8 +12,6 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
         int JJ_delta_arm_len = 8e3;
         int JJ_arm_len = arm_len/2+JJ_delta_arm_len;
         point cursor;
-	      w_JJ = w_JJ - 30;
-	      h_JJ = h_JJ - 30;
 
 
     cursor.set(anchorPoint.x(), anchorPoint.y()-g_q);
@@ -24,7 +22,7 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     wire(curCell, aux3, cursor, "r", arm_len+2*g_q, w_q+2*g_q);
     cursor.set(cursor.x()+g_q, cursor.y());
     wire(curCell, aux2, cursor, "r", arm_len, w_q);
-
+    point pos = cursor;
     rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
     rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
 
@@ -38,16 +36,16 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     int right_h_JJ = h_JJ*math::sqrt(1+asymmetry)- 30;
 
     string jjCell_name ="Squid:("+(left_w_JJ+30);
-    data+= "x"+(left_h_JJ+30);
-    data+=")";
-    data+="("+(right_w_JJ+30);
-    data+="x"+(right_h_JJ+30);
-    data+=")";
-    data+= "bridge:"+;
-    data+= "d:"+asymmetry;
-    data+= "corr:"+30;
+    jjCell_name+= "x"+(left_h_JJ+30);
+    jjCell_name+=")";
+    jjCell_name+="("+(right_w_JJ+30);
+    jjCell_name+="x"+(right_h_JJ+30);
+    jjCell_name+=")";
+    jjCell_name+= "bridge:"+60;
+    jjCell_name+= "d:"+asymmetry;
+    jjCell_name+= "corr:"+30;
 
-    layout->drawing->currentCell->newCell();
+    layout->drawing->newCell();
 
     layout->drawing->currentCell->cellName=jjCell_name;
 
@@ -55,7 +53,7 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
 
  //============ JJ pads ===========
    // =====  Top
-    cursor.set(cursor.x()+arm_len/2, cursor.y()-JJ_arm_len); // cursor to lower edge of the xmon JJ arm
+    cursor.set(0,0); // cursor to lower edge of the xmon JJ arm
     point cursor2; cursor2.set(cursor.x(), cursor.y()+ebeam_overlap); // cursor 2 to the <ebeam_overlap> nm above the cursor
 
     point cursorBandage = newPoint(cursor2.x(), cursor2.y()+1.25e3); // ------\/
@@ -88,16 +86,25 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     cursor.set(cursor.x()-6e3, cursor.y() - w_JJ*math::sqrt(1-asymmetry)/2 + w_JJ*math::sqrt(1+asymmetry)/2);
     wire(curCell, aux, cursor, "r", .9e3-60, w_JJ*math::sqrt(1-asymmetry));
 
-
-     // ==== Merge aux structure to M1 and bandage
+    // ==== Merge aux structure to M1 and bandage
 
     layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A-B", 0, 0, 2);
-    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
     layout->booleanTool->boolOnLayer(aux3, aux3, jj_layer, "A+B", 0, 0, 0);
-    rotateLayer(curCell, aux4, anchorPoint, angleFromDirection(direction));
     layout->booleanTool->boolOnLayer(aux4, aux4, bandage, "A+B", 0, 0, 0);
     clearLayer(curCell, aux);
     clearAllAuxiliaryAux(curCell);
+
+    cell *curCellJJ = curCell;
+    cell *curCell = layout->drawing->findCell(sample_name);
+    layout->drawing->setCell(sample_name);
+
+    point JJ_point = newPoint(0, -JJ_arm_len-arm_len/2-g_q);
+    JJ_point = rotateVector(JJ_point, anchorPoint, direction);
+    debug(JJ_point);
+    element *JJ_ref = curCell->addCellref(curCellJJ,
+                                          newPoint(JJ_point.x(),
+                                                   JJ_point.y()));
+    JJ_ref->rotate(angleFromDirection(direction));
 
     point retPoint;
     retPoint.set(0, -arm_len-2*g_q);

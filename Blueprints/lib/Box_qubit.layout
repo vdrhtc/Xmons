@@ -4,13 +4,16 @@
 
 */
 
-    int JJ_pads_len = 5.45e3;
+ //   int JJ_pads_len = 5.45e3;
+ int JJ_pads_len = 4e3+5.45e3;
 
 point addBoxQubit(cell* curCell, point anchorPoint, string direction, int w_JJ, int h_JJ) {
 
-        int JJ_delta_arm_len = 8e3;
+//        int JJ_delta_arm_len = 8e3;
+int JJ_delta_arm_len = 0;//8e3;
         int JJ_arm_len = 0;
-        int ebeam_overlap = 2e3;
+//        int ebeam_overlap = 2e3;
+int ebeam_overlap =3e3;
         point cursor;
     
     
@@ -25,7 +28,7 @@ point addBoxQubit(cell* curCell, point anchorPoint, string direction, int w_JJ, 
     point cursor2; cursor2.set(cursor.x(), cursor.y()+ebeam_overlap);
 
     
-    point cursor3 = wire(curCell, aux3, cursor2, "d", (JJ_pads_len+ebeam_overlap)/3*2, 6e3);
+    point cursor3 = wire(curCell, aux3, cursor2, "d", 2*(JJ_pads_len+ebeam_overlap)/3, 6e3);
     wire(curCell, aux3, cursor3, "d", (JJ_pads_len+ebeam_overlap)/3+1, 5e3); 
     wire(curCell, aux4, cursor3, "d", (JJ_pads_len+ebeam_overlap)/3+1, 4e3);
     
@@ -41,7 +44,7 @@ point addBoxQubit(cell* curCell, point anchorPoint, string direction, int w_JJ, 
     wire(curCell, aux3, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3);
     wire(curCell, aux4, newPoint(cursor.x()-0.25e3, cursor.y()+(JJ_pads_len+ebeam_overlap)/2), "u", (JJ_pads_len+ebeam_overlap)/2, 1.5e3);
     cursor.set(cursor.x()+2*4e3, cursor.y());
-    wire(curCell, aux3, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3);
+    wire(curCell, aux3, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3); // вторая половина
     wire(curCell, aux4, newPoint(cursor.x()+0.25e3, cursor.y()+(JJ_pads_len+ebeam_overlap)/2), "u", (JJ_pads_len+ebeam_overlap)/2, 1.5e3);
     cursor.set(cursor.x()-1e3, cursor.y()+ebeam_overlap+JJ_pads_len-h_JJ/2);
     wire(curCell, aux3, cursor, "l", 1e3, h_JJ);
@@ -66,5 +69,7 @@ point addBoxQubit(cell* curCell, point anchorPoint, string direction, int w_JJ, 
     
     point retPoint;
     retPoint.set(0, -w_q-2*g_q+JJ_delta_arm_len);
-    return rotateVector(retPoint, anchorPoint, direction);
+    retPoint =  rotateVector(retPoint, anchorPoint, direction);
+
+    return retPoint;
 }

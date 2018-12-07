@@ -1,0 +1,31 @@
+
+// Draws a layer of square holes which is within 10 um inside the ground polygon..
+
+     int hole_size = 15e3;
+     int hole_period = 25e3;
+     int border_thickness = 500e3;
+
+void addHoles(cell* curCell) {
+
+    int N_holes_vertical = (chip_height-2*border_thickness)/hole_period+1;
+    int N_holes_horizontal = (chip_width-2*border_thickness)/hole_period+1; 
+
+    for (int i = -N_holes_vertical/2; i<=N_holes_vertical/2; i++) {
+        for (int j = -N_holes_horizontal/2; j<N_holes_horizontal/2+1; j++) {
+            point center = newPoint(j * (chip_width-2*border_thickness)/N_holes_horizontal, i * (chip_height-2*border_thickness)/N_holes_vertical);
+            curCell->addBox(center.x()-hole_size/2, center.y()-hole_size/2, hole_size, hole_size,aux2);
+        }
+    }
+    
+    layout->booleanTool->boolOnLayer(ground, protect, aux4, "A-B", 0, 0, 0); //aux4 is mask
+    layout->drcTool->inside(50e3, aux2, aux4);
+    layout->booleanTool->boolOnLayer(aux2, error, holes, "A-B", 0, 0, 0);
+//    layout->booleanTool->boolOnLayer(aux2, error, protect, "A-B", 0, 0, 0);
+
+    string curCellName = curCell->cellName;
+    layout->drawing->setCell(curCellName+":DRC-Rule");
+    layout->drawing->deleteCurrentCell();
+    layout->drawing->setCell(curCellName);
+    clearAllAuxiliaryAux(curCell);
+
+}

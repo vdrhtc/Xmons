@@ -9,8 +9,9 @@ void clearAllAuxiliaryAux(cell* curCell) {
 
     layout->drawing->deselectAll();
     curCell->selectLayer(aux2);
-    curCell->selectLayer(aux3);    
+    curCell->selectLayer(aux3);
     curCell->selectLayer(aux4);
+    curCell->selectLayer(aux5);
     layout->drawing->deleteSelect();
     layout->drawing->deselectAll();
 }
@@ -34,7 +35,7 @@ void rotateLayer(cell* curCell, int layer, point center, double angle) {
 }
 
 void mirrorLayer(cell* curCell, int layer, point p1, point p2) {
-    
+
     curCell->deselectAll();
     curCell->selectLayer(layer);
     layout->drawing->point(p1.x(), p1.y());
@@ -42,8 +43,8 @@ void mirrorLayer(cell* curCell, int layer, point p1, point p2) {
     layout->drawing->mirror();
     curCell->deselectAll();
     layout->drawing->clearPoints();
-    
-} 
+
+}
 
 
 void rotateSelection(cell* curCell, rect selection, point center, string direction) {
@@ -86,18 +87,18 @@ point rotateVector(point vec, point anchor, string direction) {
         return retPoint;
     } else if(direction=="l") {
         retPoint.set(anchor.x()+ vec.y(), anchor.y()-vec.x());
-        return retPoint; 
+        return retPoint;
     } else if(direction=="r") {
         retPoint.set(anchor.x() -vec.y(), anchor.y()+vec.x());
-        return retPoint; 
+        return retPoint;
     } else  {
-        retPoint.set(anchor.x() + vec.x(), anchor.y()-vec.y()); //mirrored...
-        return retPoint; 
+        retPoint.set(anchor.x() - vec.x(), anchor.y()-vec.y()); //mirrored...
+        return retPoint;
     }
 }
 
 double angleFromDirection(string direction) {
-    
+
     if (direction=="d")
         return 0;
     else if (direction=="u")
@@ -106,6 +107,10 @@ double angleFromDirection(string direction) {
         return -90;
     else if (direction=="r")
         return 90;
+    else if (direction=="lu")
+        return -45;
+    else if (direction=="ru")
+        return 45;
 }
 
 point rotateVectorArbAngle(point vec, point anchor, double angle) {
@@ -118,21 +123,21 @@ point rotateVectorArbAngle(point vec, point anchor, double angle) {
 string roman(int i){
     int k;
     string ret="";
-    
+
     if (i<4){
         for(k=0;k<i;k++)
             ret+="I";
         return ret;
-    } else if(i==4) 
+    } else if(i==4)
         return "IV";
-    else if(i==5) 
+    else if(i==5)
         return "V";
     else if(i<9) {
         ret += "V";
         return ret+roman(i-5);
-    } else if(i==9) 
+    } else if(i==9)
         return "IX";
-    else if(i==10) 
+    else if(i==10)
         return "X";
     else if (i<50)
         return "X"+roman(i-10);

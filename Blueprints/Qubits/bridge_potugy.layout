@@ -1,0 +1,91 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/alignment_mark.layout"
+#include "qr_nbal.layout"
+
+
+        int M = 0;
+        int M1 = 1;
+	      int jj_layer = 2;
+        int protect = 3;
+        int ground = 4;
+        int mask = 5;
+        int total = 6;
+        int aux = 7;
+        int aux2 = 8;
+        int aux3 = 9;
+        int aux4 = 10;
+        int bandage = 11;
+	int aux5 = 12;
+
+
+point addBridge(cell* curCell, point anchorPoint, string direction) {
+
+
+    point cursor;
+    point start;
+    start.set(anchorPoint.x(), anchorPoint.y()+85e3/2+10e3);
+
+    cursor = wire(curCell, aux, start, "d", 30e3, 40e3);
+    cursor.set(cursor.x(), cursor.y()+20e3);
+    cursor = wire(curCell, aux2, cursor, "d", 85e3, 20e3);
+    cursor.set(cursor.x(), cursor.y()+20e3);
+    cursor = wire(curCell, aux, cursor, "d", 30e3, 40e3);
+
+    point ret_point = newPoint(cursor.x(), cursor.y());
+
+
+    //=========Rotate===========
+    rotateLayer(curCell, aux, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
+
+
+    layout->booleanTool->boolOnLayer(aux, aux, 20, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux2, aux2, 30, "A+B", 0, 0, 0);
+
+    clearLayer(curCell, aux);
+    clearAllAuxiliaryAux(curCell);
+
+    ret_point= rotateVector(newPoint(ret_point.x()-anchorPoint.x(), ret_point.y()-anchorPoint.y()), anchorPoint, direction);
+    return ret_point;
+}
+
+int main() {
+    setupLayers();
+    layout->drawing->selectAll();
+    layout->drawing->deleteSelect();
+    layout->drawing->deselectAll();
+    cell *curCell = layout->drawing->currentCell;
+
+    // Ground plane
+    curCell->addBox(-5e6, -5e6/2, 5e6, 5e6, ground);
+
+    string sample_name = layout->getText("Sample name", "Please enter the sample name:", "Blat ?");
+//    addBridge(curCell,  newPoint(0, 0), "r");
+ //  layout->booleanTool->boolOnLayer(M1, total, total, "A+B", 0, 0, 0);
+ //  clearLayer(curCell, M1);
+
+    bridgedWire(curCell, M, newPoint(0,0), "d", 1000e3, 10e3, 100e3);
+    bridgedWire(curCell, M, newPoint(10e3,0), "l", 1000e3, 10e3, 100e3);
+    bridgedWire(curCell, M, newPoint(0,10e3), "r", 1000e3, 10e3, 100e3);
+    bridgedWire(curCell, M, newPoint(10e3,10e3), "u", 1000e3, 10e3, 100e3);
+
+
+    layout->backgroundTool->clearBackground();
+    clearLayer(curCell, ground);
+    debug.show();
+    debug.clear();
+
+}
+ /*   //=========Res_part===========
+    cursor = wire(curCell, aux2, start, "u", 100e3, w_res);
+    cursor.set(anchorPoint.x(),anchorPoint.y()+w_thinGround);
+    cursor = wire(curCell, aux3, cursor, "u", 100e3+w_thinGround, w_res+2*w_thinGround);
+    //=========Rotate===========
+
+*/

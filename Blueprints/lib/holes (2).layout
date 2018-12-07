@@ -24,7 +24,7 @@ void addHoles(cell* curCell) {
                     chip_height-2*border_thickness,
                     aux);
 
-    layout->booleanTool->boolOnLayer(ground, protect, aux2, "A-B", 0, 0, 0); //aux4 is mask
+    layout->booleanTool->boolOnLayer(ground, protect, aux2, "A-B", 0, 0, 0); //aux2 is mask
     curCell->deselectAll();
     curCell->selectLayer(aux2);
     layout->drawing->currentCell->sizeAdjustSelect(-structure_borders,1);
@@ -47,7 +47,7 @@ void addHoles(cell* curCell) {
     for (int i = -N_stripes_vertical/2; i<=N_stripes_vertical/2; i++) {
       point start = newPoint(i * (chip_width-2*border_thickness)/N_stripes_vertical,
                               -chip_height/2+border_thickness);
-      wire(curCell, aux4, start, "u", chip_height-2*border_thickness, hole_period-hole_size);
+      wire(curCell, aux5, start, "u", chip_height-2*border_thickness, hole_period-hole_size);
     }
 
     // curCell->selectLayer(aux4);
@@ -56,14 +56,17 @@ void addHoles(cell* curCell) {
     // layout->drawing->invertSelect();
     // curCell->deselectAll();
     layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(aux3, aux4,  holes, "A*B", 0, 0, 0);
-
+    layout->booleanTool->boolOnLayer(aux3, aux4, 14, "A*B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux5, 15, "A*B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(14, 15, 16, "A-B", 0, 0, 0);
 
     string curCellName = curCell->cellName;
     layout->drawing->setCell(curCellName+":DRC-Rule");
     // layout->drawing->deleteCurrentCell();
     layout->drawing->setCell(curCellName);
     clearLayer(curCell, aux);
+    clearLayer(curCell, 14);
+
     clearAllAuxiliaryAux(curCell);
 
 }

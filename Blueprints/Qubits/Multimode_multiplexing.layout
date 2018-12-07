@@ -25,7 +25,8 @@
         int aux3 = 8;
         int aux4 = 9;
         int error = 10;
-
+	int bandage = 11;
+	int aux5 = 12;
         
         int chip_height = 10e6;
         int chip_width = 5e6;
@@ -62,10 +63,13 @@ int main() {
     layout->drawing->selectAll();
     layout->drawing->deleteSelect();
     layout->drawing->deselectAll();
-    layout->drawing->activeLayer=error;
-    layout->drcTool->setErrorLayerToActiveLayer();
+	layout->drawing->activeLayer=error;
+	layout->drcTool->setErrorLayerToActiveLayer();
     
     debug("New run below --------------------------------");
+
+
+
         
     string sample_name = layout->getText("Sample name","Please enter the sample name:", "M-M MPLX 1");
     
@@ -129,7 +133,7 @@ int main() {
     addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -chip_height/2+0.5e6), 200, 100, "l", false);
     addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -chip_height/2+0.5e6), 200, 100, "l", false);
     
-/*    addHoles(curCell);*/
+//    addHoles(curCell);
     
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, protect);
     

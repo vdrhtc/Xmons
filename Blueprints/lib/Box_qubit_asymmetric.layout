@@ -1,0 +1,86 @@
+    int JJ_pads_len = 4e3+5.65e3; // controls the width of the Dolan bridge
+    int ebeam_overlap = 2e3; // overlap of the ebeam pads in M1 with the M layer 
+
+point addBoxQubit(cell* curCell, point anchorPoint, string direction, int w_JJ, int h_JJ, double asymmetry=0) {
+
+        int JJ_delta_arm_len = 0;
+        int JJ_arm_len = arm_len/2+JJ_delta_arm_len;
+        point cursor;
+//	w_JJ = w_JJ - 30;
+//	h_JJ = h_JJ - 30;
+        
+
+    
+    
+    cursor.set(anchorPoint.x(), anchorPoint.y()-g_q);
+    wire(curCell, aux2, cursor, "d", w_q, q_length); // M
+    
+    wire(curCell, aux3, anchorPoint, "d", w_q+2*g_q-JJ_delta_arm_len, q_length+2*g_q); // protect
+    
+    rotateLayer(curCell, aux2, anchorPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
+    
+    layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
+    
+    clearAllAuxiliaryAux(curCell);
+    
+    
+  
+ //============ JJ pads ===========
+   // =====  Top 
+    cursor.set(cursor.x(), cursor.y()-w_q); 
+    point cursor2; cursor2.set(cursor.x(), cursor.y()+ebeam_overlap); // cursor 2 to the <ebeam_overlap> nm above the cursor 
+
+    point cursorBandage = newPoint(cursor2.x(), cursor2.y()+1.25e3); // ------\/
+    wire(curCell, aux4, cursorBandage, "d", ebeam_overlap, 7.5e3); // bandage pad
+    
+    point cursor3 = wire(curCell, aux, cursor2, "d", (JJ_pads_len+ebeam_overlap)/2, 5e3); // the big pad 
+    wire(curCell, aux, cursor3, "d", (JJ_pads_len+ebeam_overlap)/2+1, 4e3);   // ----\/
+    wire(curCell, aux2, cursor3, "d", (JJ_pads_len+ebeam_overlap)/2+1, 3.25e3); // these two are the narrow pads (after subtraction)
+    
+    cursor2.set(cursor2.x()-2e3+h_JJ/2, cursor2.y()-JJ_pads_len-ebeam_overlap);
+    wire(curCell, aux, cursor2, "d", 1e3, h_JJ);
+    cursor2.set(cursor2.x()+4e3-h_JJ/2 -h_JJ*(1-asymmetry)/2 , cursor2.y());
+    wire(curCell, aux, cursor2, "d", 1e3, h_JJ*(1-asymmetry));
+
+    // =====  Bottom
+    cursor.set(cursor.x()-4e3, cursor.y()-g_q+JJ_delta_arm_len-ebeam_overlap);
+    
+    point cursorBandage = newPoint(cursor.x()+4e3, cursor.y()); // ------\/
+    wire(curCell, aux4, cursorBandage, "u", ebeam_overlap-1.25e3, 12e3); // bandage pad
+    
+    wire(curCell, aux, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3);
+    wire(curCell, aux2, newPoint(cursor.x()-0.25e3, cursor.y()+(JJ_pads_len+ebeam_overlap)/2), "u", (JJ_pads_len+ebeam_overlap)/2, 1.5e3);
+    cursor.set(cursor.x()+2*4e3, cursor.y());
+    wire(curCell, aux, cursor, "u", JJ_pads_len+ebeam_overlap, 2e3);
+    wire(curCell, aux2, newPoint(cursor.x()+0.25e3, cursor.y()+(JJ_pads_len+ebeam_overlap)/2), "u", (JJ_pads_len+ebeam_overlap)/2, 1.5e3);
+    cursor.set(cursor.x()-1e3, cursor.y()+ebeam_overlap+JJ_pads_len-w_JJ/2);
+
+    wire(curCell, aux, cursor, "l", .9e3-50, w_JJ);
+    cursor.set(cursor.x()-6e3, cursor.y() - w_JJ*(1+asymmetry)/2 + w_JJ/2);
+    wire(curCell, aux, cursor, "r", .9e3-50, w_JJ*(1+asymmetry));
+//    wire(curCell, aux, cursor, "r", .9e3-15, w_JJ*(1+asymmetry));
+    
+
+    
+     // ==== Merge aux structure to M1 and bandage
+    
+    layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A-B", 0, 0, 2);
+    rotateLayer(curCell, aux3, anchorPoint, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux3, aux3, jj_layer, "A+B", 0, 0, 0);
+    rotateLayer(curCell, aux4, anchorPoint, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux4, aux4, bandage, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    clearAllAuxiliaryAux(curCell);
+   
+    point retPoint;
+    retPoint.set(0,  -w_q-2*g_q+JJ_delta_arm_len);
+    retPoint = rotateVector(retPoint, anchorPoint, direction);
+    
+  /*  addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()+100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()+100e3)); */
+    return retPoint;
+}
