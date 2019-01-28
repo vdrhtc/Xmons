@@ -54,9 +54,9 @@ void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ, string direct
 
 
 
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()-150e3, center.y()-150e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()+150e3, center.y()-150e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()+150e3, center.y()+150e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()-150e3, center.y()+150e3));
+    //addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()-150e3, center.y()-150e3));
+    //addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()+150e3, center.y()-150e3));
+    //addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()+150e3, center.y()+150e3));
+    //addLocalAlignmentMarkBMSTU(curCell, newPoint(center.x()-150e3, center.y()+150e3));
 
 }

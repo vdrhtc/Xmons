@@ -50,9 +50,9 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
 
     addSquidManhattan(curCell, squidPoint, direction,  w_JJ,  h_JJ,  corr,  asymmetry);
 
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()+100e3));
-    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()+100e3));
+    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
+    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));
+    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()+100e3));
+    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()+100e3));
     return retPoint;
   }

@@ -1,0 +1,130 @@
+
+// Draws a layer of square holes which is within 10 um inside the ground polygon..
+
+     // int hole_size = 15e3;
+     // int hole_period = 17e3;
+     int hole_size = 15e3;
+     int hole_period = 17e3;
+
+
+     int border_thickness = 500e3;
+     int structure_borders = 50e3;
+
+void addHoles(cell* curCell) {
+
+    // int N_holes_vertical = (chip_height-2*border_thickness)/hole_period+1;
+    // int N_holes_horizontal = (chip_width-2*border_thickness)/hole_period+1;
+    //
+    // for (int i = -N_holes_vertical/2; i<=N_holes_vertical/2; i++) {
+    //     for (int j = -N_holes_horizontal/2; j<N_holes_horizontal/2+1; j++) {
+    //         point center = newPoint(j * (chip_width-2*border_thickness)/N_holes_horizontal, i * (chip_height-2*border_thickness)/N_holes_vertical);
+    //         curCell->addBox(center.x()-hole_size/2, center.y()-hole_size/2, hole_size, hole_size,aux2);
+    //     }
+    // }
+
+    curCell->addBox(-chip_width/2+border_thickness,
+                    -chip_height/2+border_thickness,
+                    chip_width-2*border_thickness,
+                    chip_height-2*border_thickness,
+                    aux);
+
+    layout->booleanTool->boolOnLayer(ground, protect, aux2, "A-B", 0, 0, 0); //aux2 is mask
+    curCell->deselectAll();
+    curCell->selectLayer(aux2);
+    layout->drawing->currentCell->sizeAdjustSelect(-structure_borders,1);
+    curCell->deselectAll();
+
+    // layout->drawing->sizeLayer(aux4, -50e3);
+    // layout->drcTool->inside(50e3, aux2, aux4);
+    layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A*B", 0, 0, 0); // aux3 is the mask inside chip border
+                                                                       // and outside no-hole structure borders
+
+    int N_stripes_vertical = (chip_width-2*border_thickness)/hole_period+1;
+    int N_stripes_horizontal = (chip_height-2*border_thickness)/hole_period+1;
+
+    for (int i = -N_stripes_horizontal/2; i<=N_stripes_horizontal/2; i++) {
+      point start = newPoint(-chip_width/2+border_thickness,
+                              i * hole_period);
+      wire(curCell, aux4, start, "r",
+            chip_width-2*border_thickness, hole_period-hole_size);
+    }
+
+    for (int i = -N_stripes_vertical/2; i<=N_stripes_vertical/2; i++) {
+      point start = newPoint(i * hole_period,
+                              -chip_height/2+border_thickness);
+      wire(curCell, aux5, start, "u", chip_height-2*border_thickness, hole_period-hole_size);
+    }
+
+    // curCell->selectLayer(aux4);
+    layerTranslator t;
+
+    // layout->drawing->invertSelect();
+    // curCell->deselectAll();
+    layout->booleanTool->boolOnLayer(protect, protect, 1020, "A+B", 0, 0, 0); //copy protect to find small holes
+    layout->booleanTool->boolOnLayer(protect, protect, 1021, "A+B", 0, 0, 0); //-=-
+
+    layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0); // now protect as well
+                                                                           // the hole area
+    layout->booleanTool->boolOnLayer(aux3, aux4, holes_h, "A*B", 0, 0, 0); // horizontal comb
+    layout->booleanTool->boolOnLayer(aux3, aux5, 15, "A*B", 0, 0, 0); // vertical comb
+    layout->booleanTool->boolOnLayer(15, holes_h, holes_v, "A-B", 0, 0, 0); // vertical is striped in 16,
+                                                                  // horizontal is continuous in 14
+    // layout->booleanTool->boolOnLayer(15, 14, 17, "A-B", 0, 0, 0);
+    // layout->booleanTool->boolOnLayer(14, 15, 18, "A*B", 0, 0, 0);
+
+    layout->booleanTool->boolOnLayer(holes_h, 15, 1019, "A+B", 0, 0, 0); // 1019 has the full net to find small holes
+                                                                  // full net is between structure borders
+                                                                  // and chip border
+
+    curCell->deselectAll();
+    curCell->selectLayer(1020);
+    layout->drawing->currentCell->sizeAdjustSelect(structure_borders+100e3, 1);
+    curCell->deselectAll(); // increase former protect with 100e3 margin to structure borders
+
+    curCell->deselectAll();
+    curCell->selectLayer(1021);
+    layout->drawing->currentCell->sizeAdjustSelect(structure_borders-10, 1);
+    curCell->deselectAll(); // increase former protect to reach structure borders (minus 10 nm to ensure overlap)
+
+    // part of the full net (1019) in protect, small border and 100e3 border beyond that
+    layout->booleanTool->boolOnLayer(1020, 1019, 1022, "A-B", 0, 0, 0);
+    // layout->booleanTool->boolOnLayer(21, ground, 22, "A*B", 0, 0, 0);
+
+    // now 1023 has the part of the net without protect and small border
+    // (just in the 100e3 border beyond structure borders)
+    layout->booleanTool->boolOnLayer(1022, 1021, 1023, "A-B", 0, 0, 0);
+
+
+    // layout->drcTool->minimumDimensionOnLayer(5e3,5e3,23,false);
+
+    // now, checking the 1023 for small holes
+    layout->drcTool->minimumSize(4e3, 1023, false);
+
+    curCell->deselectAll();
+    curCell->selectLayer(1020); // 1020 was the enlarged protect (structure_borders+100e3)
+    layout->drawing->currentCell->sizeAdjustSelect(-50e3,0); // shrink it back by half the increase
+    curCell->deselectAll();
+
+
+    layout->booleanTool->boolOnLayer(1020, error, 1017, "A*B", 0, 0, 0);// now, 1017 has small
+                                                                    // holes in 50e3 area near structure_borders
+                                                                    // because other small holes are just artefact
+    layout->booleanTool->boolOnLayer(1017, aux, 1018, "A*B", 0, 0, 0);  // found small holes are double checked to be inside
+                                                                    // aux and then put into !18!
+
+    string curCellName = curCell->cellName;
+    layout->drawing->setCell(curCellName+":DRC-Rule");
+    layout->drawing->deleteCurrentCell();
+    layout->drawing->setCell(curCellName);
+    clearLayer(curCell, aux);
+    clearLayer(curCell, 14);
+    clearLayer(curCell, 1017);
+    clearLayer(curCell, 1019);
+    clearLayer(curCell, 1020);
+    clearLayer(curCell, 1021);
+    clearLayer(curCell, 1022);
+    clearLayer(curCell, 1023);
+
+    clearAllAuxiliaryAux(curCell);
+
+}

@@ -38,14 +38,14 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     int right_h_JJ = h_JJ*math::sqrt(1+asymmetry)- 30;
 
     string jjCell_name ="Squid:("+(left_w_JJ+30);
-    data+= "x"+(left_h_JJ+30);
-    data+=")";
-    data+="("+(right_w_JJ+30);
-    data+="x"+(right_h_JJ+30);
-    data+=")";
-    data+= "bridge:"+;
-    data+= "d:"+asymmetry;
-    data+= "corr:"+30;
+    jjCell_name+= "x"+(left_h_JJ+30);
+    jjCell_name+=")";
+    jjCell_name+="("+(right_w_JJ+30);
+    jjCell_name+="x"+(right_h_JJ+30);
+    jjCell_name+=")";
+    jjCell_name+= "bridge:"+;
+    jjCell_name+= "d:"+asymmetry;
+    jjCell_name+= "corr:"+30;
 
     layout->drawing->currentCell->newCell();
 
