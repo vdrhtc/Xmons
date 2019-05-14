@@ -65,7 +65,7 @@
         int g_feed = 8e3;
         int pad_len = 400e3;
         int ground_connector_width = 100e3;
-
+        int bridge_resonators = false;
 
         int w_q = 20e3;
         int g_q = 20e3;
@@ -132,33 +132,32 @@ int main() {
   	point cursor4 = addClaw(curCell,  newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell,  newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
 
-
-    cursor5 =addXmon(curCell, cursor5, "r", 150, 150, 30, 0.7);
     cursor4 = addXmon(curCell, cursor4, "l", 177, 177, 30, 0.7);
+    cursor5 =addXmon(curCell, cursor5, "r", 177, 177, 30, 0.7);
 
+
+    cursor4.set(cursor4.x()+arm_len/2-g_q, cursor4.y()-150e3);
     stringList directions;
     intList segmentLengths;
     directions.append("l"); directions.append("u");
     segmentLengths.append(cursor4.x()+chip_width/4);segmentLengths.append(-cursor4.y()+chip_height/2);
-    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "fb", true);
+    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "mdl", true);
+
+    stringList directions;
+    intList segmentLengths;
+    directions.append("r");directions.append("u");
+    segmentLengths.append(-cursor5.x());
+    segmentLengths.append(chip_height/2 - cursor5.y());
+    addFeedline(curCell, cursor5, w_res, g_res, segmentLengths, directions, "fb", true);
+
+    point cursor6;
+    cursor6.set(cursor5.x()-arm_len/2+g_q, cursor5.y()-150e3);
 
     stringList directions;
     intList segmentLengths;
     directions.append("r"); directions.append("u");
-    segmentLengths.append(-cursor5.x()+chip_width/4);segmentLengths.append(-cursor5.y()+chip_height/2);
-    addFeedline(curCell, cursor5, w_res, g_res, segmentLengths, directions, "fb", true);
-
-
-
-    cursor4 = newPoint(cursor4.x()+arm_len+w_q+g_q+w_thinGround,cursor4.y() +250e3);
-
-    stringList directions;
-    intList segmentLengths;
-    directions.append("u");directions.append("r");directions.append("u");
-    segmentLengths.append(250e3 );
-    segmentLengths.append(-cursor4.x());
-    segmentLengths.append(cursor4.y()-391e3);
-    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "md", true);
+    segmentLengths.append(-cursor6.x()+chip_width/4);segmentLengths.append(-cursor6.y()+chip_height/2);
+    addFeedline(curCell, cursor6, w_res, g_res, segmentLengths, directions, "mdl", true);
 
 //жопа
 
@@ -171,32 +170,33 @@ int main() {
   	point cursor4 = addClaw(curCell, newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell, newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
 
-    cursor5 = addXmon(curCell, cursor5, "r", 150, 150, 30, 0.7);
+    cursor5 = addXmon(curCell, cursor5, "r", 177, 177, 30, 0.7);
     cursor4 = addXmon(curCell, cursor4, "l", 177, 177, 30, 0.7);
 
     stringList directions;
     intList segmentLengths;
+    directions.append("l");directions.append("d");
+    segmentLengths.append(cursor4.x());
+    segmentLengths.append(chip_height/2 + cursor4.y());
+    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "fb", true);
+
+
+    cursor4.set(cursor4.x()+arm_len/2-g_q, cursor4.y()+150e3);
+    stringList directions;
+    intList segmentLengths;
     directions.append("l"); directions.append("d");
     segmentLengths.append(cursor4.x()+chip_width/4);segmentLengths.append(cursor4.y()+chip_height/2);
-    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "fb", true);
+    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "mdl", true);
+
+
+    point cursor6;
+    cursor6.set(cursor5.x()-arm_len/2+g_q, cursor5.y()+150e3);
 
     stringList directions;
     intList segmentLengths;
     directions.append("r"); directions.append("d");
-    segmentLengths.append(-cursor5.x()+chip_width/4);segmentLengths.append(cursor5.y()+chip_height/2);
-    addFeedline(curCell, cursor5, w_res, g_res, segmentLengths, directions, "fb", true);
-
-
-
-    cursor4 = newPoint(cursor4.x()+arm_len+2*g_q+2*w_thinGround+4.5e3,cursor4.y()-250e3);
-
-    stringList directions;
-    intList segmentLengths;
-    directions.append("d");directions.append("l");directions.append("d");
-    segmentLengths.append(250e3);
-    segmentLengths.append(cursor4.x());
-    segmentLengths.append(-cursor4.y()-391e3);
-    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "md", true);
+    segmentLengths.append(-cursor6.x()+chip_width/4);segmentLengths.append(cursor6.y()+chip_height/2);
+    addFeedline(curCell, cursor6, w_res, g_res, segmentLengths, directions, "mdl", true);
 
 
     curCell->textToPolygon(100e3);
@@ -233,7 +233,7 @@ int main() {
      clearLayer(curCell, aux);
      clearLayer(curCell, mask);
 
-     addHoles(curCell);
+     //addHoles(curCell);
 
      layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
      layout->booleanTool->boolOnLayer(M, mask, aux, "A+B", 0, 0, 0);

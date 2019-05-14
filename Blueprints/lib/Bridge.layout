@@ -1,4 +1,6 @@
 
+int bridge_layer = 30;
+int patch_layer = 20;
 
 point addBridge(cell* curCell, point anchorPoint, string direction) {
 
@@ -21,12 +23,14 @@ point addBridge(cell* curCell, point anchorPoint, string direction) {
     rotateLayer(curCell, aux5, anchorPoint, angleFromDirection(direction));
 
 
-    layout->booleanTool->boolOnLayer(aux4, aux4, 20, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(aux5, aux5, 30, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux4, aux4, patch_layer, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux5, aux5, bridge_layer, "A+B", 0, 0, 0);
 
     clearLayer(curCell, aux4);
     clearLayer(curCell, aux5);
 
-    ret_point= rotateVector(newPoint(ret_point.x()-anchorPoint.x(), ret_point.y()-anchorPoint.y()), anchorPoint, direction);
+    ret_point = rotateVector(newPoint(ret_point.x()-anchorPoint.x(),
+                                     ret_point.y()-anchorPoint.y()),
+                            anchorPoint, direction);
     return ret_point;
 }

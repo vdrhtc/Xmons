@@ -45,7 +45,10 @@ x |  |___ >==========~======<  |_____
     int fluxBiasInductorLen = 20e3;
 //    int fluxBiasInductorLen = 35e3; //MIPT
     int microwaveDriveLen = 0;
-
+    int w_md = 2e3;
+    int g_md = 4e3;
+    int md_transition_len = 10e3;
+    int md_thin_len = 100e3;
 
 point microwaveDrive(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
 
@@ -53,6 +56,48 @@ point microwaveDrive(cell* curCell, int M, int protect, point anchor, int w_feed
     point cursor = wire(curCell, protect, anchor, direction, g_feed, w_feed+2*g_feed);
 
     return cursor;
+}
+
+point microwaveDriveLong(cell* curCell, int M, int protect, point anchor, int w_feed, int g_feed, string direction) {
+
+    point cursor;
+    cursor.set(anchor.x(), anchor.y());
+
+    pointArray ps;
+    ps.attach(cursor.x()-w_md/2, cursor.y());
+    ps.attach(cursor.x()-w_md/2, cursor.y()-md_thin_len);
+    ps.attach(cursor.x()-w_feed/2, cursor.y()-md_transition_len - md_thin_len);
+    ps.attach(cursor.x()+w_feed/2, cursor.y()-md_transition_len - md_thin_len);
+    ps.attach(cursor.x()+w_md/2, cursor.y()-md_thin_len);
+    ps.attach(cursor.x()+w_md/2, cursor.y());
+
+    curCell->addPolygon(ps, aux3);
+
+
+    pointArray ps;
+    ps.attach(cursor.x()-w_md/2-g_md, cursor.y()+g_md);
+    ps.attach(cursor.x()-w_md/2-g_md, cursor.y()-md_thin_len);
+    ps.attach(cursor.x()-w_feed/2-g_feed, cursor.y()-md_transition_len - md_thin_len);
+    ps.attach(cursor.x()+w_feed/2+g_feed, cursor.y()-md_transition_len - md_thin_len);
+    ps.attach(cursor.x()+w_md/2+g_md, cursor.y()-md_thin_len);
+    ps.attach(cursor.x()+w_md/2+g_md, cursor.y()+g_md);
+
+    curCell->addPolygon(ps, aux4);
+
+    rotateLayer(curCell, aux3, anchor, angleFromDirection(direction));
+    rotateLayer(curCell, aux4, anchor, angleFromDirection(direction));
+
+    layout->booleanTool->boolOnLayer(aux3, aux3, M, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux4, aux4, protect, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux3);
+    clearLayer(curCell, aux4);
+
+    microwaveDriveLen = md_transition_len+md_thin_len;
+
+    point retPoint;
+    retPoint.set(0, -microwaveDriveLen);
+    return rotateVector(retPoint, anchor, direction);
+
 }
 
 
@@ -115,7 +160,7 @@ point contactPad(cell* curCell, int M, int protect, point anchor, int w_feed, in
 
 void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
                  intList segmentLengths, stringList directions, string type,
-                 bool bridged = false, int bridge_interval = 100e3) {
+                 bool bridged = false, int bridge_interval = 100e3, int bridge_offset=50e3) {
 
     int turnRad = 10*w_feed;
     int N_turns = directions.size()-1;
@@ -131,8 +176,9 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
     } else if (type == "md") {
         start = microwaveDrive(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
         segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
-    } else if (type == "cd") {
-
+    } else if (type == "mdl") {
+        start = microwaveDriveLong(curCell, aux, aux2, start, w_feed, g_feed, directions.at(0));
+        segmentLengths.set(0, segmentLengths.at(0) - microwaveDriveLen);
     }
 
     if(N_turns==0) {
@@ -141,7 +187,8 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
     }
     else {
         if (bridged) {
-          bridgedWire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed, bridge_interval);
+          bridgedWire(curCell, aux, start, directions.at(0), segmentLengths.at(0) - turnRad,
+                      w_feed, bridge_interval, bridge_offset);
           cursor = wire(curCell, aux2, start, directions.at(0), segmentLengths.at(0) - turnRad, w_feed+2*g_feed);
           torusTurnBridge(curCell, aux, cursor, directions.at(0)+directions.at(1), turnRad, w_feed);
         } else {
@@ -154,7 +201,8 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
     }
     for (i=1; i<N_turns; i++) {
       if (bridged) {
-        bridgedWire(curCell, aux, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed, bridge_interval);
+        bridgedWire(curCell, aux, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad,
+                    w_feed, bridge_interval, bridge_offset);
         cursor = wire(curCell, aux2, cursor, directions.at(i), segmentLengths.at(i) - 2*turnRad, w_feed+2*g_feed);
         torusTurnBridge(curCell, aux, cursor, directions.at(i)+directions.at(i+1), turnRad, w_feed);
       } else {
@@ -168,7 +216,7 @@ void addFeedline(cell* curCell, point start, int w_feed, int g_feed,
     if (bridged) {
       bridgedWire(curCell, aux, cursor, directions.at(N_turns),
                   segmentLengths.at(N_turns) - turnRad- totalPadLen(), w_feed,
-                  bridge_interval);
+                  bridge_interval, bridge_offset);
       point newCursor = wire(curCell, aux2, cursor, directions.at(N_turns),
                     segmentLengths.at(N_turns) - turnRad- totalPadLen(),
                     w_feed+2*g_feed);

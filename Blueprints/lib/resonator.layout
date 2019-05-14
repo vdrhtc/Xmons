@@ -43,15 +43,20 @@ int length_from_frequency(double frequency, string claw) {
 
 point drawMeanderStep(cell* curCell, int layer, point cursor, int meanderSegmentLength, int resTurnRad, int width) {
 
-        point cursor2 = wire(curCell, layer, cursor, "r", meanderSegmentLength, width);
-        cursor2 = torusTurn(curCell, layer, cursor2, "rd", resTurnRad, width);
-        cursor2 = torusTurn(curCell, layer, cursor2, "dl", resTurnRad, width);
-        cursor2 = wire(curCell, layer, cursor2, "l", meanderSegmentLength, width);
-        cursor2 = torusTurn(curCell, layer, cursor2, "ld", resTurnRad, width);
-        return torusTurn(curCell, layer, cursor2, "dr", resTurnRad, width);
+        bool bridged = false;
+        if (layer == aux3 && bridge_resonators == true) {
+            bridged = true;
+        }
+        point cursor2 = wire(curCell, layer, cursor, "r", meanderSegmentLength, width, bridged);
+        cursor2 = torusTurn(curCell, layer, cursor2, "rd", resTurnRad, width, false);
+        cursor2 = torusTurn(curCell, layer, cursor2, "dl", resTurnRad, width, bridged);
+        cursor2 = wire(curCell, layer, cursor2, "l", meanderSegmentLength, width, bridged);
+        cursor2 = torusTurn(curCell, layer, cursor2, "ld", resTurnRad, width, false);
+        return torusTurn(curCell, layer, cursor2, "dr", resTurnRad, width, bridged);
 }
 
-void generateStructure(cell* curCell, point cursor,  int width, int tailLen, int length,  int resTurnRad, int layer) {
+void generateStructure(cell* curCell, point cursor,  int width, int tailLen,
+                       int length,  int resTurnRad, int layer) {
 
     int curLength = 0;
     point start;
@@ -114,13 +119,18 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
 
  //   int resTurnRad = 8*w_res;
  //   int resTurnRad = 5*w_res; //MIPT
-	int resTurnRad = 6*w_res;
+	  int resTurnRad = 6*w_res;
+    bridge_layer = aux6;
+    patch_layer = aux7;
+    bridge_interval = 200e3;
 
     generateStructure(curCell, cursor, w_res, tailLen, length, resTurnRad, aux2);
     generateStructure(curCell, cursor, w_res+2*g_res, tailLen+g_res, length+g_res, resTurnRad, aux3);
 
     rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
     rotateLayer(curCell, aux3, couplingPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux6, couplingPoint, angleFromDirection(direction));
+    rotateLayer(curCell, aux7, couplingPoint, angleFromDirection(direction));
 
   //  if (direction=="u") {
     //    mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
@@ -129,8 +139,16 @@ point addResonator(cell* curCell, point couplingPoint, int w_res, int g_res, dou
 
     layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux6, aux6, 30, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(aux7, aux7, 20, "A+B", 0, 0, 0);
 
     clearAllAuxiliaryAux(curCell);
+    clearLayer(curCell, aux6);
+    clearLayer(curCell, aux7);
+
+    bridge_layer = 30;
+    patch_layer = 20;
+    bridge_interval = 100e3;
 
     point retPoint;
     retPoint.set(200e3+resTurnRad, -(g_res+w_res/2+resTurnRad+tailLen));
