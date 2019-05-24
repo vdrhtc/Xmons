@@ -56,8 +56,8 @@
         int x = 5e3;
         int tailLen = 1000e3;
         int w_thinGround = 5e3;
-	      int L_claw_right = 60e3;
-	      int L_claw_left= 60e3;
+	      int L_claw_right = 100e3;
+	      int L_claw_left= 100e3;
         int w_claw = 20e3;
         int claw_gap = 5e3;
 
@@ -92,23 +92,13 @@ int main() {
     cell *curCell = layout->drawing->currentCell;
     point cursor;
 
-    intList segmentLengths;
-    stringList directions;
-    directions.append("r");
-
-    segmentLengths.append(chip_width);
-    cursor.set(-chip_width/2, 0);
-    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
-
-
-
 
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
 
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -w_feed/2-g_feed-x;
-    res_freqs.append(7); res_freqs.append(7.5);
+    res_freqs.append(7.4); res_freqs.append(7.5);
     test_res_freqs.append(8); test_res_freqs.append(8.1);
 
 
@@ -127,7 +117,7 @@ int main() {
 
   	cursor.set(-600e3, -resonatorPositionsY);
   	cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(0), tailLen, "u", "3");
-    marker = curCell->addText(protect, newPoint(cursor2.x()-400e3, cursor2.y()-250e3), "I");
+    marker = curCell->addText(protect, newPoint(cursor2.x()-400e3, cursor2.y()-350e3), "I");
 
   	point cursor4 = addClaw(curCell,  newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell,  newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
@@ -146,9 +136,10 @@ int main() {
     stringList directions;
     intList segmentLengths;
     directions.append("r");directions.append("u");
-    segmentLengths.append(-cursor5.x());
+    point cursor7 = newPoint(cursor5.x()-2*4e3, cursor5.y()+500);
+    segmentLengths.append(-cursor7.x());
     segmentLengths.append(chip_height/2 - cursor5.y());
-    addFeedline(curCell, cursor5, w_res, g_res, segmentLengths, directions, "fb", true);
+    addFeedline(curCell, cursor7, w_res, g_res, segmentLengths, directions, "fb", true);
 
     point cursor6;
     cursor6.set(cursor5.x()-arm_len/2+g_q, cursor5.y()-150e3);
@@ -165,7 +156,7 @@ int main() {
 
   	cursor.set(600e3, resonatorPositionsY);
   	cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(1), tailLen, "d", "3");
-    marker = curCell->addText(protect, newPoint(cursor2.x()+400e3, cursor2.y()+300e3), "II");
+    marker = curCell->addText(protect, newPoint(cursor2.x()+400e3, cursor2.y()+450e3), "II");
 
   	point cursor4 = addClaw(curCell, newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell, newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
@@ -176,9 +167,10 @@ int main() {
     stringList directions;
     intList segmentLengths;
     directions.append("l");directions.append("d");
-    segmentLengths.append(cursor4.x());
-    segmentLengths.append(chip_height/2 + cursor4.y());
-    addFeedline(curCell, cursor4, w_res, g_res, segmentLengths, directions, "fb", true);
+    point cursor7 = newPoint(cursor4.x()+2*4e3, cursor4.y()-500);
+    segmentLengths.append(cursor7.x());
+    segmentLengths.append(chip_height/2 + cursor7.y());
+    addFeedline(curCell, cursor7, w_res, g_res, segmentLengths, directions, "fb", true);
 
 
     cursor4.set(cursor4.x()+arm_len/2-g_q, cursor4.y()+150e3);
@@ -204,10 +196,23 @@ int main() {
     marker = curCell->addText(protect, newPoint(-chip_width/2+400e3, chip_height/2-400e3), sample_name);
     curCell->textToPolygon(150e3);
         JJ_pads_len = 4e3+5.65e3;
-    addTestSquid(curCell, newPoint(-chip_width/2+0.8e6, 1.2e6), 150, 150, "l", false,30, 0.7);
-    addTestSquid(curCell, newPoint(chip_width/2-0.8e6, 1.2e6), 150, 150, "l", false, 30,0.7);
+    addTestSquid(curCell, newPoint(-chip_width/2+0.8e6, 1.2e6), 177, 177, "l", false,30, 0.7);
+    addTestSquid(curCell, newPoint(chip_width/2-0.8e6, 1.2e6), 177, 177, "l", false, 30,0.7);
     addTestSquid(curCell, newPoint(-chip_width/2+0.8e6, -1.2e6), 177, 177, "r", false, 30, 0.7);
     addTestSquid(curCell, newPoint(chip_width/2-0.8e6, -1.2e6), 177,177, "r", false,30, 0.7);
+
+
+    /// Main feedline
+    intList segmentLengths;
+    stringList directions;
+    directions.append("r");
+
+    segmentLengths.append(chip_width);
+    cursor.set(-chip_width/2, 0);
+    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths,
+                directions, "cp", true);
+
+
 /*    */
     // addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
     // addGlobalAlignmentMarkBMSTU(curCell, newPoint(chip_width/2-0.65e6, -1.75e6+0.025e6));

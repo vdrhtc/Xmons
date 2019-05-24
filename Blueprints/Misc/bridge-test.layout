@@ -1,0 +1,110 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/resonator.layout"
+#include "../lib/feedline.layout"
+#include "../lib/claw.layout"
+#include "../lib/squid_manhattan.layout"
+#include "../lib/Xmon_manhattan.layout"
+#include "../lib/test_JJ_manhattan.layout"
+#include "../lib/alignment_mark.layout"
+#include "../lib/Bridge.layout"
+// #include "../lib/Claw_3_and_2Box.layout"
+#include "../lib/holes_h-v_no_small_elements.layout"
+
+        int photo_neg = 9;
+        int photo_neg_holed = 11;
+        int photo_holed = 1;
+        int M = 1000;
+        int M1 = 1001;
+	      int jj_layer = 2;
+        int protect = 1003;
+        int ground = 1004;
+        int mask = 1005;
+        int total = 0;
+        int aux = 1007;
+        int aux2 = 1008;
+        int aux3 = 1009;
+        int aux4 = 1010;
+        int bandage = 1011;
+	      int aux5 = 1012;
+        int aux6 = 1013;
+        int aux7 = 1014;
+	      int holes_v = 5;
+        int holes_h = 4;
+        int error = 115;
+
+
+        int chip_height = 5e6;
+        int chip_width = 10e6;
+        int border=50e3;
+
+        int feedlineDepth = chip_height/4;
+        double ɛ = 12.23;
+        double c = 299792458.0;
+
+        doubleList res_freqs;
+        doubleList test_res_freqs;
+
+        int w_res =7e3;
+        int g_res = 4e3;
+        int x = 5e3;
+        int tailLen = 1000e3;
+        int w_thinGround = 5e3;
+	      int L_claw_right = 60e3;
+	      int L_claw_left= 60e3;
+        int w_claw = 20e3;
+        int claw_gap = 5e3;
+
+        int w_feed = 16e3;
+        int g_feed = 8e3;
+        int pad_len = 400e3;
+        int ground_connector_width = 100e3;
+        int bridge_resonators = false;
+
+        int w_q = 20e3;
+        int g_q = 20e3;
+        int arm_len = 300e3;
+        int ebeam_overlap = 3e3;
+        doubleList asymmetries;
+
+        int qrSize = 600e3;
+        int qrCodePositionX = chip_width/2*11/10;
+        int qrCodePositionY = chip_height/2*11/10;
+        string sample_name;
+
+int main() {
+    setupLayers();
+    layout->drawing->deleteAllCell();
+
+    layout->drawing->activeLayer=error;
+    layout->drcTool->setErrorLayerToActiveLayer();
+
+    sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon2Q-2");
+    layout->drawing->currentCell->cellName=sample_name;
+        int i;
+
+    cell *curCell = layout->drawing->currentCell;
+    point cursor;
+
+    curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, protect);
+
+    addBridge(curCell, newPoint(0,0), "d");
+
+
+     clearLayer(curCell, mask);
+     clearLayer(curCell, M);
+     // clearLayer(curCell, protect);
+     clearLayer(curCell, ground);
+     // clearLayer(curCell, aux5);
+
+    debug.show();
+    debug.clear();
+
+
+
+}

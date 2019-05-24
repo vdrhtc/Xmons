@@ -22,9 +22,23 @@ point addBridge(cell* curCell, point anchorPoint, string direction) {
     rotateLayer(curCell, aux4, anchorPoint, angleFromDirection(direction));
     rotateLayer(curCell, aux5, anchorPoint, angleFromDirection(direction));
 
+    layout->drcTool->ruleName = "DRC-Rule";
+    layout->drcTool->minimumDistance(5000, aux4, protect);
+    string curCellName = curCell->cellName;
+    layout->drawing->setCell(curCellName+":DRC-Rule");
+    // debug(curCellName+":DRC-Rule");
+    if (layout->drawing->currentCell->cellName == (curCellName+":DRC-Rule")) {
+      // debug("YES"+layout->drawing->currentCell->cellName);
+      layout->drawing->deleteCurrentCell();
+      layout->drawing->setCell(curCellName);
+    } else {
+      // debug("NO"+layout->drawing->currentCell->cellName);
+      layout->booleanTool->boolOnLayer(aux4, aux4, patch_layer, "A+B", 0, 0, 0);
+      layout->booleanTool->boolOnLayer(aux5, aux5, bridge_layer, "A+B", 0, 0, 0);
+    }
+    layout->drawing->setCell(curCellName);
 
-    layout->booleanTool->boolOnLayer(aux4, aux4, patch_layer, "A+B", 0, 0, 0);
-    layout->booleanTool->boolOnLayer(aux5, aux5, bridge_layer, "A+B", 0, 0, 0);
+    // debug(layout->drawing->currentCell->cellName);
 
     clearLayer(curCell, aux4);
     clearLayer(curCell, aux5);
