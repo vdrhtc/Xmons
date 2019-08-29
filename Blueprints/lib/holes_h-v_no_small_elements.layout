@@ -3,14 +3,13 @@
 
      // int hole_size = 15e3;
      // int hole_period = 17e3;
-     int hole_size = 150e3;
-     int hole_period = 170e3;
+     int hole_size = 5e3;
+     int hole_period = 10e3;
 
+     int border_thickness = 250e3;
+     int structure_borders = 30e3;
 
-     int border_thickness = 500e3;
-     int structure_borders = 50e3;
-
-void addHoles(cell* curCell) {
+int addHoles(cell* curCell) {
 
     // int N_holes_vertical = (chip_height-2*border_thickness)/hole_period+1;
     // int N_holes_horizontal = (chip_width-2*border_thickness)/hole_period+1;
@@ -36,8 +35,12 @@ void addHoles(cell* curCell) {
 
     // layout->drawing->sizeLayer(aux4, -50e3);
     // layout->drcTool->inside(50e3, aux2, aux4);
-    layout->booleanTool->boolOnLayer(aux, aux2, aux3, "A*B", 0, 0, 0); // aux3 is the mask inside chip border
+
+    layout->booleanTool->boolOnLayer(aux, aux2, aux4, "A*B", 0, 0, 0); // inside chip border
                                                                        // and outside no-hole structure borders
+    layout->booleanTool->boolOnLayer(aux4, holes_mask, aux3, "A*B", 0, 0, 0); // + inside holes_mask
+    clearLayer(curCell, aux4);
+
 
     int N_stripes_vertical = (chip_width-2*border_thickness)/hole_period+1;
     int N_stripes_horizontal = (chip_height-2*border_thickness)/hole_period+1;
@@ -55,20 +58,15 @@ void addHoles(cell* curCell) {
       wire(curCell, aux5, start, "u", chip_height-2*border_thickness, hole_period-hole_size);
     }
 
-    // curCell->selectLayer(aux4);
-    layerTranslator t;
 
-    // layout->drawing->invertSelect();
-    // curCell->deselectAll();
-    layout->booleanTool->boolOnLayer(protect, protect, 1020, "A+B", 0, 0, 0); //copy protect to find small holes
-    layout->booleanTool->boolOnLayer(protect, protect, 1021, "A+B", 0, 0, 0); //-=-
+    layout->booleanTool->boolOnLayer(aux3, aux3, 1020, "A+B", 0, 0, 0); //copy holes area to find small holes
 
     layout->booleanTool->boolOnLayer(aux3, aux3, protect, "A+B", 0, 0, 0); // now protect as well
                                                                            // the hole area
     layout->booleanTool->boolOnLayer(aux3, aux4, holes_h, "A*B", 0, 0, 0); // horizontal comb
     layout->booleanTool->boolOnLayer(aux3, aux5, 15, "A*B", 0, 0, 0); // vertical comb
-    layout->booleanTool->boolOnLayer(15, holes_h, holes_v, "A-B", 0, 0, 0); // vertical is striped in 16,
-                                                                  // horizontal is continuous in 14
+    layout->booleanTool->boolOnLayer(15, holes_h, holes_v, "A-B", 0, 0, 0); // vertical is striped in holes_v,
+                                                                  // horizontal is continuous in holes_h
     // layout->booleanTool->boolOnLayer(15, 14, 17, "A-B", 0, 0, 0);
     // layout->booleanTool->boolOnLayer(14, 15, 18, "A*B", 0, 0, 0);
 
@@ -76,41 +74,65 @@ void addHoles(cell* curCell) {
                                                                   // full net is between structure borders
                                                                   // and chip border
 
+    // curCell->deselectAll();
+    // curCell->selectLayer(1020);
+    // layout->drawing->currentCell->sizeAdjustSelect(structure_borders+100e3, 1);
+    // curCell->deselectAll(); // increase former protect with 100e3 margin to structure borders
+    //
+    // curCell->deselectAll();
+    // curCell->selectLayer(1021);
+    // layout->drawing->currentCell->sizeAdjustSelect(structure_borders-10, 1);
+    // curCell->deselectAll(); // increase the other former protect to reach structure borders (minus 10 nm to ensure overlap)
+    //
+    // // part of the full net (1019) in protect, small border and 100e3 border beyond that
+    // layout->booleanTool->boolOnLayer(1020, 1019, 1022, "A-B", 0, 0, 0);
+    // // layout->booleanTool->boolOnLayer(21, ground, 22, "A*B", 0, 0, 0);
+    //
+    // // now 1023 has the part of the net without protect and small border
+    // // (just in the 100e3 border beyond structure borders)
+    // layout->booleanTool->boolOnLayer(1022, 1021, 1023, "A-B", 0, 0, 0);
+
+    // all above does not know about holes_mask borders
+    curCell->deselectAll();
+    curCell->selectLayer(aux3);
+    layout->drawing->currentCell->sizeAdjustSelect(10, 1); // make aux3 10 nm larger to remove small shit on the edges
+    curCell->deselectAll();
+
     curCell->deselectAll();
     curCell->selectLayer(1020);
-    layout->drawing->currentCell->sizeAdjustSelect(structure_borders+100e3, 1);
-    curCell->deselectAll(); // increase former protect with 100e3 margin to structure borders
-
+    layout->drawing->currentCell->sizeAdjustSelect(-4*hole_period, 1); // shrink aux3 copy
     curCell->deselectAll();
-    curCell->selectLayer(1021);
-    layout->drawing->currentCell->sizeAdjustSelect(structure_borders-10, 1);
-    curCell->deselectAll(); // increase former protect to reach structure borders (minus 10 nm to ensure overlap)
 
-    // part of the full net (1019) in protect, small border and 100e3 border beyond that
-    layout->booleanTool->boolOnLayer(1020, 1019, 1022, "A-B", 0, 0, 0);
-    // layout->booleanTool->boolOnLayer(21, ground, 22, "A*B", 0, 0, 0);
+    //----------- 3 min for 5, 10 holes
 
-    // now 1023 has the part of the net without protect and small border
-    // (just in the 100e3 border beyond structure borders)
-    layout->booleanTool->boolOnLayer(1022, 1021, 1023, "A-B", 0, 0, 0);
+    //(**)  1021 will be a 100e3 border inside holes_mask (where we look for small holes)
+    layout->booleanTool->boolOnLayer(aux3, 1020, 1021, "A-B", 0, 0, 0);
+
+    // make 1021 holed (in 999)
+    layout->booleanTool->boolOnLayer(1021, 1019, 999, "A-B", 0, 0, 0);
+
+    // Remove technological 10 nm edge by subtracting grid
+    layout->booleanTool->boolOnLayer(999, aux4, 998, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(998, aux5, 1023, "A-B", 0, 0, 0);
 
 
-    // layout->drcTool->minimumDimensionOnLayer(5e3,5e3,23,false);
-
+    // return 0;
     // now, checking the 1023 for small holes
     layout->drcTool->minimumSize(4e3, 1023, false);
 
     curCell->deselectAll();
-    curCell->selectLayer(1020); // 1020 was the enlarged protect (structure_borders+100e3)
-    layout->drawing->currentCell->sizeAdjustSelect(-50e3,0); // shrink it back by half the increase
+    curCell->selectLayer(1020); // 1020 was the shrunk protect (-4*hole_period)
+    layout->drawing->currentCell->sizeAdjustSelect(2*hole_period,0); // grow it back by half the shrink
     curCell->deselectAll();
 
+    // same as (**): 1017 will be a 50e3 border inside holes_mask (small holes here are real)
+    layout->booleanTool->boolOnLayer(aux3, 1020, 1017, "A-B", 0, 0, 0);
 
-    layout->booleanTool->boolOnLayer(1020, error, 1017, "A*B", 0, 0, 0);// now, 1017 has small
-                                                                    // holes in 50e3 area near structure_borders
-                                                                    // because other small holes are just artefact
-    layout->booleanTool->boolOnLayer(1017, aux, 1018, "A*B", 0, 0, 0);  // found small holes are double checked to be inside
-                                                                    // aux and then put into !18!
+    layout->booleanTool->boolOnLayer(1017, error, 1018, "A*B", 0, 0, 0);
+    // now, 1018 has small
+    // holes in 50e3 area near structure_borders
+    // because other small holes are just artefact
+
 
     string curCellName = curCell->cellName;
     layout->drawing->setCell(curCellName+":DRC-Rule");
@@ -118,13 +140,17 @@ void addHoles(cell* curCell) {
     layout->drawing->setCell(curCellName);
     clearLayer(curCell, aux);
     clearLayer(curCell, 14);
+    clearLayer(curCell, 15);
     clearLayer(curCell, 1017);
     clearLayer(curCell, 1019);
     clearLayer(curCell, 1020);
     clearLayer(curCell, 1021);
     clearLayer(curCell, 1022);
-    clearLayer(curCell, 1023);
+    clearLayer(curCell, 999);
+    clearLayer(curCell, 998);
+    // clearLayer(curCell, 1023);
+
 
     clearAllAuxiliaryAux(curCell);
-
+    return 0;
 }

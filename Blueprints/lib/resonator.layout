@@ -13,7 +13,9 @@
 
 #include "wiring.layout"
 
+    int tail_len = 300e3;
     int meanderSegmentLength = 250e3;
+    int res_distance = 50e3;
 
 double claw3PhaseShift(double frequency) {
     return 0.452+6.226*frequency;
@@ -75,8 +77,8 @@ void generateStructure(cell* curCell, point cursor,  int width, int tailLen,
     curLength+=200e3;
     cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
-    cursor = wire(curCell, layer, cursor, "d", 50e3, width);
-    curLength+=50e3;
+    cursor = wire(curCell, layer, cursor, "d", res_distance, width);
+    curLength+=res_distance;
     cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
 
@@ -243,29 +245,29 @@ point addHalfwaveTransmissionResonator(cell* curCell, point start, int w_res, in
 
 }
 
-int generateStructureCexp(cell* curCell, point cursor,  int width, int length,  int resTurnRad, int layer, int short_tail) {
+point generateStructureCexp(cell* curCell, point cursor,  int width, int length,  int resTurnRad, int layer, int short_tail) {
 
         int curLength = 0;
-        int tail_len = 300e3;
         point start;
+        double tail_len_local_var = tail_len;
         start.set(cursor.x(), cursor.y());
 
     if (short_tail == 1) {
-        cursor.set(start.x()+tail_len/2, start.y());
+        cursor.set(start.x()+tail_len_local_var/2, start.y());
     } else if (layer==aux3) {
-        cursor.set(start.x()+tail_len/2+4*g_res, start.y());
-        tail_len+=4*g_res;
+        cursor.set(start.x()+tail_len_local_var/2+4*g_res, start.y());
+        tail_len_local_var+=4*g_res;
     } else if(layer==aux2) {
-        cursor.set(start.x()+tail_len/2, start.y());
+        cursor.set(start.x()+tail_len_local_var/2, start.y());
     }
 
 
-    cursor = wire(curCell, layer, cursor, "l", tail_len, width);
-    curLength+=tail_len;
+    cursor = wire(curCell, layer, cursor, "l", tail_len_local_var, width);
+    curLength+=tail_len_local_var;
     cursor = torusTurn(curCell, layer, cursor, "ld", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
-    cursor = wire(curCell, layer, cursor, "d", 200e3, width);
-    curLength+=200e3;
+    cursor = wire(curCell, layer, cursor, "d", 300e3, width);
+    curLength+=300e3;
     cursor = torusTurn(curCell, layer, cursor, "dr", resTurnRad, width);
     curLength+=resTurnRad*math::pi_2;
 
@@ -297,24 +299,26 @@ int generateStructureCexp(cell* curCell, point cursor,  int width, int length,  
         cursor = wire(curCell, layer, cursor, "r", length - curLength, width);
         curLength+=length - curLength;
     }
+    return cursor;
 }
 
-point addResonatorCexp(cell* curCell, point couplingPoint, int w_res, int g_res, double frequency, string direction, int short_tail=1) {
+point addResonatorCexp(cell* curCell, point couplingPoint, int w_res, int g_res,
+                       double frequency, string direction, int short_tail=1) {
 
         point cursor;
         cursor.set(couplingPoint.x(), couplingPoint.y()-w_res/2 - g_res);
         int length = length_from_frequency(frequency, 0)*1e3;
 
-        int resTurnRad = 10*w_res;
+        int resTurnRad = 100e3;
 
-    generateStructureCexp(curCell, cursor, w_res,             length, resTurnRad, aux2, short_tail);
-    generateStructureCexp(curCell, cursor, w_res+2*g_res, length+4*g_res, resTurnRad, aux3, short_tail);
+    generateStructureCexp(curCell, cursor, w_res,         length, resTurnRad, aux2, short_tail);
+    point cursor2 = generateStructureCexp(curCell, cursor, w_res+2*g_res, length+4*g_res, resTurnRad, aux3, short_tail);
 
     rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
     rotateLayer(curCell, aux3, couplingPoint, angleFromDirection(direction));
     if (direction=="u") {
-        mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
-        mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
+        // mirrorLayer(curCell, aux2, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
+        // mirrorLayer(curCell, aux3, couplingPoint, newPoint(couplingPoint.x(), couplingPoint.y()+100e3));
     }
 
     layout->booleanTool->boolOnLayer(aux2, aux2, M, "A+B", 0, 0, 0);
@@ -322,9 +326,19 @@ point addResonatorCexp(cell* curCell, point couplingPoint, int w_res, int g_res,
 
     clearAllAuxiliaryAux(curCell);
 
-    point retPoint;
-    retPoint.set(200e3+resTurnRad, -(g_res+w_res/2+resTurnRad+tailLen));
-    return rotateVector(retPoint, couplingPoint, direction);
+    // holes mask creation
+    curCell->addRoundedBox(couplingPoint.x()-tail_len/2-resTurnRad-holes_mask_range,
+                    cursor2.y()-holes_mask_range,
+                    resTurnRad*2+meanderSegmentLength+2*holes_mask_range,
+                    couplingPoint.y()-cursor2.y()+holes_mask_range,
+                    100e3, aux2);
+    rotateLayer(curCell, aux2, couplingPoint, angleFromDirection(direction));
+    layout->booleanTool->boolOnLayer(aux2, aux2, holes_mask, "A+B", 0, 0, 0);
+    clearAllAuxiliaryAux(curCell);
+
+    return rotateVector(newPoint(cursor2.x() - couplingPoint.x(),
+                                 cursor2.y() - couplingPoint.y()),
+                        couplingPoint, direction);
 }
 
 point addResonatorNoMeander(cell* curCell, point couplingPoint, int w_res, int g_res, double frequency, int tailLen, string direction, bool claw) {

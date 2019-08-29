@@ -1,0 +1,205 @@
+#!/usr/bin/layout
+#name=XMon resonators
+#help=Creates XMon resonator design
+
+#include "../lib/wiring.layout"
+#include "../lib/auxx.layout"
+#include "../lib/layersSetup.layout"
+#include "../lib/resonator.layout"
+#include "../lib/feedline.layout"
+#include "../lib/claw.layout"
+#include "../lib/squid_manhattan.layout"
+#include "../lib/Xmon_manhattan.layout"
+#include "../lib/test_JJ_manhattan.layout"
+#include "../lib/alignment_mark.layout"
+#include "../lib/Bridge.layout"
+#include "../lib/holes_h-v_no_small_elements.layout"
+
+        int photo_neg = 9;
+        int photo_neg_holed = 11;
+        int photo_holed = 1;
+        int M = 1000;
+        int M1 = 1001;
+        int jj_layer = 2;
+        int protect = 1003;
+        int ground = 1004;
+        int mask = 1005;
+        int total = 0;
+        int aux = 1007;
+        int aux2 = 1008;
+        int aux3 = 1009;
+        int aux4 = 1010;
+        int bandage = 1011;
+        int aux5 = 1012;
+        int aux6 = 1013;
+        int aux7 = 1014;
+        int holes_v = 5;
+        int holes_h = 4;
+        int error = 115;
+
+        int holes_mask = 54;
+        int holes_mask_range = 250e3;  // no holes outside this range
+        int structure_borders = 30e3;
+
+        int chip_height = 5e6;
+        int chip_width = 10e6;
+        int border=50e3;
+
+        double ɛ = 11.45;
+        double c = 299792458.0;
+
+        doubleList res_freqs;
+        doubleList test_res_freqs;
+
+        int w_res =7e3;
+        int g_res = 4e3;
+        int x = 5e3;
+        int tail_len = 10e3;
+        int bridge_resonators = false;
+        int res_distance = 500e3;
+        int meanderSegmentLength = 500e3;
+
+        int w_feed = 16e3;
+        int g_feed = 8e3;
+        int pad_len = 400e3;
+
+        int w_q = 20e3;
+        int g_q = 20e3;
+        int arm_len = 300e3;
+        int ebeam_overlap = 3e3;
+        doubleList asymmetries;
+        doubleList qubit_frequencies;
+        doubleList qubit_square_equiv_JJ_size;
+        double E_C = .242;
+        double Ic_density = 0.7;  // uA/um
+
+
+        int qrSize = 600e3;
+        int qrCodePositionX = chip_width/2*11/10;
+        int qrCodePositionY = chip_height/2*11/10;
+
+        string sample_name;
+
+        element* marker;
+
+int main() {
+    setupLayers();
+    layout->drawing->deleteAllCell();
+    layout->drawing->activeLayer=error;
+    layout->drcTool->setErrorLayerToActiveLayer();
+
+    sample_name = layout->getText("Sample name","Please enter the sample name:", "Res Al BMSTU v4 SC open");
+    layout->drawing->currentCell->cellName=sample_name;
+
+    cell *curCell = layout->drawing->currentCell;
+    point cursor;
+
+    // Ground plane
+    curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
+    
+    int resonator_interval = 1300e3;
+    int N_pairs = 6;
+    int resonatorPositionsX = -resonator_interval*(N_pairs-1)/2;
+    int resonatorPositionsY = -w_feed/2-g_feed-x;
+
+    res_freqs.append(4.5);
+    res_freqs.append(6.2);
+    res_freqs.append(5.4);
+    res_freqs.append(6.1);
+    res_freqs.append(5.3);
+    res_freqs.append(4.6);
+    res_freqs.append(5.7);
+    res_freqs.append(5);
+    res_freqs.append(6.6);
+    res_freqs.append(4.9);
+    res_freqs.append(6.5);
+    res_freqs.append(5.8);
+
+    int i;
+
+    double j = 0;
+    int k = 0;
+    point cursor2;
+    point cursor3;
+    for (i=0; i<11; i+=2){
+        cursor.set(resonatorPositionsX+resonator_interval*j-270e3, resonatorPositionsY);
+        cursor2 = addResonatorCexp(curCell, cursor, w_res, g_res, res_freqs.at(6+i/2), "d", 0);
+
+        cursor3.set(cursor.x()-100e3, -chip_height/2+150e3);
+        string text = roman(6+i/2+1); text+=", "; text+=res_freqs.at(6+i/2);  text += " GHz";
+        marker = curCell->addText(protect, cursor3, text);
+
+
+        cursor.set(resonatorPositionsX+resonator_interval*(j)+270e3, -resonatorPositionsY);
+        cursor2 = addResonatorCexp(curCell, cursor, w_res, g_res, res_freqs.at(i/2), "u", 0);
+
+        cursor3.set(cursor.x()-300e3, chip_height/2);
+        string text = roman(i/2+1); text+=", "; text+=res_freqs.at(i/2);  text += " GHz";
+        marker = curCell->addText(protect, cursor3, text);
+
+        j++;
+        k+=2;
+    }
+    curCell->textToPolygon(100e3);
+
+    marker = curCell->addText(protect, newPoint(-chip_width/2+10e3, -chip_height/2+150e3+200e3), sample_name);
+    curCell->textToPolygon(150e3);
+
+    /// Main feedline
+    intList segmentLengths;
+    stringList directions;
+    directions.append("r");
+
+    segmentLengths.append(chip_width);
+    cursor.set(-chip_width/2, 0);
+    addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths,
+                directions, "cp", false);
+
+
+    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
+    // layout->booleanTool->boolOnLayer(M1, total, total, "A+B", 0, 0, 0);
+    // clearLayer(curCell, M1);
+
+
+    layout->booleanTool->boolOnLayer(protect, M, photo_neg, "A-B", 0, 0, 0);
+    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux);
+    layout->booleanTool->boolOnLayer(aux, ground, photo_neg, "A-B", 0, 0, 0);
+    // layout->booleanTool->boolOnLayer(M1, M1, jj_layer  , "A+B", 0, 0, 0);
+
+    clearLayer(curCell, aux);
+    clearLayer(curCell, mask);
+
+    addHoles(curCell);
+
+
+    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(M, mask, aux, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(1018, aux, photo_holed, "A+B", 0, 0, 0);
+    clearLayer(curCell, aux);
+
+    layout->booleanTool->boolOnLayer(1018, M, aux, "A+B", 0, 0, 0);
+    layout->booleanTool->boolOnLayer(protect, aux, photo_neg_holed, "A-B", 0, 0, 0);
+    curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux2);
+    layout->booleanTool->boolOnLayer(aux2, ground, photo_neg_holed, "A-B", 0, 0, 0);
+    clearLayer(curCell, aux);
+    clearLayer(curCell, aux2);
+    clearLayer(curCell, 1018);
+    // clearLayer(curCell, holes_mask);
+
+
+    int hd;
+    layout->backgroundTool->clearBackground();
+/*    hd = layout->backgroundTool->addBackground("background.png");*/
+/*    layout->backgroundTool->backgroundOffset(hd, -5682e3, 2950e3);*/
+/*    layout->backgroundTool->backgroundScale(hd, 8.3e3, 8.3e3);*/
+    clearLayer(curCell, mask);
+    clearLayer(curCell, M);
+    clearLayer(curCell, protect);
+    clearLayer(curCell, ground);
+    // debug.show();
+    // debug.clear();
+
+
+
+}

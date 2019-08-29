@@ -7,7 +7,23 @@
     int JJ_pads_len = 5.65e3; // controls the width of the Dolan bridge
 //    int ebeam_overlap = 2e3; // overlap of the ebeam pads in M1 with the M layer
     //corr = 30
-point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int h_JJ, int corr = 30, double asymmetry=0) {
+    double h = 6.6261e-34;
+    double hbar = 1.054571e-34;
+    double e = 1.6e-19;
+
+
+
+double get_equiv_square_JJ_size(double frequency, double E_C, double j) {
+    double E_J = 1e9*h*(frequency+E_C)**2/8/E_C;
+    double I_c = E_J/hbar*2*e*1e6;
+    j = j*1e12;
+    double S_squid = I_c/j;
+    debug(I_c);
+    return math::sqrt(S_squid/2)*1e9;
+}
+
+point addXmon(cell* curCell, point anchorPoint, string direction, double f_max,
+              double E_C, int corr = 30, double asymmetry=0) {
 
   int bridge_width = 160;
   int structure_length = 16e3;
@@ -48,11 +64,13 @@ point addXmon(cell* curCell, point anchorPoint, string direction, int w_JJ, int 
     retPoint = rotateVector(retPoint, anchorPoint, direction);
     squidPoint = rotateVector(squidPoint, anchorPoint, direction);
 
-    addSquidManhattan(curCell, squidPoint, direction,  w_JJ,  h_JJ,  corr,  asymmetry);
+    double size_JJ = get_equiv_square_JJ_size(f_max, E_C, Ic_density);
 
-    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
-    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));
-    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()+100e3));
-    // addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()+100e3));
+    addSquidManhattan(curCell, squidPoint, direction,  size_JJ,  size_JJ,  corr,  asymmetry);
+
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()+100e3));
+    addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()+100e3));
     return retPoint;
   }

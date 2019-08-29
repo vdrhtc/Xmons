@@ -9,7 +9,9 @@
         int test_squid_counter = 1;
 
 
-void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ, string direction="d", bool no_pads,int corr, double asymmetry=0) {
+void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ,
+                  string direction="d", bool no_pads, int corr,
+                  double asymmetry=0) {
 
         int test_JJ_pads_len = 5.45e3;
         int JJ_delta_arm_len = 0;

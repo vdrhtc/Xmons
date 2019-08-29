@@ -3,35 +3,52 @@
     XMon qubit. Anchor point is on the protect of the arm towards the resonator.
 
 */
-  int ebeam_overlap = 0e3;
+    int ebeam_overlap = 0e3;
     int JJ_pads_len = 5.65e3; // controls the width of the Dolan bridge
 //    int ebeam_overlap = 2e3; // overlap of the ebeam pads in M1 with the M layer
     //corr = 30
-point addSquidManhattan(cell* curCell, point anchorPoint, string direction, int w_JJ, int h_JJ, int corr = 30, double asymmetry=0) {
+point addSquidManhattan(cell* curCell, point anchorPoint, string direction,
+                        int w_JJ, int h_JJ, int corr = 30, double asymmetry=0) {
 
     int bridge_width = 160;
-    int structure_length = 16e3;
-    int squid_width_top = 6.2e3;
-    int squid_width_bottom = 4e3;
-    int pad_width = 8e3;
-    int small_lead_width = 0.65e3;
+    int structure_length = 14e3;
+    int squid_width_top = 3e3;
+    int squid_width_bottom = 5e3;
+    int pad_width = 7e3;
+    int top_pad_height = 2e3;
+    int bottom_pad_height = 2e3;
+
+    int small_lead_width = 1e3;
     int top_tiny_lead_length = 1e3;
-    int bottom_tiny_lead_length = 1e3;
+    int bottom_tiny_lead_length = 1.4e3;
     int tiny_lead_outshoot = 1200;
 
     int JJ_delta_arm_len = 8e3;
     int JJ_arm_len = arm_len/2+JJ_delta_arm_len;
 
-    int left_w_JJ = h_JJ*math::sqrt(1-asymmetry)- corr;
-    int right_w_JJ = 1.5 * (1 + asymmetry) * h_JJ- corr;
-    int left_h_JJ = math::sqrt(1-asymmetry)*w_JJ- corr;
-    int right_h_JJ = w_JJ / 1.5 - corr;
+    int corr_l = corr;
+    int corr_r = corr;
+    if (asymmetry == 1) {
+        corr_l = 0;
+    }
 
-    string jjCell_name ="Squid:("+(left_w_JJ+corr);
-    jjCell_name+= "x"+(left_h_JJ+corr);
+
+    int left_w_JJ = h_JJ*math::sqrt(1-asymmetry)- corr_l;
+    int left_h_JJ = math::sqrt(1-asymmetry)*w_JJ - corr_l;
+    int right_w_JJ;
+    int right_h_JJ;
+    if (w_JJ > 150) {
+        right_w_JJ = 1.5 * (1 + asymmetry) * h_JJ - corr_r;
+        right_h_JJ = w_JJ/1.5 - corr_r;
+    } else {
+        right_w_JJ = (1 + asymmetry) * h_JJ/100*w_JJ - corr_r;
+        right_h_JJ = 100 - corr_r;
+    }
+    string jjCell_name ="Squid:("+(left_w_JJ+corr_l);
+    jjCell_name+= "x"+(left_h_JJ+corr_l);
     jjCell_name+=")";
-    jjCell_name+="("+(right_w_JJ+corr);
-    jjCell_name+="x"+(right_h_JJ+corr);
+    jjCell_name+="("+(right_w_JJ+corr_r);
+    jjCell_name+="x"+(right_h_JJ+corr_r);
     jjCell_name+=")";
     jjCell_name+= "bridge:"+bridge_width;
     jjCell_name+= "d:"+asymmetry;
@@ -50,32 +67,66 @@ point addSquidManhattan(cell* curCell, point anchorPoint, string direction, int 
         point cursor;
         cursor.set(0,structure_length/2);
 
-        point cursor_ct = wire(curCellJJ, aux, cursor, "d", structure_length/4, pad_width);
+        point cursor_ct = wire(curCellJJ, aux, cursor, "d", top_pad_height, pad_width, false, 1000);
 
-        cursor.set(cursor_ct.x()-squid_width_top/2-small_lead_width/2,cursor_ct.y());
-        cursor = wire(curCellJJ, aux, cursor, "d", structure_length/4-left_h_JJ/2, small_lead_width);
-        cursor.set(cursor.x()-small_lead_width/2,cursor.y()-left_h_JJ/2);
-        wire(curCellJJ, aux, cursor, "r", top_tiny_lead_length+tiny_lead_outshoot, left_h_JJ);
+        point cursor_top_tiny_lead_left;
+        if (asymmetry != 1) {
+            cursor.set(cursor_ct.x()-squid_width_top/2-small_lead_width/2,cursor_ct.y());
+            cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-left_h_JJ/2)/2,
+                          small_lead_width, false, 500);
+            cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-left_h_JJ/2)/2,
+                          small_lead_width/2, false, 250);
+
+            cursor_top_tiny_lead_left = newPoint(cursor.x()+small_lead_width/2/2,cursor.y()-left_h_JJ/2);
+        }
 
         cursor.set(cursor_ct.x()+squid_width_top/2+small_lead_width/2,cursor_ct.y());
-        cursor = wire(curCellJJ, aux, cursor, "d", structure_length/4-right_h_JJ/2, small_lead_width);
-        cursor.set(cursor.x()+small_lead_width/2,cursor.y()-right_h_JJ/2);
-        wire(curCellJJ, aux, cursor, "l", top_tiny_lead_length+tiny_lead_outshoot, right_h_JJ);
+        cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-right_h_JJ/2)/2,
+                      small_lead_width, false, 500);
+        cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-right_h_JJ/2)/2,
+                      small_lead_width/2, false, 250);
+
+        point cursor_top_tiny_lead_right = newPoint(cursor.x()-small_lead_width/2/2,cursor.y()-right_h_JJ/2);
 
        // =====  Bottom
 
-
         cursor.set(0,-structure_length/2);
 
-        point cursor_cb = wire(curCellJJ, aux, cursor, "u", structure_length/4, pad_width);
+        point cursor_cb = wire(curCellJJ, aux, cursor, "u",
+                               bottom_pad_height, pad_width, false, 1000);
 
-        cursor.set(cursor_cb.x()-squid_width_bottom/2-small_lead_width/2,cursor_cb.y());
-        cursor = wire(curCellJJ, aux, cursor, "u", structure_length/4-bottom_tiny_lead_length, small_lead_width);
-        wire(curCellJJ, aux, cursor, "u", bottom_tiny_lead_length - left_h_JJ/2 - bridge_width, left_w_JJ);
+        point cursor_bottom_tiny_lead_left;
+        if (asymmetry != 1) {
+            cursor.set(cursor_cb.x()-squid_width_bottom/2-small_lead_width/2, cursor_cb.y());
+            cursor = wire(curCellJJ, aux, cursor, "u",
+                          (structure_length/2 - bottom_pad_height-bottom_tiny_lead_length)/2,
+                          small_lead_width, false, 500);
+            cursor_bottom_tiny_lead_left =
+                     wire(curCellJJ, aux, cursor, "u",
+                          (structure_length/2 - bottom_pad_height-bottom_tiny_lead_length)/2,
+                          small_lead_width/2, false, 200);
+        }
 
         cursor.set(cursor_cb.x()+squid_width_bottom/2+small_lead_width/2,cursor_cb.y());
-        cursor = wire(curCellJJ, aux, cursor, "u", structure_length/4-bottom_tiny_lead_length, small_lead_width);
-        wire(curCellJJ, aux, cursor, "u", bottom_tiny_lead_length - right_h_JJ/2 - bridge_width, right_w_JJ);
+        cursor = wire(curCellJJ, aux, cursor, "u", (structure_length/2 - bottom_pad_height-bottom_tiny_lead_length)/2,
+                      small_lead_width, false, 500);
+        point cursor_bottom_tiny_lead_right =
+                 wire(curCellJJ, aux, cursor, "u", (structure_length/2 - bottom_pad_height-bottom_tiny_lead_length)/2,
+                      small_lead_width/2, false, 200);
+
+        // === Miter structure
+
+
+
+
+        // ======== Josephson leads
+
+        wire(curCellJJ, aux, cursor_top_tiny_lead_left, "l", top_tiny_lead_length+tiny_lead_outshoot, left_h_JJ);
+        wire(curCellJJ, aux, cursor_top_tiny_lead_right, "r", top_tiny_lead_length+tiny_lead_outshoot, right_h_JJ);
+
+        wire(curCellJJ, aux, cursor_bottom_tiny_lead_left, "u", bottom_tiny_lead_length - left_h_JJ/2 - bridge_width, left_w_JJ);
+        wire(curCellJJ, aux, cursor_bottom_tiny_lead_right, "u", bottom_tiny_lead_length - right_h_JJ/2 - bridge_width, right_w_JJ);
+
 
         // ==== Merge aux structure to jj_layer
 
