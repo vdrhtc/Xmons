@@ -39,6 +39,8 @@
         int holes_h = 4;
         int error = 115;
 
+        int photo_correction = 0e3;
+
 
         int chip_height = 5e6;
         int chip_width = 10e6;
@@ -65,6 +67,7 @@
         int g_feed = 8e3;
         int pad_len = 400e3;
         int ground_connector_width = 100e3;
+        int bridge_resonators = false;
 
 
         int w_q = 20e3;
@@ -72,6 +75,9 @@
         int arm_len = 300e3;
         int ebeam_overlap = 3e3;
         doubleList asymmetries;
+        double E_C = .242;
+        double Ic_density = 0.75;  // uA/um2
+        doubleList criticalCurrents;
 
         int qrSize = 600e3;
         int qrCodePositionX = chip_width/2*11/10;
@@ -233,7 +239,7 @@ int main() {
      clearLayer(curCell, aux);
      clearLayer(curCell, mask);
 
-     addHoles(curCell);
+     //addHoles(curCell);
 
      layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
      layout->booleanTool->boolOnLayer(M, mask, aux, "A+B", 0, 0, 0);
@@ -260,8 +266,8 @@ int main() {
      clearLayer(curCell, ground);
      clearLayer(curCell, aux5);
 
-//     debug.show();
-//     debug.clear();
+    debug.show();
+    debug.clear();
 
 
 

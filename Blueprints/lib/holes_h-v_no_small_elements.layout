@@ -3,8 +3,8 @@
 
      // int hole_size = 15e3;
      // int hole_period = 17e3;
-     int hole_size = 5e3;
-     int hole_period = 10e3;
+     int hole_size = 10e3;
+     int hole_period = 20e3;
 
      int border_thickness = 250e3;
      int structure_borders = 30e3;

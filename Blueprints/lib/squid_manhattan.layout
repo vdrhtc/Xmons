@@ -11,12 +11,15 @@ point addSquidManhattan(cell* curCell, point anchorPoint, string direction,
                         int w_JJ, int h_JJ, int corr = 30, double asymmetry=0) {
 
     int bridge_width = 160;
-    int structure_length = 14e3;
+    int structure_length = 11e3;
     int squid_width_top = 3e3;
     int squid_width_bottom = 5e3;
     int pad_width = 7e3;
-    int top_pad_height = 2e3;
-    int bottom_pad_height = 2e3;
+    int top_pad_height = 1e3;
+    int bottom_pad_height = 1e3;
+
+    int bandage_height = 3e3;
+    int bandage_width = 5e3;
 
     int small_lead_width = 1e3;
     int top_tiny_lead_length = 1e3;
@@ -37,12 +40,15 @@ point addSquidManhattan(cell* curCell, point anchorPoint, string direction,
     int left_h_JJ = math::sqrt(1-asymmetry)*w_JJ - corr_l;
     int right_w_JJ;
     int right_h_JJ;
-    if (w_JJ > 150) {
+    if (w_JJ > 150 && asymmetry != 0) {
         right_w_JJ = 1.5 * (1 + asymmetry) * h_JJ - corr_r;
         right_h_JJ = w_JJ/1.5 - corr_r;
-    } else {
+    } else if(asymmetry != 0) {
         right_w_JJ = (1 + asymmetry) * h_JJ/100*w_JJ - corr_r;
         right_h_JJ = 100 - corr_r;
+    } else {
+        right_w_JJ = math::sqrt(1-asymmetry)*w_JJ - corr_l;
+        right_h_JJ = h_JJ*math::sqrt(1-asymmetry)- corr_l;
     }
     string jjCell_name ="Squid:("+(left_w_JJ+corr_l);
     jjCell_name+= "x"+(left_h_JJ+corr_l);
@@ -65,9 +71,11 @@ point addSquidManhattan(cell* curCell, point anchorPoint, string direction,
         //============ JJ pads ===========
         // =====  Top
         point cursor;
-        cursor.set(0,structure_length/2);
+        cursor.set(0, structure_length/2);
 
-        point cursor_ct = wire(curCellJJ, aux, cursor, "d", top_pad_height, pad_width, false, 1000);
+        point cursor_ct = wire(curCellJJ, aux, cursor, "d", top_pad_height, pad_width, false, 500);
+        cursor.set(0, structure_length/2 + bandage_height*2/3);
+        wire(curCellJJ, bandage, cursor, "d", bandage_height, bandage_width, false, 0);
 
         point cursor_top_tiny_lead_left;
         if (asymmetry != 1) {
@@ -75,25 +83,34 @@ point addSquidManhattan(cell* curCell, point anchorPoint, string direction,
             cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-left_h_JJ/2)/2,
                           small_lead_width, false, 500);
             cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-left_h_JJ/2)/2,
-                          small_lead_width/2, false, 250);
+                          small_lead_width/2, false, 0);
+
+            wire(curCellJJ, aux, cursor, "d", 150,
+              small_lead_width/2, false, 250); // ensure rounding overlap with tiny lead
 
             cursor_top_tiny_lead_left = newPoint(cursor.x()+small_lead_width/2/2,cursor.y()-left_h_JJ/2);
         }
 
-        cursor.set(cursor_ct.x()+squid_width_top/2+small_lead_width/2,cursor_ct.y());
+        cursor.set(cursor_ct.x()+squid_width_top/2+small_lead_width/2, cursor_ct.y());
         cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-right_h_JJ/2)/2,
                       small_lead_width, false, 500);
         cursor = wire(curCellJJ, aux, cursor, "d", (structure_length/2 - top_pad_height-right_h_JJ/2)/2,
-                      small_lead_width/2, false, 250);
+                      small_lead_width/2, false, 0);
 
-        point cursor_top_tiny_lead_right = newPoint(cursor.x()-small_lead_width/2/2,cursor.y()-right_h_JJ/2);
+        wire(curCellJJ, aux, cursor, "d", 150,
+             small_lead_width/2, false, 250); // ensure rounding overlap with tiny lead
+        point cursor_top_tiny_lead_right = newPoint(cursor.x()-small_lead_width/2/2,
+                                                    cursor.y()-right_h_JJ/2);
 
        // =====  Bottom
 
-        cursor.set(0,-structure_length/2);
+        cursor.set(0, -structure_length/2);
 
         point cursor_cb = wire(curCellJJ, aux, cursor, "u",
-                               bottom_pad_height, pad_width, false, 1000);
+                               bottom_pad_height, pad_width, false, 500);
+
+        cursor.set(0, -structure_length/2 - bandage_height*2/3);
+        wire(curCellJJ, bandage, cursor, "u", bandage_height, bandage_width, false, 0);
 
         point cursor_bottom_tiny_lead_left;
         if (asymmetry != 1) {

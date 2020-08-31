@@ -39,6 +39,9 @@
         int holes_h = 4;
         int error = 115;
 
+        int holes_mask = 54;
+        int holes_mask_range = 250e3;  // no holes outside this range
+        int structure_borders = 50e3;
 
         int chip_height = 5e6;
         int chip_width = 10e6;
@@ -72,6 +75,8 @@
         int arm_len = 300e3;
         int ebeam_overlap = 3e3;
         doubleList asymmetries;
+        double E_C = .22;
+        double Ic_density = 0.7;  // uA/um
 
         int qrSize = 600e3;
         int qrCodePositionX = chip_width/2*11/10;
@@ -85,7 +90,7 @@ int main() {
     layout->drawing->activeLayer=error;
     layout->drcTool->setErrorLayerToActiveLayer();
 
-    sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon2Q-2");
+    sample_name = layout->getText("Sample name","Please enter the sample name:", "Xmon2Q-2-DD");
     layout->drawing->currentCell->cellName=sample_name;
         int i;
 
@@ -95,6 +100,8 @@ int main() {
 
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
+    // Holes everywhere where OK
+    curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, holes_mask);
 
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -w_feed/2-g_feed-x;
@@ -122,8 +129,8 @@ int main() {
   	point cursor4 = addClaw(curCell,  newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell,  newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
 
-    cursor4 = addXmon(curCell, cursor4, "l", 177, 177, 30, 0.7);
-    cursor5 =addXmon(curCell, cursor5, "r", 177, 177, 30, 0.7);
+    cursor4 = addXmon(curCell, cursor4, "l", 6, E_C, 30, 0.7);
+    cursor5 = addXmon(curCell, cursor5, "r", 6, E_C, 30, 0.7);
 
 
     cursor4.set(cursor4.x()+arm_len/2-g_q, cursor4.y()-150e3);
@@ -161,8 +168,8 @@ int main() {
   	point cursor4 = addClaw(curCell, newPoint(cursor2.x()+5e3/2, cursor2.y()), "l");
     point cursor5 = addClaw(curCell, newPoint(cursor2.x()-5e3/2, cursor2.y()), "r");
 
-    cursor5 = addXmon(curCell, cursor5, "r", 177, 177, 30, 0.7);
-    cursor4 = addXmon(curCell, cursor4, "l", 177, 177, 30, 0.7);
+    cursor4 = addXmon(curCell, cursor4, "l", 5, E_C, 30, 0.5);
+    cursor5 = addXmon(curCell, cursor5, "r", 5.5, E_C, 30, 0.5);
 
     stringList directions;
     intList segmentLengths;
@@ -238,7 +245,7 @@ int main() {
      clearLayer(curCell, aux);
      clearLayer(curCell, mask);
 
-     //addHoles(curCell);
+     addHoles(curCell);
 
      layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
      layout->booleanTool->boolOnLayer(M, mask, aux, "A+B", 0, 0, 0);

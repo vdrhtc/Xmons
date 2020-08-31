@@ -96,7 +96,7 @@ int main() {
 
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
-    
+
     int resonator_interval = 1300e3;
     int N_pairs = 6;
     int resonatorPositionsX = -resonator_interval*(N_pairs-1)/2;
@@ -170,7 +170,7 @@ int main() {
     clearLayer(curCell, aux);
     clearLayer(curCell, mask);
 
-    addHoles(curCell);
+    // addHoles(curCell);
 
 
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);

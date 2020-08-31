@@ -11,7 +11,7 @@
 
 void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ,
                   string direction="d", bool no_pads, int corr,
-                  double asymmetry=0) {
+                  double asymmetry=0, bool label = true) {
 
         int test_JJ_pads_len = 5.45e3;
         int JJ_delta_arm_len = 0;
@@ -23,9 +23,11 @@ void addTestSquid(cell* curCell, point center, int w_JJ, int h_JJ,
     point corner = newPoint(center.x()-total_w/2, center.y()-total_h/2);
     curCell->addBox(corner.x(), corner.y(), total_w, total_h, aux4);
 
-    element* marker = curCell->addText(protect, newPoint(center.x()+250e3, center.y()+100e3), roman(test_squid_counter));
-    curCell->textToPolygon(100e3);
-    test_squid_counter+=1;
+    if (label) {
+        element* marker = curCell->addText(protect, newPoint(center.x()+250e3, center.y()+100e3), roman(test_squid_counter));
+        curCell->textToPolygon(100e3);
+        test_squid_counter+=1;
+    }
 
     if(!no_pads) {
         curCell->addBox(corner.x()+structure_padding, corner.y()+structure_padding, pad_side_len, pad_side_len, aux3);

@@ -16,7 +16,7 @@
 
         int M = 0;
         int M1 = 1;
-	int jj_layer = 2;    
+	int jj_layer = 2;
         int protect = 3;
         int ground = 4;
         int mask = 5;
@@ -28,18 +28,18 @@
         int bandage = 11;
 	int aux5 = 12;
 
-        
+
         int chip_height = 5e6;
         int chip_width = 10e6;
         int border=50e3;
-        
+
         int feedlineDepth = chip_height/4;
         double ɛ = 11.45;
         double c = 299792458.0;
 
-        doubleList res_freqs;        
+        doubleList res_freqs;
         doubleList test_res_freqs;
-        
+
         int w_res =7e3;
         int g_res = 4e3;
         int x = 5e3;
@@ -51,7 +51,7 @@
 
         int w_feed = 16e3;
         int g_feed = 8e3;
-      
+
         int w_q = 20e3;
         int g_q = 20e3;
         int arm_len = 300e3;
@@ -69,26 +69,26 @@ int main() {
     layout->drawing->deleteSelect();
     layout->drawing->deselectAll();
 
-        
+
     string sample_name = layout->getText("Sample name","Please enter the sample name:", "Trident");
-    
+
         int i;
-    
+
     cell *curCell = layout->drawing->currentCell;
     point cursor;
-    
+
     intList segmentLengths;
     stringList directions;
     directions.append("r");
-    
+
     segmentLengths.append(chip_width);
     cursor.set(-chip_width/2, 0);
     addFeedline(curCell, cursor, w_feed, g_feed, segmentLengths, directions, "cp");
-   
-   
+
+
     // Ground plane
     curCell->addBox(-chip_width/2, -(chip_height)/2, chip_width, chip_height, ground);
-    
+
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -w_feed/2-g_feed-x;
     res_freqs.append(7); res_freqs.append(7.1); res_freqs.append(7.2); res_freqs.append(7.3); res_freqs.append(7.4); res_freqs.append(7.5);
@@ -99,11 +99,11 @@ int main() {
     marker = curCell->addText(protect, newPoint(test_cursor.x()-300e3, test_cursor.y()+500e3), "TI");
     test_cursor = addResonator(curCell, newPoint(chip_width/2-chip_width/6+100e3, resonatorPositionsY-5*x), w_res, g_res, test_res_freqs.at(1), 1e6, "d", 0);
     marker = curCell->addText(protect, newPoint(test_cursor.x()-300e3, test_cursor.y()), "TII");
-    
+
     for (i=0; i<6; i++){
         asymmetries.append(0+0.8/5*i);
-    } 
-        
+    }
+
     double j = -0.25;
     int k = 0;
     point cursor2;
@@ -117,8 +117,8 @@ int main() {
       //  cursor2 = addXmon(curCell, cursor2, "d", 200, 100, asymmetries.at(k));
         cursor3.set(cursor2.x(), cursor2.y()-750e3);
         marker = curCell->addText(protect, cursor3, roman(k+1));
-       
-	
+
+
 
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u", "2");
@@ -126,18 +126,14 @@ int main() {
 
         cursor3.set(cursor2.x(), cursor2.y()+750e3);
         marker = curCell->addText(protect, cursor3, roman(k+2));
-       
+
         j++;
         k+=2;
-
-
-
-
     }
 
     curCell->textToPolygon(100e3);
 
-    marker = curCell->addText(protect, newPoint(-chip_width/2+400e3, chip_height/2-400e3), sample_name);    
+    marker = curCell->addText(protect, newPoint(-chip_width/2+400e3, chip_height/2-400e3), sample_name);
     curCell->textToPolygon(150e3);
 
 /*    */
@@ -146,15 +142,15 @@ int main() {
 
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, -1.75e6));
     addGlobalAlignmentMarkBMSTU(curCell, newPoint(-chip_width/2+0.65e6, -1.75e6+0.025e6));
-    
+
     addAlignmentMark(curCell, newPoint(-chip_width/2+0.5e6, 1.75e6));
     addGlobalAlignmentMarkBMSTU(curCell, newPoint(-chip_width/2+0.65e6, 1.75e6-0.025e6));
-    
+
    layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
    layout->booleanTool->boolOnLayer(M, mask, total, "A+B", 0, 0, 0);
     layout->booleanTool->boolOnLayer(M1, total, total, "A+B", 0, 0, 0);
     clearLayer(curCell, M1);
-    
+
   // layout->booleanTool->boolOnLayer(protect, M, total, "A-B", 0, 0, 0);
  //  curCell->addBox(-chip_width/2-border, -chip_height/2-border, chip_width+border*2, chip_height+border*2, aux);
  //  layout->booleanTool->boolOnLayer(aux, ground, total, "A-B", 0, 0, 0);
@@ -162,7 +158,7 @@ int main() {
 
 
 
-    
+
     int hd;
     layout->backgroundTool->clearBackground();
 /*    hd = layout->backgroundTool->addBackground("background.png");*/
@@ -174,7 +170,7 @@ int main() {
     clearLayer(curCell, ground);
     //debug.show();
     //debug.clear();
-    
-    
-    
+
+
+
 }

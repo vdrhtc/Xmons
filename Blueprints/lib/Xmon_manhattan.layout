@@ -16,35 +16,25 @@
 double get_equiv_square_JJ_size(double frequency, double E_C, double j) {
     double E_J = 1e9*h*(frequency+E_C)**2/8/E_C;
     double I_c = E_J/hbar*2*e*1e6;
-    j = j*1e12;
-    double S_squid = I_c/j;
-    debug(I_c);
-    return math::sqrt(S_squid/2)*1e9;
+    criticalCurrents.append(I_c);
+    double S_squid = I_c/j/1e12;
+    double size = math::sqrt(S_squid/2)*1e9;
+    debug((("Frequency: "+frequency)+(", I_c: "+I_c))+(", size: "+size));
+    return size;
 }
 
 point addXmon(cell* curCell, point anchorPoint, string direction, double f_max,
               double E_C, int corr = 30, double asymmetry=0) {
 
-  int bridge_width = 160;
-  int structure_length = 16e3;
-  int squid_width_top = 6.2e3;
-  int squid_width_bottom = 4e3;
-  int pad_width = 8e3;
-  int small_lead_width = 0.65e3;
-  int top_tiny_lead_length = 1e3;
-  int bottom_tiny_lead_length = 1e3;
-  int tiny_lead_outshoot = 1200;
-
-
-
-        int JJ_delta_arm_len = 8e3;
-        int JJ_arm_len = arm_len/2+JJ_delta_arm_len;
-        point cursor;
+    int bridge_width = 160;
+    int structure_length = 12e3;
+    int JJ_delta_arm_len = 8e3;
+    point cursor;
 
 
     cursor.set(anchorPoint.x(), anchorPoint.y()-g_q);
     wire(curCell, aux3, anchorPoint, "d", arm_len+2*g_q, w_q+2*g_q);
-    wire(curCell, aux2, cursor, "d", arm_len/2+JJ_arm_len, w_q);
+    wire(curCell, aux2, cursor, "d", arm_len + JJ_delta_arm_len, w_q);
 
     cursor.set(cursor.x()-arm_len/2-g_q, cursor.y()-arm_len/2);
     wire(curCell, aux3, cursor, "r", arm_len+2*g_q, w_q+2*g_q);
@@ -59,14 +49,15 @@ point addXmon(cell* curCell, point anchorPoint, string direction, double f_max,
 
     clearAllAuxiliaryAux(curCell);
 
-    point retPoint = newPoint(0, -arm_len-2*g_q);
-    point squidPoint = newPoint(retPoint.x(), retPoint.y()+structure_length/2 - squid_width_bottom/2);
+    point retPoint = newPoint(0, - arm_len - 2 * g_q - photo_correction);
+    point squidPoint = newPoint(retPoint.x(),
+                                retPoint.y() + structure_length/2 + photo_correction/2);
     retPoint = rotateVector(retPoint, anchorPoint, direction);
     squidPoint = rotateVector(squidPoint, anchorPoint, direction);
 
     double size_JJ = get_equiv_square_JJ_size(f_max, E_C, Ic_density);
 
-    addSquidManhattan(curCell, squidPoint, direction,  size_JJ,  size_JJ,  corr,  asymmetry);
+    addSquidManhattan(curCell, squidPoint, "d",  size_JJ,  size_JJ,  corr,  asymmetry);
 
     addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()-100e3, retPoint.y()-100e3));
     addLocalAlignmentMarkBMSTU(curCell, newPoint(retPoint.x()+100e3, retPoint.y()-100e3));

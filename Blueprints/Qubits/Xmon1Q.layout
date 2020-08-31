@@ -14,7 +14,7 @@
 #include "../lib/alignment_mark.layout"
 #include "../lib/Bridge.layout"
 #include "../lib/holes_h-v_no_small_elements.layout"
-#include "qr_nbal.layout"
+#include "qr_xmon1Q.layout"
 
         int photo_neg = 9;
         int photo_neg_holed = 11;
@@ -54,31 +54,36 @@
         doubleList res_freqs;
         doubleList test_res_freqs;
 
-        int w_res =7e3;
-        int g_res = 4e3;
-        int x = 5e3;
+        int photo_correction = 1.5e3;
+
+        int w_res =7e3+photo_correction;
+        int g_res = 4e3 - photo_correction;
+        int x = 7e3 + photo_correction;
         int tailLen = 1000e3;
-        int w_thinGround = 5e3;
+        int w_thinGround = 5e3+photo_correction;
         int L_claw_right = 60e3;
         int L_claw_left = 60e3;
         int w_claw = 20e3;
-	      int claw_gap = 5e3;
+	    int claw_gap = 5e3 - photo_correction;
         int ground_connector_width = 100e3;
         int bridge_resonators = false;
-        int res_distance = 500e3;
+        int res_distance = 50e3;
 
-        int w_feed = 16e3;
-        int g_feed = 8e3;
+        int w_feed = 16e3 + photo_correction;
+        int g_feed = 8e3 - photo_correction;
 
-        int w_q = 20e3;
-        int g_q = 20e3;
-        int arm_len = 300e3;
-        int ebeam_overlap = 3e3;
+        int w_q = 20e3 + photo_correction;
+        int g_q = 20e3 - photo_correction;
+        int arm_len = 300e3 + photo_correction;
         doubleList asymmetries;
         doubleList qubit_frequencies;
+        doubleList Ics;
+
         doubleList qubit_square_equiv_JJ_size;
         double E_C = .242;
-        double Ic_density = 0.7;  // uA/um
+        double Ic_density = 0.5;  // uA/um2
+
+        doubleList criticalCurrents;
 
 
         int qrSize = 600e3;
@@ -108,36 +113,26 @@ int main() {
     int resonatorPositionsX = -chip_width/5;
     int resonatorPositionsY = -chip_height/4+feedlineDepth-w_feed/2-g_feed-x;
 
-    res_freqs.append(7);
-    res_freqs.append(7.05);
-    res_freqs.append(7.1);
-    res_freqs.append(7.15);
-    res_freqs.append(7.2);
-    res_freqs.append(7.25);
+    int i;
+
+    for (i=0; i<6; i++) {
+        res_freqs.append(5+i*0.05);
+    }
     test_res_freqs.append(8);
     test_res_freqs.append(8.25);
 
     element* marker;
     point test_cursor = addResonator(curCell, newPoint(-chip_width/2+chip_width/6, -resonatorPositionsY+5*x), w_res, g_res, test_res_freqs.at(0), 0.5e6, "u", 0);
-    marker = curCell->addText(protect, newPoint(test_cursor.x()-300e3, test_cursor.y()+500e3), "TI");
+    marker = curCell->addText(protect, newPoint(test_cursor.x()+300e3, test_cursor.y()+500e3), "TI");
     test_cursor = addResonator(curCell, newPoint(chip_width/2-chip_width/6, resonatorPositionsY-5*x), w_res, g_res, test_res_freqs.at(1), 1e6, "d", 0);
     marker = curCell->addText(protect, newPoint(test_cursor.x()-300e3, test_cursor.y()), "TII");
 
-    int i;
-
-    qubit_frequencies.append(5.5);
-    qubit_frequencies.append(4);
-    qubit_frequencies.append(5.5);
-    qubit_frequencies.append(4.75);
-    qubit_frequencies.append(5.5);
-    qubit_frequencies.append(5.25);
+    for (i=0; i<6; i++) {
+        qubit_frequencies.append(res_freqs.at(i)+1);
+    }
 
     for (i=0; i<6; i++) {
-        if (i%2 == 0){
-            asymmetries.append(.5);
-        } else {
-            asymmetries.append(1);
-        }
+        asymmetries.append(.5);
     }
 
     double j = -0.25;
@@ -149,11 +144,13 @@ int main() {
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k), tailLen, "d", 1);
         cursor2 = addClaw(curCell, cursor2, "d");
 
-        cursor3.set(cursor2.x()-400e3, cursor2.y());
+        cursor3.set(cursor2.x()-800e3, cursor2.y());
         marker = curCell->addText(protect, cursor3, roman(k+1));
-        cursor2 = addXmon(curCell, cursor2, "d", qubit_frequencies.at(k), E_C, 30, asymmetries.at(k));
+        cursor2 = addXmon(curCell, cursor2, "d", qubit_frequencies.at(k), E_C, 0, asymmetries.at(k));
 
-        cursor2 = newPoint(cursor2.x(), cursor2.y()+8e3);
+        // cursor2 = newPoint(cursor2.x(), cursor2.y()+8e3);
+        cursor2.set(cursor2.x(), cursor2.y() - photo_correction);
+
 
         stringList directions;
         if (k != 0) {
@@ -163,19 +160,24 @@ int main() {
         }
         intList segmentLengths;
         if (k!=0) {
-            segmentLengths.append(200e3); segmentLengths.append((-1+k/2)/4*chip_width - cursor2.x()); segmentLengths.append(chip_height/2 - 200e3+cursor2.y());
+            segmentLengths.append(200e3);
+            segmentLengths.append((-1+k/2)/4*chip_width - cursor2.x());
+            segmentLengths.append(chip_height/2 - 200e3+cursor2.y());
         } else {
-            segmentLengths.append(200e3); segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x()); segmentLengths.append(chip_height/2 - 200e3+cursor2.y());
+            segmentLengths.append(200e3);
+            segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x());
+            segmentLengths.append(chip_height/2 - 200e3+cursor2.y());
         }
-        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb", true);
+        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb", false);
 
         cursor.set(resonatorPositionsX+chip_width/5*(1.*j+0.5), -resonatorPositionsY);
         cursor2 = addResonator(curCell, cursor, w_res, g_res, res_freqs.at(k+1), tailLen, "u", 1);
         cursor2 = addClaw(curCell, cursor2, "u");
         cursor3.set(cursor2.x()-400e3, cursor2.y());
         marker = curCell->addText(protect, cursor3, roman(k+2));
-        cursor2 = addXmon(curCell, cursor2, "u", qubit_frequencies.at(k+1), E_C, 30, asymmetries.at(k+1));
+        cursor2 = addXmon(curCell, cursor2, "u", qubit_frequencies.at(k+1), E_C, 0, asymmetries.at(k+1));
 
+        cursor2.set(cursor2.x(), cursor2.y() + photo_correction);
 
         stringList directions;
         if (k != 4) {
@@ -185,12 +187,16 @@ int main() {
         }
         intList segmentLengths;
         if (k!=4) {
-            segmentLengths.append(200e3); segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x()); segmentLengths.append(chip_height/2 - 200e3-cursor2.y());
+            segmentLengths.append(200e3);
+            segmentLengths.append(-(-1+k/2)/4*chip_width + cursor2.x());
+            segmentLengths.append(chip_height/2 - 200e3-cursor2.y());
         } else {
-            segmentLengths.append(200e3); segmentLengths.append((-1+k/2)/4*chip_width - cursor2.x()); segmentLengths.append(chip_height/2 - 200e3-cursor2.y());
+            segmentLengths.append(200e3);
+            segmentLengths.append((-1+k/2)/4*chip_width - cursor2.x());
+            segmentLengths.append(chip_height/2 - 200e3-cursor2.y());
         }
 
-        // addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
+        addFeedline(curCell, cursor2, w_res, g_res, segmentLengths, directions, "fb");
 
         j++;
         k+=2;
@@ -200,11 +206,29 @@ int main() {
     marker = curCell->addText(protect, newPoint(-chip_width/2+400e3, chip_height/2-400e3), sample_name);
     curCell->textToPolygon(150e3);
 
-    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, 1e6), 150, 150,"d", false, 30, 1);
-    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, 1e6), 150, 150,"d", false, 30, 0.5);
-    addTestSquid(curCell, newPoint(-chip_width/2+0.5e6, -1e6), 150, 150,"d", false, 30, 1);
-    addTestSquid(curCell, newPoint(chip_width/2-0.5e6, -1e6), 150, 150,"d", false, 30, 0.5);
-/*    */
+    addTestSquid(curCell, newPoint(-chip_width/2+0.75e6, 1e6),
+                 10, 10,"d", false, 0, 0, false);
+    addTestSquid(curCell, newPoint(-chip_width/2+1e6, 1e6),
+                 10, 10,"d", false, 0, 0);
+
+    addTestSquid(curCell, newPoint(chip_width/2-0.75e6, 1e6),
+                 100, 100,"d", false, 0, 0);
+    addTestSquid(curCell, newPoint(chip_width/2-1e6, 1e6),
+                 100, 100,"d", false, 0, 0, false);
+
+    addTestSquid(curCell, newPoint(-chip_width/2+1e6, -1e6),
+                 200, 200,"d", false, 0, 0);
+     addTestSquid(curCell, newPoint(-chip_width/2+0.75e6, -1e6),
+                 200, 200,"d", false, 0, 0, false);
+
+
+    addTestSquid(curCell, newPoint(chip_width/2-1e6, -1e6),
+                 300, 300,"d", false, 0, 0, false);
+    addTestSquid(curCell, newPoint(chip_width/2-0.75e6, -1e6),
+                 300, 300,"d", false, 0, 0);
+
+
+
     addAlignmentMark(curCell, newPoint(chip_width/2-0.5e6, -1.75e6));
     addGlobalAlignmentMarkBMSTU(curCell, newPoint(chip_width/2-0.65e6, -1.75e6+0.025e6));
 
@@ -239,7 +263,7 @@ int main() {
     clearLayer(curCell, aux);
     clearLayer(curCell, mask);
 
-    addHoles(curCell);
+    // addHoles(curCell);
 
 
     layout->booleanTool->boolOnLayer(ground, protect, mask, "A-B", 0, 0, 0);
@@ -257,7 +281,6 @@ int main() {
 
     addQR(curCell, qrCodePositionX,qrCodePositionY, qrSize, qrSize, aux);
 
-
     int hd;
     layout->backgroundTool->clearBackground();
 /*    hd = layout->backgroundTool->addBackground("background.png");*/
@@ -267,6 +290,12 @@ int main() {
     clearLayer(curCell, M);
     clearLayer(curCell, protect);
     clearLayer(curCell, ground);
+    clearLayer(curCell, photo_neg);
+    clearLayer(curCell, photo_holed);
+    clearLayer(curCell, 20);
+    clearLayer(curCell, 30);
+    clearLayer(curCell, 54);
+    clearLayer(curCell, photo_neg_holed);
     // debug.show();
     // debug.clear();
 
